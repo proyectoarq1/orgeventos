@@ -52,7 +52,8 @@ def nuevo_evento():
 						organizador_id=usuario.id,
 						nombre=form.nombre.data,
 						fecha=form.fecha.data,
-						descripcion=form.descripcion.data)
+						descripcion=form.descripcion.data,
+						asistiran=0)
 		db_session.add(evento)
 		db_session.commit()
 		return redirect(url_for('perfil'))
