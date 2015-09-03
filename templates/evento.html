@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+  
+{% block content %}
+  <h2>{{ evento.nombre }}</h2>
+  <div class="jumbo">
+	 	<h3></h3>
+		  {% if evento.descripcion %}
+		    <p >{{evento.descripcion}}</p>
+		  {% endif %}
+		  <p>Fecha: {{evento.fecha}}</p>
+		  <p>Asistiran: {{evento.asistiran}}</p>
+	  
+  </div>
+  
+  <div class="pull-right"><button type="submit" class="btn btn-default"><a href="{{ url_for('perfil') }}">Volver</button></div>
+{% endblock %}
