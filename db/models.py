@@ -54,6 +54,6 @@ class Evento(Base):
 
 
 if __name__ == '__main__':
-	os.environ.setdefault("DJANGO_SETTINGS_MODULE", "dbsettings")
-	session = Session()
+	#os.environ.setdefault("DJANGO_SETTINGS_MODULE", "dbsettings")
+	#session = Session()
 	Base.metadata.create_all(engine)

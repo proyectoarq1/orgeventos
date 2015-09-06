@@ -46,8 +46,6 @@ def nuevo_evento():
 	db_session = Session()
 	usuario = db_session.query(Usuario).filter_by(id=session['usuario_id']).first()
 	if request.method == 'POST' and form.validate():
-		print form.data
-		print form.nombre
 		evento = Evento(organizador=usuario.nombre,
 						organizador_id=usuario.id,
 						nombre=form.nombre.data,
@@ -72,7 +70,6 @@ def perfil():
   usuario = db_session.query(Usuario).filter_by(id=session['usuario_id']).first()
   eventos_usuario = db_session.query(Evento).filter_by(organizador_id=session['usuario_id']).all()
   eventos = []
-  print eventos_usuario
   for e in eventos_usuario:
   	eventos.append(e)
 

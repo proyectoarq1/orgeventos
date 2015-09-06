@@ -7,7 +7,7 @@
   <div class="jumbo">
 	 <form method=post action="/nuevo_evento">
     <dl>
-      {{ render_field(form.nombre) }}
+      {{ render_field(form.nombre,class='simple') }}
       {{ render_field(form.fecha) }}
       {{ render_field(form.descripcion) }}
     </dl>
