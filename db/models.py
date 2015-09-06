@@ -15,7 +15,10 @@ import dbsettings
 from flask.ext.social import Social
 from flask.ext.social.datastore import SQLAlchemyConnectionDatastore
 
-engine = create_engine(URL(**dbsettings.DATABASE))
+
+url = os.getenv('DATABASE_URL', URL(**dbsettings.DATABASE))
+engine = create_engine(url)
+
 
 Session = sessionmaker(bind=engine)
 Base = declarative_base()
