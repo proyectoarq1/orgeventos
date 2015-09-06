@@ -22,3 +22,4 @@ requests==2.7.0
 SQLAlchemy==1.0.8
 Werkzeug==0.10.4
 WTForms==2.0.2
+psycopg2
