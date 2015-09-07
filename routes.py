@@ -4,6 +4,7 @@ from db.models import Session, Usuario, Evento
 from formularios.evento_form import EventoForm
 import datetime
 from flask import request, redirect, url_for, session
+import os
 
  
 app = Flask(__name__)      
@@ -86,5 +87,9 @@ def profile():
         facebook_conn=social.facebook.get_connection())
  
 if __name__ == '__main__':
+
+  port = os.getenv('PORT', '5000')
   app.secret_key = 'super secret key'
-  app.run(debug=True)
+
+
+  app.run(port=int(port),debug=True)
