@@ -38,6 +38,16 @@ header h1.logo:hover {
   width: 940px;
   margin: 0 auto;
 }
+
+input    {
+width:375px;
+display:block;
+border: 1px solid #999;
+height: 25px;
+-webkit-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+-moz-box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
+}
  
 div.jumbo {
   padding: 10px 0 30px 0;

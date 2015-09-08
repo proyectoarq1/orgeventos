@@ -80,9 +80,9 @@ if __name__ == '__main__':
 
   print "esta porqueria anda"
   port = os.getenv('PORT', '5000')
-  host = os.getenv('HOST', '"0.0.0.0"')
+
   app.secret_key = 'super secret key'
   print "holaaaaaaaaaaaaaaaaa"
-  print host
 
-  app.run(host=host,port=int(port),debug=True)
+
+  app.run(port=int(port),debug=True)
