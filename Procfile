@@ -1,1 +1,1 @@
-web python routes.py
+web: python db/models.py; python routes.py

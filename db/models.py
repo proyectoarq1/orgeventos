@@ -30,6 +30,26 @@ class Usuario(Base):
 	nombre_usuario_facebook= Column(String(500))
 	organizador = relationship("Evento", backref="usuario")
 
+	def asignar_evento(self,form):
+		db_session = Session()
+		evento = Evento(organizador=self.nombre,
+						organizador_id=self.id,
+						nombre=form.nombre.data,
+						fecha=form.fecha.data,
+						descripcion=form.descripcion.data,
+						asistiran=0)
+		db_session.add(evento)
+		db_session.commit()
+
+	def obtener_eventos_asignados(self):
+		eventos_usuario = Session().query(Evento).filter_by(organizador_id=self.id).all()
+		eventos = []
+		for e in eventos_usuario:
+		  eventos.append(e)
+		return eventos
+
+
+
 class Evento(Base):
 	__tablename__ = 'evento'
 	id = Column(Integer, primary_key=True)
@@ -59,4 +79,6 @@ class Evento(Base):
 if __name__ == '__main__':
 	#os.environ.setdefault("DJANGO_SETTINGS_MODULE", "dbsettings")
 	#session = Session()
+	print "esta porqueria de base se acciono?"
 	Base.metadata.create_all(engine)
+	print "aca llego?"
