@@ -16,6 +16,8 @@ def hacer_usuario_y_ejemplo():
 	db_session = Session()
 	usuario = Usuario(nombre="Cosme Fulanito")
 	db_session.add(usuario)
+	db_session.commit()
+	print usuario.id
 	evento1 = Evento(organizador=usuario.nombre,
 					nombre="Evento uno",
 					descripcion="Me gustaria poder organizar una juntada", 
@@ -28,6 +30,7 @@ def hacer_usuario_y_ejemplo():
 					fecha=datetime.date.today(), 
 					asistiran=0, 
 					organizador_id=usuario.id)
+	print evento1.organizador_id
 	db_session.add(evento1)
 	db_session.add(evento2)
 	db_session.commit()
@@ -39,40 +42,27 @@ def home():
   hacer_usuario_y_ejemplo()
   return render_template('home.html',usuario=session['usuario_id'])
 
-
-
 @app.route('/nuevo_evento', methods=['GET', 'POST'])
 def nuevo_evento():
 	form = EventoForm(request.form)
 	db_session = Session()
 	usuario = db_session.query(Usuario).filter_by(id=session['usuario_id']).first()
 	if request.method == 'POST' and form.validate():
-		evento = Evento(organizador=usuario.nombre,
-						organizador_id=usuario.id,
-						nombre=form.nombre.data,
-						fecha=form.fecha.data,
-						descripcion=form.descripcion.data,
-						asistiran=0)
-		db_session.add(evento)
-		db_session.commit()
+		usuario.asignar_evento(form)
 		return redirect(url_for('perfil'))
-	return render_template('nuevo_evento.html', usuario=usuario, form=form)
+	return render_template('nuevo_evento.html', form=form)
 
-@app.route('/evento')
-def evento():
+@app.route('/evento/<evento>')
+def evento(evento):
 	db_session = Session()
-	id_evento = request.args.get('evento')
-	evento = db_session.query(Evento).filter_by(id=id_evento).first()
+	evento = db_session.query(Evento).filter_by(id=evento).first()
 	return render_template('evento.html',evento=evento)
 
 @app.route('/perfil')
 def perfil():
   db_session = Session()
   usuario = db_session.query(Usuario).filter_by(id=session['usuario_id']).first()
-  eventos_usuario = db_session.query(Evento).filter_by(organizador_id=session['usuario_id']).all()
-  eventos = []
-  for e in eventos_usuario:
-  	eventos.append(e)
+  eventos = usuario.obtener_eventos_asignados()
 
   return render_template('perfil.html', usuario=usuario, eventos=eventos)
 
@@ -88,6 +78,7 @@ def profile():
  
 if __name__ == '__main__':
 
+  print "esta porqueria anda"
   port = os.getenv('PORT', '5000')
   app.secret_key = 'super secret key'
 
