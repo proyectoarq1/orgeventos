@@ -7,7 +7,7 @@
 		  {% for evento_usuario in eventos %}
 		    <p><a href="{{ url_for('evento', evento=evento_usuario.id) }}"> {{ evento_usuario.nombre }}</a></p>
 		  {% endfor %}
-		  <p><a href="{{ url_for('nuevo_evento', _method='GET', usuario=usuario) }}">Crear nuevo evento</a></p>
+		  <p><a href="{{ url_for('nuevo_evento', _method='GET') }}">Crear nuevo evento</a></p>
   </div>
   
 {% endblock %}
