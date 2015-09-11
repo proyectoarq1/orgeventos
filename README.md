@@ -1,4 +1,3 @@
-# Para correr la aplicación localmente
 
 ## Requisitos
 
