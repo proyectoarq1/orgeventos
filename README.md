@@ -14,8 +14,8 @@ https://glacial-scrubland-6807.herokuapp.com/
 
 + Clonar el proyecto mediante git o bien bajar el código de la aplicación  
 
-+```
-+pip install requirements.txt
-+python db/models.py
-+python routes.py
-+```
+```
+pip install requirements.txt
+python db/models.py
+python routes.py
+```
