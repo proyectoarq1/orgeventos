@@ -1,13 +1,13 @@
-## Para correr la aplicación localmente
+# Para correr la aplicación localmente
 
-# Requisitos
+## Requisitos
 
 + Base de datos MySQL
 + Python 2.7.10
 + pip 
 + git
 
-# Pasos
+## Pasos
 
 + Clonar el proyecto mediante git (o bien descargar el código de la aplicación)  
 
