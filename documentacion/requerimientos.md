@@ -2,10 +2,25 @@
 
 ##No negociables:
 
-*Servicio de log in
-	*Poder crear usuarios
-	*Los usuarios pueden loguearse
-	*Cambiar contraseña
+
+<ul>
+  <li>Servicio de log in
+  <ul>
+	  <li>Poder crear usuarios</li>
+	  <li>Los usuarios pueden loguearse</li>
+	  <li>Cambiar contraseña</li>
+  </ul>
+  </li>
+  <li>Creación y modificación de eventos por parte de un usuario
+  <ul>
+	  <li>Poder crear usuarios</li>
+	  <li>Los usuarios pueden loguearse</li>
+	  <li>Cambiar contraseña</li>
+  </ul>
+  </li>
+  <li>third item</li>
+</ul>
+
 *Creación y modificación de eventos por parte de un usuario
   *Poder crear un evento con la siguiente información:
     *Fecha
@@ -35,17 +50,6 @@ Negociables:
 
 
 
-<ol>
-  <li>first item</li>
-  <li>second item      <!-- Look, the closing </li> tag is not placed here! -->
-    <ol>
-      <li>second item first subitem</li>
-      <li>second item second subitem</li>
-      <li>second item third subitem</li>
-    </ol>
-  </li>                <!-- Here is the closing </li> tag -->
-  <li>third item</li>
-</ol>
 
 
 
