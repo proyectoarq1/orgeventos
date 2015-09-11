@@ -16,6 +16,11 @@ git clone https://github.com/proyectoarq1/orgeventos.git
 ```
 
 + Posicionarse en la carpeta raiz del proyecto
+
+```
+cd orgeventos/
+```
+
 + Instalar dependencias del proyecto
 
 ```
