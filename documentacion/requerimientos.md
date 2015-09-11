@@ -2,11 +2,11 @@
 
 ##No negociables:
 
--Servicio de log in
-  Poder crear usuarios
-  Los usuarios pueden loguearse
-  Cambiar contraseña
--Creación y modificación de eventos por parte de un usuario
+*Servicio de log in
+	*Poder crear usuarios
+	*Los usuarios pueden loguearse
+	*Cambiar contraseña
+*Creación y modificación de eventos por parte de un usuario
   *Poder crear un evento con la siguiente información:
     *Fecha
     *Nombre del evento
