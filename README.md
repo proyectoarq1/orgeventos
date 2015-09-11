@@ -15,6 +15,7 @@
 git clone https://github.com/proyectoarq1/orgeventos.git
 ```
 
++ Posicionarse en la carpeta raiz del proyecto
 + Instalar dependencias del proyecto
 
 ```
@@ -24,7 +25,7 @@ pip install requirements.txt
 + Crear el esquema en la base de datos
 
 ```
-python routes.py
+python db/models.py
 ```
 
 + Levantar la aplicación
