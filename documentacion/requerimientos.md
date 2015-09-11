@@ -29,8 +29,8 @@
   	<ul>
 	  <li>Para todos los campos descritos en el ítem anterior</li>
 	  <li>Envío de notificaciones a los usuarios invitados al evento</li>
-	  <li>Un invitado pueda marcar un evento como “asistiré”</li>
   </ul></li>
+  <li>Un invitado pueda marcar un evento como “asistiré”</li>
 </ul>
 
 
