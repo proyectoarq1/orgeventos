@@ -12,7 +12,7 @@ class Adapter():
 	def obtener_eventos_asignados(self, usuario_id):
 		pass
 
-	def get_evento(self,evento_id):
+	def get_evento(self,user_id,evento_id):
 		pass
 
 	def crear_evento(self, usuario_id, form):
@@ -28,7 +28,6 @@ class MongoDBAdapter(Adapter):
 	db = client['prueba']
 
 	def get_usuario(self,usuario_id):
-		
 		usuario = db.usuarios.find_one({"id": usuario_id})
 		return usuario
 		
@@ -37,9 +36,14 @@ class MongoDBAdapter(Adapter):
 		usuario = db.usuarios.find_one({"_id": usuario_id})
 		return usuario["eventos"]
 
-	def get_evento(self,evento_id):
+	def get_evento(self,user_id,evento_id):
 		evento = db.eventos.find_one({"_id": evento_id})
 		return evento
+
+	def crear_usuario(self, usuario_nombre):
+		usuario = self.get_usuario(usuario_id)
+		evento = {"nombre":usuario_nombre}
+		db.usuarios.insert_one(evento)
 
 	def crear_evento(self, usuario_id, form):
 		usuario = self.get_usuario(usuario_id)
@@ -49,7 +53,7 @@ class MongoDBAdapter(Adapter):
 				  "fecha":form.fecha.data,
 				  "descripcion":form.descripcion.data,
 				  "asistiran":0}
-		db.eventos.insert_one(evento)
+		#db.eventos.insert_one(evento).inserted_id
 		db.usuarios.update({"_id": usuario_id},{'$push': {'eventos': {evento}}})
 
 
@@ -69,7 +73,7 @@ class MySQLAdapter(Adapter):
 		usuario = Session().query(Usuario).filter_by(id=usuario_id).first()
 		return self.to_json(usuario)
 
-	def get_evento(self,evento_id):
+	def get_evento(self,user_id,evento_id):
 		evento = Session().query(Evento).filter_by(id=evento_id).first()
 		return self.to_json(evento)
 

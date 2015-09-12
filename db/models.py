@@ -27,8 +27,6 @@ class Usuario(Base):
 	__tablename__ = 'usuario'
 	id = Column(Integer, primary_key=True)
 	nombre = Column(String(500))
-	nombre_usuario_facebook= Column(String(500))
-	organizador = relationship("Evento", backref="usuario")
 
 class Evento(Base):
 	__tablename__ = 'evento'
