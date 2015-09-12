@@ -2,10 +2,10 @@ from flask import Flask, render_template
 from flask_login import login_required
 from db.models import Session, Usuario, Evento
 from formularios.evento_form import EventoForm
+from db.adapter import adapter
 import datetime
 from flask import request, redirect, url_for, session
 import os
-
  
 app = Flask(__name__)      
  
@@ -44,45 +44,28 @@ def home():
 
 @app.route('/nuevo_evento', methods=['GET', 'POST'])
 def nuevo_evento():
+	
 	form = EventoForm(request.form)
-	db_session = Session()
-	usuario = db_session.query(Usuario).filter_by(id=session['usuario_id']).first()
 	if request.method == 'POST' and form.validate():
-		usuario.asignar_evento(form)
+		adapter.crear_evento(session['usuario_id'],form)
 		return redirect(url_for('perfil'))
 	return render_template('nuevo_evento.html', form=form)
 
-@app.route('/evento/<evento>')
-def evento(evento):
-	db_session = Session()
-	evento = db_session.query(Evento).filter_by(id=evento).first()
+@app.route('/evento/<evento_id>')
+def evento(evento_id):	
+	evento = adapter.get_evento(evento_id)
 	return render_template('evento.html',evento=evento)
 
 @app.route('/perfil')
 def perfil():
-  db_session = Session()
-  usuario = db_session.query(Usuario).filter_by(id=session['usuario_id']).first()
-  eventos = usuario.obtener_eventos_asignados()
+  usuario = adapter.get_usuario(session['usuario_id'])
+  eventos = adapter.obtener_eventos_asignados(session['usuario_id'])
 
   return render_template('perfil.html', usuario=usuario, eventos=eventos)
 
-
-
-@app.route('/profile')
-@login_required
-def profile():
-    return render_template(
-        'profile.html',
-        content='Profile Page',
-        facebook_conn=social.facebook.get_connection())
  
 if __name__ == '__main__':
-
-  print "esta porqueria anda"
   port = os.getenv('PORT', '5000')
 
   app.secret_key = 'super secret key'
-  print "holaaaaaaaaaaaaaaaaa"
-
-
   app.run(host='0.0.0.0',port=int(port),debug=True)
