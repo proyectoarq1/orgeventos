@@ -1,6 +1,8 @@
 from models import Usuario, Session, Evento
+from alchemy_encoder import AlchemyEncoder
 import dbsettings
 from pymongo import MongoClient
+import json, os
 
 class Adapter():
 
@@ -18,6 +20,8 @@ class Adapter():
 
 
 class MongoDBAdapter(Adapter):
+
+	#mongod --config c:\mongodb\mongo.config
 	
 	url = dbsettings.MONGO_DATABASE["url_conection"]
 	client = MongoClient(url)
@@ -51,26 +55,29 @@ class MongoDBAdapter(Adapter):
 
 class MySQLAdapter(Adapter):
 
+	def to_json(self, db_object):
+		return json.loads(json.dumps(db_object, cls=AlchemyEncoder))
+
  	def obtener_eventos_asignados(self, usuario_id):
 		eventos_usuario = Session().query(Evento).filter_by(organizador_id=usuario_id).all()
 		eventos = []
 		for e in eventos_usuario:
-		  eventos.append(e)
+		  eventos.append(self.to_json(e))
 		return eventos
 
 	def get_usuario(self,usuario_id):
 		usuario = Session().query(Usuario).filter_by(id=usuario_id).first()
-		return usuario
+		return self.to_json(usuario)
 
 	def get_evento(self,evento_id):
 		evento = Session().query(Evento).filter_by(id=evento_id).first()
-		return evento
+		return self.to_json(evento)
 
 	def crear_evento(self, usuario_id, form):
 		db_session = Session()
 		usuario = self.get_usuario(usuario_id)
-		evento = Evento(organizador=usuario.nombre,
-						organizador_id=usuario.id,
+		evento = Evento(organizador=usuario["nombre"],
+						organizador_id=usuario_id,
 						nombre=form.nombre.data,
 						fecha=form.fecha.data,
 						descripcion=form.descripcion.data,
@@ -78,20 +85,36 @@ class MySQLAdapter(Adapter):
 		db_session.add(evento)
 		db_session.commit()
 
+db_seleccionada = os.getenv('DATABASE_TO_USE', 'MySQL')
 
-adapter = MySQLAdapter()
+if db_seleccionada=='MySQL':
+	adapter = MySQLAdapter()
+else:
+	adapter = MongoDBAdapter()
 
 if __name__ == '__main__':
 
-	url = dbsettings.MONGO_DATABASE["url_conection"]
-	client = MongoClient(url)
-	db = client['prueba']
-	post = {"author": "Mike", "hola":[]}
-	posts = db.posts
-	post_id = posts.insert_one(post).inserted_id
-	a=posts.find_one({"_id": post_id})
-	print a
-	posts.update({"_id": post_id},{'$push': {'hola': {'name': 'item5'}}})
-	posts.update({"_id": post_id},{'$push': {'hola': {'name': 'item333','name': 'item33'}}})
-	a=posts.find_one({"_id": post_id})
-	print a
+	if 1==0:
+		url = dbsettings.MONGO_DATABASE["url_conection"]
+		client = MongoClient(url)
+		db = client['prueba']
+		post = {"author": "Mike", "hola":[]}
+		posts = db.posts
+		post_id = posts.insert_one(post).inserted_id
+		a=posts.find_one({"_id": post_id})
+		print a
+		posts.update({"_id": post_id},{'$push': {'hola': {'name': 'item5'}}})
+		posts.update({"_id": post_id},{'$push': {'hola': {'name': 'item333','name': 'item33'}}})
+		a=posts.find_one({"_id": post_id})
+		print a["hola"]
+		print type(a)
+
+
+	usuario = Session().query(Usuario).first()
+
+	pa= json.loads(json.dumps(usuario, cls=AlchemyEncoder))
+
+	print pa
+	print pa["nombre"]
+	print type(pa)
+
