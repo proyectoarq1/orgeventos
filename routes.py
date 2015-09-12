@@ -13,28 +13,22 @@ app.config['SECURITY_POST_LOGIN'] = '/profile'
 
 
 def hacer_usuario_y_ejemplo():
-	db_session = Session()
-	usuario = Usuario(nombre="Cosme Fulanito")
-	db_session.add(usuario)
-	db_session.commit()
-	print usuario.id
-	evento1 = Evento(organizador=usuario.nombre,
-					nombre="Evento uno",
-					descripcion="Me gustaria poder organizar una juntada", 
-					fecha=datetime.date.today(), 
-					asistiran=0, 
-					organizador_id=usuario.id)
-	evento2 = Evento(organizador=usuario.nombre,
-					nombre="Evento dos",
-					descripcion="Hagamos tambien otra juntada mas", 
-					fecha=datetime.date.today(), 
-					asistiran=0, 
-					organizador_id=usuario.id)
-	print evento1.organizador_id
-	db_session.add(evento1)
-	db_session.add(evento2)
-	db_session.commit()
-	session['usuario_id'] = usuario.id
+	
+	usuario = adapter.crear_usuario("Cosme Fulanito")
+	usuario_id = adapter.get_id(usuario)
+
+	form_evento1 = EventoForm(nombre="Evento uno", fecha=None, descripcion="Me gustaria poder organizar una juntada")
+	form_evento2 = EventoForm(nombre="Evento dos", fecha=None, descripcion="Hagamos tambien otra juntada mas")
+
+	e1 = adapter.crear_evento(usuario_id,form_evento1)
+	e2 = adapter.crear_evento(usuario_id,form_evento2)
+
+	print usuario
+	print e1
+	print e2
+
+	
+	session['usuario_id'] = usuario_id
 
 
 @app.route('/')
@@ -69,3 +63,4 @@ if __name__ == '__main__':
 
   app.secret_key = 'super secret key'
   app.run(host='0.0.0.0',port=int(port),debug=True)
+  #hacer_usuario_y_ejemplo()
