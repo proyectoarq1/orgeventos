@@ -5,7 +5,7 @@
   <div class="jumbo">
 		  <h3>Lista de eventos propios</h3>
 		  {% for evento_usuario in eventos %}
-		    <p><a href="{{ url_for('evento', evento_id=evento_usuario.id) }}"> {{ evento_usuario.nombre }}</a></p>
+		    <p><a href="{{ url_for('evento', evento_id=evento_usuario._id) }}"> {{ evento_usuario.nombre }}</a></p>
 		  {% endfor %}
 		  <p><a href="{{ url_for('nuevo_evento', _method='GET') }}">Crear nuevo evento</a></p>
   </div>

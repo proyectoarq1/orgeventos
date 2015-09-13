@@ -4,6 +4,7 @@ import dbsettings
 from pymongo import MongoClient
 import json, os
 from bson.objectid import ObjectId
+from datetime import date
 
 class Adapter():
 
@@ -34,7 +35,8 @@ class MongoDBAdapter(Adapter):
 	db = client['prueba']
 
 	def get_id(self, objecto):
-		return objecto["_id"]
+		print str(objecto["_id"])
+		return str(objecto["_id"])
 
 	def get_usuario(self,usuario_id):
 		usuario = self.db.usuarios.find_one({"_id": ObjectId(usuario_id)})
@@ -58,8 +60,8 @@ class MongoDBAdapter(Adapter):
 		usuario = self.get_usuario(usuario_id)
 		evento = {"organizador":usuario["nombre"],
 				  "organizador_id":usuario["_id"],
-				  "nombre":form.nombre.data,
-				  "fecha":form.fecha.data,
+				  "nombre": form.nombre.data,
+				  "fecha":str(form.fecha.data),
 				  "descripcion":form.descripcion.data,
 				  "asistiran":0}
 		self.db.eventos.insert_one(evento)
@@ -113,7 +115,7 @@ class MySQLAdapter(Adapter):
 db_seleccionada = os.getenv('DATABASE_TO_USE', 'MySQL')
 
 if db_seleccionada=='MySQL':
-	adapter = MongoDBAdapter()
+	adapter = MySQLAdapter()
 else:
 	adapter = MongoDBAdapter()
 

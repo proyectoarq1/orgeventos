@@ -40,6 +40,7 @@ def home():
 def nuevo_evento():
 	
 	form = EventoForm(request.form)
+	print form
 	if request.method == 'POST' and form.validate():
 		adapter.crear_evento(session['usuario_id'],form)
 		return redirect(url_for('perfil'))
