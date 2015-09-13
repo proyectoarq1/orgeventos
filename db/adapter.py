@@ -112,12 +112,12 @@ class MySQLAdapter(Adapter):
 		db_session.commit()
 		return evento
 
-db_seleccionada = os.getenv('DATABASE_TO_USE', 'MySQL')
+db_seleccionada = os.getenv('TIPO_BASE_DE_DATOS', 'MySQL')
 
-if db_seleccionada=='MySQL':
-	adapter = MySQLAdapter()
-else:
+if db_seleccionada=='MongoDB':
 	adapter = MongoDBAdapter()
+else:
+	adapter = MySQLAdapter()
 
 if __name__ == '__main__':
 
