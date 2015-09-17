@@ -9,3 +9,5 @@ deploy:
   api_key: glacial-scrubland-6807
   app:
     master: orgeventos
+# command to run tests
+script: nosetests
