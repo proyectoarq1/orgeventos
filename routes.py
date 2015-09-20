@@ -23,10 +23,6 @@ def hacer_usuario_y_ejemplo():
 	e1 = adapter.crear_evento(usuario_id,form_evento1)
 	e2 = adapter.crear_evento(usuario_id,form_evento2)
 
-	print usuario
-	print e1
-	print e2
-
 	
 	session['usuario_id'] = usuario_id
 
@@ -40,7 +36,6 @@ def home():
 def nuevo_evento():
 	
 	form = EventoForm(request.form)
-	print form
 	if request.method == 'POST' and form.validate():
 		adapter.crear_evento(session['usuario_id'],form)
 		return redirect(url_for('perfil'))

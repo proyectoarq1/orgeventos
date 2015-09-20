@@ -35,7 +35,6 @@ class MongoDBAdapter(Adapter):
 	db = client['prueba']
 
 	def get_id(self, objecto):
-		print str(objecto["_id"])
 		return str(objecto["_id"])
 
 	def get_usuario(self,usuario_id):
