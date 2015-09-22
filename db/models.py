@@ -9,6 +9,7 @@ from sqlalchemy import ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, DateTime, Float
 from sqlalchemy.engine.url import URL
+from sqlalchemy_utils import database_exists, create_database
 
 import dbsettings
 
@@ -18,6 +19,12 @@ from flask.ext.social.datastore import SQLAlchemyConnectionDatastore
 
 url = os.getenv('DATABASE_URL', URL(**dbsettings.DATABASE))
 engine = create_engine(url)
+
+if not database_exists(engine.url):
+	print "INFO: Creating database ", dbsettings.DATABASE["database"]
+	create_database(engine.url)
+
+#print(database_exists(engine.url))
 
 
 Session = sessionmaker(bind=engine)
