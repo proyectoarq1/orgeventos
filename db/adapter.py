@@ -5,21 +5,29 @@ from pymongo import MongoClient
 import json, os
 from bson.objectid import ObjectId
 from datetime import date
+from abc import ABCMeta, abstractmethod
 
 class Adapter():
 
+	__metaclass__ = ABCMeta
+
+	@abstractmethod
 	def get_usuario(self,usuario_id):
 		pass
 
+	@abstractmethod
 	def obtener_eventos_asignados(self, usuario_id):
 		pass
 
+	@abstractmethod
 	def get_evento(self,user_id,evento_id):
 		pass
 
+	@abstractmethod
 	def crear_evento(self, usuario_id, form):
 		pass
 
+	@abstractmethod
 	def get_id(self, objecto):
 		pass
 
@@ -120,13 +128,15 @@ else:
 
 if __name__ == '__main__':
 
+	#adapter = Adapter()
+
 	adapter = MongoDBAdapter()
 	usuario = adapter.crear_usuario("Juan")
 	print usuario
 
-	evento = adapter.crear_evento(usuario["_id"],None)
-	evento = adapter.crear_evento(usuario["_id"],None)
-	print evento
+	#evento = adapter.crear_evento(usuario["_id"],None)
+	#evento = adapter.crear_evento(usuario["_id"],None)
+	#print evento
 	print "----------"
 	print "----------"
 	print "----------"
