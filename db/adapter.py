@@ -138,6 +138,4 @@ if __name__ == '__main__':
 	#evento = adapter.crear_evento(usuario["_id"],None)
 	#print evento
 	print "----------"
-	print "----------"
-	print "----------"
 	print adapter.get_usuario(usuario["_id"])
