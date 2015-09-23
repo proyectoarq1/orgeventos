@@ -12,7 +12,15 @@ class Adapter():
 	__metaclass__ = ABCMeta
 
 	@abstractmethod
+	def crear_usuario(self, usuario_nombre):
+		pass
+
+	@abstractmethod
 	def get_usuario(self,usuario_id):
+		pass
+
+	@abstractmethod
+	def borrar_usuario(self,usuario_id):
 		pass
 
 	@abstractmethod
@@ -52,7 +60,11 @@ class MongoDBAdapter(Adapter):
 	def get_usuario(self,usuario_id):
 		usuario = self.db.usuarios.find_one({"_id": ObjectId(usuario_id)})
 		return usuario
-		
+	
+	def borrar_usuario(self,usuario_id):
+		self.db.usuarios.remove({"_id": ObjectId(usuario_id)})
+		self.db.eventos.remove({'organizador_id': ObjectId(usuario_id)})
+
 
 	def obtener_eventos_asignados(self, usuario_id):
 		usuario = self.get_usuario(usuario_id)
@@ -94,8 +106,17 @@ class MySQLAdapter(Adapter):
 	def to_json(self, db_object):
 		return json.loads(json.dumps(db_object, cls=AlchemyEncoder))
 
+	def borrar_usuario(self,usuario_id):
+		db_session = self.session
+		usuario = db_session.query(Usuario).filter_by(id=usuario_id).first()
+		eventos_usuario = db_session.query(Evento).filter_by(organizador_id=usuario_id).all()
+		for e in eventos_usuario:
+			db_session.delete(e)
+		db_session.delete(usuario)		
+		db_session.commit()	
+
  	def obtener_eventos_asignados(self, usuario_id):
-		eventos_usuario = selfs.session.query(Evento).filter_by(organizador_id=usuario_id).all()
+		eventos_usuario = self.session.query(Evento).filter_by(organizador_id=usuario_id).all()
 		eventos = []
 		for e in eventos_usuario:
 		  eventos.append(self.to_json(e))
@@ -127,9 +148,9 @@ class MySQLAdapter(Adapter):
 		usuario = self.get_usuario(usuario_id)
 		evento = Evento(organizador=usuario["nombre"],
 						organizador_id=usuario_id,
-						nombre="Evento uno",#form.nombre.data,
-						fecha=None,#form.fecha.data,
-						descripcion="Me gustaria poder organizar una juntada",#form.descripcion.data,
+						nombre=form.nombre.data,
+						fecha=form.fecha.data,
+						descripcion=form.descripcion.data,
 						asistiran=0)
 		db_session.add(evento)
 		db_session.commit()
@@ -146,22 +167,28 @@ if __name__ == '__main__':
 
 	#adapter = Adapter()
 
-	adapter = MySQLAdapter()
+	adapter = MongoDBAdapter()
 	usuario = adapter.crear_usuario("Juan")
 	print usuario
+	usuario_id = adapter.get_id(usuario)
 
 	#evento = adapter.crear_evento(usuario["_id"],None)
 	#evento = adapter.crear_evento(usuario["_id"],None)
 	#print evento
 
 	print "----------"
-	print adapter.get_usuario(usuario.id)
-	print "__________CON EVENTO___________"
-	e = adapter.crear_evento(usuario.id,None)
-	ee=adapter.get_evento(usuario.id,e.id)
+	print adapter.get_usuario(usuario_id)
+	print "__________CON EVENTO Y USUARIO___________"
+	e = adapter.crear_evento(usuario_id,None)
+	evento_id = adapter.get_id(e)
+	ee=adapter.get_evento(usuario_id,evento_id)
 	print ee
-	print "__________SIN EVENTO___________"
-	adapter.borrar_evento(usuario.id, e.id)
-	ee=adapter.get_evento(usuario.id,e.id)
+	print "__________SIN EVENTO Y SIN USUARIO___________"
+	#adapter.borrar_evento(usuario_id, evento_id)
+	adapter.borrar_usuario(usuario_id)
+	ee=adapter.get_evento(usuario_id,evento_id)
+	u=adapter.get_usuario(usuario_id)
 	print ee
+	print u
+
 
