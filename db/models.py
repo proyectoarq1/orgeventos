@@ -24,9 +24,9 @@ engine = create_engine(url)
 print "*********************************** "
 print engine.url
 
-#if not database_exists(engine.url):
-#	print "INFO: Creating database ", dbsettings.DATABASE["database"]
-#	create_database(engine.url)
+if os.getenv('DATABASE_URL') and not database_exists(engine.url):
+	print "INFO: Creating database ", dbsettings.DATABASE["database"]
+	create_database(engine.url)
 
 #print(database_exists(engine.url))
 
