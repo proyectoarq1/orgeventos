@@ -18,7 +18,11 @@ import dbsettings
 
 
 url = os.getenv('DATABASE_URL', URL(**dbsettings.DATABASE))
+print "*********************************** "
+print url
 engine = create_engine(url)
+print "*********************************** "
+print engine.url
 
 if not database_exists(engine.url):
 	print "INFO: Creating database ", dbsettings.DATABASE["database"]
