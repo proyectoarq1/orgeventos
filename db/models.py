@@ -13,14 +13,18 @@ from sqlalchemy_utils import database_exists, create_database
 
 import dbsettings
 
-from flask.ext.social import Social
-from flask.ext.social.datastore import SQLAlchemyConnectionDatastore
+#from flask.ext.social import Social
+#from flask.ext.social.datastore import SQLAlchemyConnectionDatastore
 
 
 url = os.getenv('DATABASE_URL', URL(**dbsettings.DATABASE))
+print "*********************************** "
+print url
 engine = create_engine(url)
+print "*********************************** "
+print engine.url
 
-if not database_exists(engine.url):
+if (os.getenv('DATABASE_URL') is None) and not database_exists(engine.url):
 	print "INFO: Creating database ", dbsettings.DATABASE["database"]
 	create_database(engine.url)
 
