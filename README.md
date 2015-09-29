@@ -2,7 +2,6 @@
 ## Requisitos
 
 + MySQL o MongoDB local
-+ Si la opccion es MySQL, crear base de datos 'prueba' con usurio root y password root
 + Python 2.7.10
 + pip 
 + git
@@ -34,7 +33,7 @@ pip install requirements.txt
 export TIPO_BASE_DE_DATOS='MongoDB'
 ```
 
-+Si la base elegida es MySQL, crear el esquema en la base de datos
++ Si la base elegida es MySQL, crear el esquema en la base de datos ejecutando:
 
 ```
 python db/models.py
