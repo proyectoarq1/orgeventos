@@ -203,8 +203,6 @@ class MySQLAdapter(Adapter):
 		db_session = self.session
 		invitaciones_evento = self.session.query(Invitacion).filter_by(evento_id=evento_id).all()
 		usuarios_invitados = []
-		print "sasasasasasasasaaaaaaaaaaa"
-		print invitaciones_evento
 		for invitacion in invitaciones_evento:
 			usuarios_invitados.append(invitacion.usuario_id)
 		return usuarios_invitados
