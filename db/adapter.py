@@ -25,6 +25,10 @@ class Adapter():
 		pass
 
 	@abstractmethod
+	def get_usuarios(self):
+		pass
+
+	@abstractmethod
 	def borrar_usuario(self,usuario_id):
 		pass
 
@@ -78,6 +82,9 @@ class MongoDBAdapter(Adapter):
 	def get_usuario(self,usuario_id):
 		usuario = self.db.usuarios.find_one({"_id": ObjectId(usuario_id)})
 		return usuario
+
+	def get_usuarios(self):
+		return self.db.usuarios.find()
 	
 	def borrar_usuario(self,usuario_id):
 		self.db.usuarios.remove({"_id": ObjectId(usuario_id)})
@@ -153,6 +160,13 @@ class MySQLAdapter(Adapter):
 	def get_usuario(self,usuario_id):
 		usuario = self.session.query(Usuario).filter_by(id=usuario_id).first()
 		return self.to_json(usuario)
+
+	def get_usuarios(self):
+		usuarios = []
+		usuarios_sql = Usuario.query.all()
+		for u in usuarios_sql:
+		  usuarios.append(self.to_json(u))
+		return usuarios
 
 	def borrar_usuario(self,usuario_id):
 		db_session = self.session
