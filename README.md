@@ -42,9 +42,10 @@ python db/models.py
 + Levantar la aplicación
 
 ```
-python routes.py
+python app.py
 ```
 
 ##Link a app en heroku:
 
 https://glacial-scrubland-6807.herokuapp.com/
+
