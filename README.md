@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/proyectoarq1/orgeventos.png?label=ready&title=Ready)](https://waffle.io/proyectoarq1/orgeventos)
 
 ## Requisitos
 
