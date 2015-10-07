@@ -6,7 +6,7 @@ import json, os
 from bson.objectid import ObjectId
 from datetime import date
 from abc import ABCMeta, abstractmethod
-from evento_form import EventoForm
+#from evento_form import EventoForm
 
 class Adapter():
 
@@ -258,13 +258,13 @@ if __name__ == '__main__':
 	#evento = adapter.crear_evento(usuario["_id"],None)
 	#print evento
 
-	form_evento1 = EventoForm(nombre="Evento uno", fecha=None, descripcion="Me gustaria poder organizar una juntada")
-	form_evento2 = EventoForm(nombre="Evento dos", fecha=None, descripcion="Hagamos tambien otra juntada mas")
+#	form_evento1 = EventoForm(nombre="Evento uno", fecha=None, descripcion="Me gustaria poder organizar una juntada")
+#	form_evento2 = EventoForm(nombre="Evento dos", fecha=None, descripcion="Hagamos tambien otra juntada mas")
 
 	
-	e1 = adapter.crear_evento(usuario_id,form_evento1)
+	e1 = adapter.crear_evento(usuario_id,None)#form_evento1)
 	evento_id1 = adapter.get_id(e1)
-	e2 = adapter.crear_evento(usuario_id,form_evento2)
+	e2 = adapter.crear_evento(usuario_id,None)#form_evento2)
 	evento_id2 = adapter.get_id(e2)
 	
 
