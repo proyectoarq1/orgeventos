@@ -9,8 +9,11 @@ def home(l):
 def perfil(l):
     l.client.get("/perfil")
 
+def nuevo_evento(l):
+    l.client.get("/nuevo_evento")
+
 class UserBehavior(TaskSet):
-    tasks = {home:10, perfil:5}
+    tasks = {home:1, perfil:1, nuevo_evento:1, perfil:2, nuevo_evento:1, home: 3}
 
     def on_start(self):
         #login(self)
