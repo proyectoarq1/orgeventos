@@ -1,16 +1,33 @@
-from flask import Flask, render_template
-from flask_login import login_required
-from db.models import Session, Usuario, Evento
+from flask import Flask, render_template, flash, abort 
+from flask.ext.login import LoginManager, login_user , logout_user , current_user , login_required
+
+from db.models import Session, Usuario, Evento, User
 from formularios.evento_form import EventoForm
 from db.adapter import adapter
 import datetime
 from flask import request, redirect, url_for, session
-import os
+import os, json
+import logging
+from logging.handlers import TimedRotatingFileHandler
  
 app = Flask(__name__)      
+
+app.config.from_object('config')
  
 app.config['SECURITY_POST_LOGIN'] = '/profile'
 
+formatter = logging.Formatter("[%(asctime)s] {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s")
+file_handler = TimedRotatingFileHandler(app.config['LOG_PATH'], when="D", backupCount=7)
+file_handler.setLevel(logging.DEBUG)
+file_handler.setFormatter(formatter)
+app.logger.addHandler(file_handler)
+ 
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+@login_manager.user_loader
+def load_user(user_id):
+  return adapter.get_user_by_id(user_id)
 
 def hacer_usuario_y_ejemplo():
 	
@@ -26,6 +43,40 @@ def hacer_usuario_y_ejemplo():
 	
 	session['usuario_id'] = usuario_id
 
+@app.route('/register' , methods=['GET','POST']) # siguiente|
+def register():
+  if request.method == 'GET':
+      return render_template('register.html')
+  username = request.form['username']
+  password = request.form['password']
+  email = request.form['email']
+  adapter.create_user(username, password, email)
+  flash('User successfully registered','success')
+  return redirect(url_for('login'))
+ 
+@app.route('/login',methods=['GET','POST'])
+def login():
+  session=Session()
+  if request.method == 'GET':
+      return render_template('login.html')
+  username = request.form['username']
+  password = request.form['password']
+  registered_user = session.query(User).filter_by(username=username,password=password).first()
+  if registered_user is None:
+    app.logger.error('login user  ')
+    flash('Username or Password is invalid' , 'error')
+    return redirect(url_for('login'))
+  app.logger.info('login user : ')
+  login_user(registered_user)
+  flash('Logged in successfully','success')
+  return redirect(request.args.get('next') or url_for('perfil'))
+
+@app.route('/logout')
+def logout():
+  app.logger.info('logout user  ')
+  logout_user()
+  #print current_user.is_authenticated
+  return redirect(url_for('home')) 
 
 @app.route('/')
 def home():
@@ -48,6 +99,8 @@ def evento(evento_id):
 
 @app.route('/perfil')
 def perfil():
+  flash(current_user.username)
+  app.logger.info('perfil page ')
   usuario = adapter.get_usuario(session['usuario_id'])
   eventos = adapter.obtener_eventos_asignados(session['usuario_id'])
 
@@ -58,5 +111,6 @@ if __name__ == '__main__':
   port = os.getenv('PORT', '5000')
 
   app.secret_key = 'super secret key'
+  app.logger.info('Run Application')
   app.run(host='0.0.0.0',port=int(port),debug=True)
   #hacer_usuario_y_ejemplo()

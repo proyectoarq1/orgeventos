@@ -1,7 +1,9 @@
 {% extends "layout.html" %}
   
 {% block content %}
-  <h2>Bienvenido, {{ usuario.nombre }}</h2>
+  {% if current_user.is_authenticated %}
+  	<h2>Bienvenido, {{ current_user.username }}</h2>
+  {% endif %}
   <div class="jumbo">
 		  <h3>Lista de eventos propios</h3>
 		  {% for evento_usuario in eventos %}
