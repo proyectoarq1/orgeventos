@@ -1,0 +1,22 @@
+from flask import Flask, render_template, flash, request, redirect, url_for, session, make_response
+from flask_restful import Resource
+from db.adapter import adapter
+from db.models import Session
+import os
+
+def doRegister():
+	session=Session()
+	username = request.form['username']
+	password = request.form['password']
+	email = request.form['email']
+	adapter.create_user(username, password, email)
+	flash('User successfully registered','success')
+
+class RegisterController(Resource):
+    def get(self):
+    	headers = {'Content-Type': 'text/html'}
+        return make_response(render_template('register.html'),200,headers)
+
+    def post(self):
+    	doRegister()
+    	return redirect(request.args.get('next') or url_for('login'))

@@ -1,8 +1,8 @@
+[![Stories in Ready](https://badge.waffle.io/proyectoarq1/orgeventos.png?label=ready&title=Ready)](https://waffle.io/proyectoarq1/orgeventos)
 
 ## Requisitos
 
 + MySQL o MongoDB local
-+ Si la opccion es MySQL, crear base de datos 'prueba' con usurio root y password root
 + Python 2.7.10
 + pip 
 + git
@@ -34,7 +34,7 @@ pip install requirements.txt
 export TIPO_BASE_DE_DATOS='MongoDB'
 ```
 
-+Si la base elegida es MySQL, crear el esquema en la base de datos
++ Si la base elegida es MySQL, crear el esquema en la base de datos ejecutando:
 
 ```
 python db/models.py
@@ -43,9 +43,10 @@ python db/models.py
 + Levantar la aplicación
 
 ```
-python routes.py
+python app.py
 ```
 
 ##Link a app en heroku:
 
 https://glacial-scrubland-6807.herokuapp.com/
+

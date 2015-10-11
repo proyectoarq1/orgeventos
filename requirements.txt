@@ -6,12 +6,15 @@ Flask-Mail==0.9.1
 Flask-MongoEngine==0.7.1
 Flask-OAuth==0.12
 Flask-Principal==0.4.0
+Flask-RESTful==0.3.4
 Flask-Security==1.7.4
 Flask-SQLAlchemy==2.0
 Flask-WTF==0.12
 httplib2==0.9.1
 itsdangerous==0.24
 Jinja2==2.8
+locustio==0.7.3
+newrelic
 MarkupSafe==0.23
 mongoengine==0.10.0
 MySQL-python==1.2.3
