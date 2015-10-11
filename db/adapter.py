@@ -1,4 +1,5 @@
-from models import Usuario, Session, Evento, Invitacion
+from models import Usuario, User, Session, Evento, Invitacion
+
 from alchemy_encoder import AlchemyEncoder
 import dbsettings
 from pymongo import MongoClient
@@ -6,6 +7,9 @@ import json, os
 from bson.objectid import ObjectId
 from datetime import date
 from abc import ABCMeta, abstractmethod
+
+from flask import current_app
+
 #from evento_form import EventoForm
 
 class Adapter():
@@ -25,6 +29,9 @@ class Adapter():
 		pass
 
 	@abstractmethod
+	def get_user_by_id(self,user_id):
+		pass
+
 	def get_usuarios(self):
 		pass
 
@@ -82,6 +89,10 @@ class MongoDBAdapter(Adapter):
 	def get_usuario(self,usuario_id):
 		usuario = self.db.usuarios.find_one({"_id": ObjectId(usuario_id)})
 		return usuario
+
+	def get_user_by_id(self,user_id):
+		user = self.db.user.find_one({"_id": ObjectId(user_id)})
+		return user
 
 	def get_usuarios(self):
 		return self.db.usuarios.find()
@@ -156,6 +167,17 @@ class MySQLAdapter(Adapter):
 		db_session.add(usuario)
 		db_session.commit()
 		return usuario
+
+	def create_user(self, user_username, user_password, user_email):
+		db_session = self.session
+		user = User(username=user_username, password=user_password , email=user_email)
+		current_app.logger.info('create_user  ')
+	  	db_session.add(user)
+	  	db_session.commit()
+	  	return user
+
+	def get_user_by_id(self,user_id):
+		return self.session.query(User).filter_by(id=user_id).first() 
 
 	def get_usuario(self,usuario_id):
 		usuario = self.session.query(Usuario).filter_by(id=usuario_id).first()

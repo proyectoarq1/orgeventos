@@ -18,7 +18,13 @@
           <div class="pull-right">
             <ul class="nav">
               <li class="active"><a href="{{ url_for('home') }}">Home</a></li>
-              <li><a href="{{ url_for('perfil') }}">Perfil</a></li>
+              {% if current_user.is_authenticated() %}
+                <li><a href="{{ url_for('perfil') }}">Perfil</a></li>
+                <li><a href="{{ url_for('logout') }}">Desloguearse</a></li>  
+              {% else %}
+                <li><a href="{{ url_for('login') }}">Login</a></li>
+                <li><a href="{{ url_for('register') }}">Registrarse</a></li>
+              {% endif %}
             </ul>
         </div>
         </div>
@@ -26,7 +32,24 @@
 
     </header> 
 
-
+    <!-- Display flashed messages -->
+    {% with msgs = get_flashed_messages(with_categories=true) %}
+      {% if msgs %}
+        {%- for category, msg in msgs %}
+          {% if category == "error" %}
+            <div class="alert alert-danger" role="alert">
+          {% else %}
+            {% if category == "success" %}
+              <div class="alert alert-success" role="alert">
+            {% else %}
+              <div class="alert alert-info" role="alert">
+            {% endif %}
+          {% endif%}
+            {{ msg }}
+          </div>
+        {% endfor -%}
+      {% endif %}
+    {% endwith %}
      
     <div class="container">
       {% if error %}

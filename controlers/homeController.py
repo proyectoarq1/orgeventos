@@ -1,4 +1,5 @@
 from flask import Flask, render_template, make_response
+from flask.ext.login import LoginManager, login_user , logout_user , current_user , login_required
 from flask_restful import Resource
 from db.models import Usuario, Evento
 from formularios.evento_form import EventoForm
