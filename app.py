@@ -16,6 +16,8 @@ from controllers.eventoController import EventoController
 from controllers.nuevoEventoController import NuevoEventoController
 import logging
 from logging.handlers import TimedRotatingFileHandler
+from logging import getLogger
+
 
 app = Flask(__name__)
 api = Api(app)
@@ -35,11 +37,11 @@ app.config.from_object('config')
  
 app.config['SECURITY_POST_LOGIN'] = '/profile'
 
-formatter = logging.Formatter("[%(asctime)s] {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s")
-file_handler = TimedRotatingFileHandler(app.config['LOG_PATH'], when="D", backupCount=7)
-file_handler.setLevel(logging.DEBUG)
-file_handler.setFormatter(formatter)
-app.logger.addHandler(file_handler)
+#formatter = logging.Formatter("[%(asctime)s] {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s")
+#file_handler = getLogger('werkzeug')#TimedRotatingFileHandler(app.config['LOG_PATH'], when="D", backupCount=7)
+#file_handler.setLevel(logging.DEBUG)
+#file_handler.setFormatter(formatter)
+#app.logger.addHandler(file_handler)
 
 api.add_resource(HomeController, '/',endpoint="home")
 api.add_resource(RegisterController, '/register',endpoint="register")
