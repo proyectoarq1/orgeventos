@@ -7,13 +7,13 @@ from db.adapter import adapter
 import datetime
 from flask import request, redirect, url_for, session
 import os
-from controlers.homeController import HomeController
-from controlers.registerController import RegisterController
-from controlers.loginController import LoginController
-from controlers.logoutController import LogoutController
-from controlers.perfilController import PerfilController
-from controlers.eventoController import EventoController
-from controlers.nuevoEventoController import NuevoEventoController
+from controllers.homeController import HomeController
+from controllers.registerController import RegisterController
+from controllers.loginController import LoginController
+from controllers.logoutController import LogoutController
+from controllers.perfilController import PerfilController
+from controllers.eventoController import EventoController
+from controllers.nuevoEventoController import NuevoEventoController
 import logging
 from logging.handlers import TimedRotatingFileHandler
 

@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/proyectoarq1/orgeventos.svg?branch=master)](https://travis-ci.org/proyectoarq1/orgeventos)
 [![Stories in Ready](https://badge.waffle.io/proyectoarq1/orgeventos.png?label=ready&title=Ready)](https://waffle.io/proyectoarq1/orgeventos)
 
 ## Requisitos

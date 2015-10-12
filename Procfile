@@ -1,1 +1,1 @@
-web: python db/models.py; newrelic-admin run-program python routes.py
+web: python db/models.py; newrelic-admin run-program python app.py
