@@ -13,5 +13,5 @@ class NuevoEventoController(Resource):
 
     def post(self):
     	form = EventoForm(request.form)
-    	adapter.crear_evento(session['usuario_id'],form)
+    	adapter.crear_evento(session['user_id'],form)
     	return redirect(url_for('perfil'))

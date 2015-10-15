@@ -1,5 +1,5 @@
 from flask import Flask, render_template, make_response
-from flask.ext.login import LoginManager, login_user , logout_user , current_user , login_required
+from flask.ext.login import LoginManager, login_user , logout_user , current_user , login_required, current_user
 from flask_restful import Resource
 from db.models import Usuario, Evento
 from formularios.evento_form import EventoForm
@@ -23,6 +23,5 @@ def hacer_usuario_y_ejemplo():
 
 class HomeController(Resource):
     def get(self):
-    	hacer_usuario_y_ejemplo()
     	headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('home.html',usuario=session['usuario_id']),200,headers)
+        return make_response(render_template('home.html'),200,headers)
