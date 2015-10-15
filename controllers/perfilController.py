@@ -7,7 +7,6 @@ from flask.ext.login import current_user
 
 class PerfilController(Resource):
     def get(self):
-    	flash(current_user.id)
 
     	usuario = adapter.get_userJson_by_id(current_user.id)
     	eventos = adapter.obtener_eventos_asignados2(current_user.id)

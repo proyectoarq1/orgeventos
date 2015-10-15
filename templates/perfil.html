@@ -2,7 +2,7 @@
   
 {% block content %}
   {% if current_user.is_authenticated %}
-  	<h2>Bienvenido, {{ current_user.id }}</h2>
+  	<h2>Bienvenido, {{ current_user.username }}</h2>
   {% endif %}
   <div class="jumbo">
 		  <h3>Lista de eventos propios</h3>
