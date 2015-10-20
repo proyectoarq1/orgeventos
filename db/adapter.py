@@ -1,5 +1,5 @@
 from models import Usuario, User, Session, Evento, Invitacion
-
+import datetime
 from alchemy_encoder import AlchemyEncoder
 import dbsettings
 from pymongo import MongoClient
@@ -74,9 +74,10 @@ class Adapter():
 class MongoDBAdapter(Adapter):
 
 	#mongod --config c:\mongodb\mongo.config
-	url = dbsettings.MONGO_DATABASE["url_conection"]
-	client = MongoClient(url)
-	db = client['prueba']
+	def __init__():
+		url = dbsettings.MONGO_DATABASE["url_conection"]
+		client = MongoClient(url)
+		db = client['prueba']
 
 	def get_id(self, objecto):
 		return str(objecto["_id"])
@@ -209,8 +210,9 @@ class MySQLAdapter(Adapter):
 		evento = Evento(organizador=usuario["username"],
 						organizador_id=usuario_id,
 						nombre=form.nombre.data,
-						fecha=form.fecha.data,
+						fecha=datetime.datetime.strptime(form.fecha.data + " " + form.hora.data, "%d/%m/%Y %H:%M"),
 						descripcion=form.descripcion.data,
+						ubicacion=form.ubicacion.data,
 						asistiran=0)
 		db_session.add(evento)
 		db_session.commit()
@@ -271,6 +273,7 @@ class MySQLAdapter(Adapter):
 
 
 
+
 db_seleccionada = os.getenv('TIPO_BASE_DE_DATOS', 'MySQL')
 
 if db_seleccionada=='MongoDB':
@@ -282,7 +285,7 @@ if __name__ == '__main__':
 
 	#adapter = Adapter()
 
-	adapter = MongoDBAdapter()
+	adapter = MySQLAdapter()
 	usuario = adapter.crear_usuario("Juan")
 	print usuario
 	usuario_id = adapter.get_id(usuario)

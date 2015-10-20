@@ -61,14 +61,15 @@ class User(Base):
         return '<User %r>' % (self.username)
 
 class Evento(Base):
-	__tablename__ = 'evento'
-	id = Column(Integer, primary_key=True)
-	nombre = Column(String(100))
-	organizador = Column(String(100))
-	descripcion = Column(String(700))
-	fecha = Column(DateTime)
-	asistiran = Column(Integer())
-	organizador_id = Column(Integer, ForeignKey('users.user_id'))
+    __tablename__ = 'evento'
+    id = Column(Integer, primary_key=True)
+    nombre = Column(String(100))
+    organizador = Column(String(100))
+    descripcion = Column(String(700))
+    ubicacion = Column(String(700))
+    fecha = Column(DateTime)
+    asistiran = Column(Integer())
+    organizador_id = Column(Integer, ForeignKey('users.user_id'))
 
 class Invitacion(Base):
 	__tablename__ = 'invitacion'

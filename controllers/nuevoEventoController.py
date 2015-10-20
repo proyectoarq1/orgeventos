@@ -3,6 +3,7 @@ from formularios.evento_form import EventoForm
 from flask_restful import Resource
 from db.adapter import adapter
 from flask import session, request, redirect
+from flask.ext.login import current_user
 
 
 class NuevoEventoController(Resource):
@@ -13,5 +14,10 @@ class NuevoEventoController(Resource):
 
     def post(self):
     	form = EventoForm(request.form)
-    	adapter.crear_evento(session['user_id'],form)
-    	return redirect(url_for('perfil'))
+    	print form.validate()
+    	if form.validate():
+    		adapter.crear_evento(current_user.id,form)
+    		return redirect(url_for('perfil'))
+    	else :
+    		headers = {'Content-Type': 'text/html'}
+	    	return make_response(render_template('nuevo_evento.html', form=form),200,headers)

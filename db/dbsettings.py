@@ -9,4 +9,4 @@ DATABASE = {
     'database': 'prueba'
 }
 
-MONGO_DATABASE = { "url_conection":"mongodb://localhost:27017/"}
+MONGO_DATABASE = { "url_conection":"mongodb://localhost:27017"}
