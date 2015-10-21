@@ -1,7 +1,7 @@
 from flask import Flask, render_template, make_response, current_app, flash
 from flask_restful import Resource
 from db.models import User, Session
-from db.adapter import adapter
+from db.adapter_selected import adapter
 from flask import request, redirect, url_for, session
 from flask.ext.login import LoginManager, login_user , current_user , login_required
 import os

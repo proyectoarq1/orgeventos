@@ -10,7 +10,7 @@ import dbsettings
 
 url = os.getenv('DATABASE_URL', dbsettings.MONGO_DATABASE["url_conection"])
 print url
-#session = Session.connect("prueba3")
+session = Session.connect("prueba3")
 
 #mongod --config c:\mongodb\mongo.config
 
@@ -22,13 +22,6 @@ class User(Document):
     email = StringField()
     email_index = Index().ascending('email').unique()
     registered_on = DateTimeField(default=datetime.datetime.utcnow())
- 
-    #def __init__(self , username ,password , email):
-
-    #    self.username = username
-    #    self.password = password
-    #    self.email = email
-    #    self.registered_on = datetime.datetime.utcnow()
     
     def is_authenticated(self):
         return True
@@ -52,8 +45,8 @@ class Evento(Document):
     descripcion = StringField()
     fecha = DateTimeField()
     asistiran = IntField(default=0)
-    organizador_id = StringField()
-    invitados = ListField(StringField(),required=False,default=[])
+    organizador_id = ObjectIdField()
+    invitados = ListField(ObjectIdField(),required=False,default=[])
 
 if __name__ == '__main__':
     session.clear_collection(User)
