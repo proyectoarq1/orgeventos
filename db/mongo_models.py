@@ -9,8 +9,9 @@ from alchemy_encoder import AlchemyEncoder, MongoAlchemyEncoder
 import dbsettings
 
 url = os.getenv('DATABASE_URL', dbsettings.MONGO_DATABASE["url_conection"])
-print url
-session = Session.connect("prueba3")
+
+session = None
+#session = Session.connect("prueba3")
 
 #mongod --config c:\mongodb\mongo.config
 
