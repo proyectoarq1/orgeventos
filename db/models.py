@@ -68,7 +68,7 @@ class Evento(Base):
     descripcion = Column(String(700))
     ubicacion = Column(String(700))
     fecha = Column(DateTime)
-    asistiran = Column(Integer())
+    asistiran = Column(Integer(), default=0)
     organizador_id = Column(Integer, ForeignKey('users.user_id'))
 
 class Invitacion(Base):

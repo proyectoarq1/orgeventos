@@ -1,4 +1,13 @@
-from models import Usuario, User, Session, Evento, Invitacion
+
+import os
+
+db_seleccionada = os.getenv('TIPO_BASE_DE_DATOS', 'MySQL')
+
+if db_seleccionada=='MongoDB':
+	from mongo_models import User, Evento
+else:
+	from models import User, Evento
+
 import datetime
 from alchemy_encoder import AlchemyEncoder
 import dbsettings
@@ -17,18 +26,15 @@ class Adapter():
 
 	__metaclass__ = ABCMeta
 
-	@abstractmethod
-	def to_json(self, db_object):
-		pass
-
-	@abstractmethod
-	def get_id(self, objecto):
-		pass
 
 	def create_user(self, user_username, user_password, user_email):# ESTE VA PARA ARRIBA
 		user = User(username=user_username, password=user_password , email=user_email)
 	  	self.guardar(user)
 	  	return user
+
+	def get_user_by_name_and_pass(self,username, password):
+		registered_user = self.db_session.query(User).filter_by(username=username,password=password).first()
+		return registered_user
 
 	@abstractmethod
 	def get_user_by_id(self,user_id):

@@ -16,7 +16,7 @@ class NuevoEventoController(Resource):
     	form = EventoForm(request.form)
     	print form.validate()
     	if form.validate():
-    		adapter.crear_evento(current_user.id,form)
+    		adapter.crear_evento(current_user.get_id(),form)
     		return redirect(url_for('perfil'))
     	else :
     		headers = {'Content-Type': 'text/html'}

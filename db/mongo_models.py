@@ -10,8 +10,11 @@ import dbsettings
 
 url = os.getenv('DATABASE_URL', dbsettings.MONGO_DATABASE["url_conection"])
 
-session = None
-#session = Session.connect("prueba3")
+db_seleccionada = os.getenv('TIPO_BASE_DE_DATOS', 'MySQL')
+
+session=None
+if db_seleccionada=='MongoDB':
+    session = Session.connect("prueba3")
 
 #mongod --config c:\mongodb\mongo.config
 
@@ -44,14 +47,15 @@ class Evento(Document):
     nombre = StringField()
     organizador = StringField()
     descripcion = StringField()
+    ubicacion =  StringField()
     fecha = DateTimeField()
     asistiran = IntField(default=0)
     organizador_id = ObjectIdField()
     invitados = ListField(ObjectIdField(),required=False,default=[])
 
 if __name__ == '__main__':
-    session.clear_collection(User)
-    user=User(username='Jeff3', password='Jenkins3', email="algoalgo3")
+    #session.clear_collection(User)
+    user=User(username='Jeff31', password='Jenkins31', email="algoalgo31")
     session.save(user)
     print user.get_id()
     user1 = session.query(User).filter_by(mongo_id=user.get_id()).first()
