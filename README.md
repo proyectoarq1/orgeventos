@@ -26,7 +26,7 @@ cd orgeventos/
 + Instalar dependencias del proyecto
 
 ```
-pip install requirements.txt
+pip install -r requirements.txt
 ```
 
 + Seleccionar MySQL o MongoDB: Exportar la variable de entorno 'TIPO_BASE_DE_DATOS' desde la consola con el valor 'MySQL' o bien 'MongoDB' (Por default si la variable no existe la base de datos utilizada sera MySQL) 

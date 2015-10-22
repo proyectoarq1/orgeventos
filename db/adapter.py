@@ -210,6 +210,7 @@ class MySQLAdapter(Adapter):
 		evento = Evento(organizador=usuario["username"],
 						organizador_id=usuario_id,
 						nombre=form.nombre.data,
+						categoria=form.categoria.data,
 						fecha=datetime.datetime.strptime(form.fecha.data + " " + form.hora.data, "%d/%m/%Y %H:%M"),
 						descripcion=form.descripcion.data,
 						ubicacion=form.ubicacion.data,
@@ -223,9 +224,16 @@ class MySQLAdapter(Adapter):
 		return self.to_json(evento)
 
  	def obtener_eventos_asignados(self, usuario_id):
-		eventos_usuario = self.session.query(Evento).filter_by(organizador_id=usuario_id).all()
+		eventos_usuario = self.session.query(Evento).filter_by(organizador_id=usuario_id, categoria="Privado").all()
 		eventos = []
 		for e in eventos_usuario:
+		  eventos.append(self.to_json(e))
+		return eventos
+
+	def obtener_eventos_publicos(self):
+		eventos_publicos = self.session.query(Evento).filter_by(categoria="Publico").all()
+		eventos = []
+		for e in eventos_publicos:
 		  eventos.append(self.to_json(e))
 		return eventos
 

@@ -9,6 +9,8 @@ class PerfilController(Resource):
     def get(self):
 
     	usuario = adapter.get_userJson_by_id(current_user.id)
-    	eventos = adapter.obtener_eventos_asignados2(current_user.id)
+    	eventos = adapter.obtener_eventos_asignados(current_user.id)
+    	eventos_publicos = adapter.obtener_eventos_publicos()
+    	
     	headers = {'Content-Type': 'text/html'}
-    	return make_response(render_template('perfil.html',usuario=usuario, eventos=eventos),200,headers)
+    	return make_response(render_template('perfil.html',usuario=usuario, eventos=eventos, eventos_publicos=eventos_publicos),200,headers)

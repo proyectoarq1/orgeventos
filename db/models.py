@@ -65,6 +65,7 @@ class Evento(Base):
     id = Column(Integer, primary_key=True)
     nombre = Column(String(100))
     organizador = Column(String(100))
+    categoria = Column(String(50))
     descripcion = Column(String(700))
     ubicacion = Column(String(700))
     fecha = Column(DateTime)

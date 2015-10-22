@@ -2,7 +2,7 @@ from flask import Flask, render_template, make_response, current_app, flash
 from flask_restful import Resource
 from db.models import User, Session
 from db.adapter import adapter
-from flask import request, redirect, url_for, session
+from flask import request, redirect, url_for, session, abort
 from flask.ext.login import LoginManager, login_user , current_user , login_required
 import os
 
@@ -14,7 +14,7 @@ def doLogin():
   if registered_user is None:
     current_app.logger.error('login user  ')
     flash('Username or Password is invalid' , 'error')
-    return redirect(url_for('login'))
+    return abort(404)#redirect(url_for('login'))
   current_app.logger.info('login user : ')
   login_user(registered_user)
   flash('Logged in successfully','success')

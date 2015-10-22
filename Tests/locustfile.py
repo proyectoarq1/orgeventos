@@ -1,7 +1,7 @@
 from locust import HttpLocust, TaskSet
 
-#def login(l):
-#    l.client.post("/login", {"username":"ellen_key", "password":"education"})
+def login(l):
+    l.client.post("/login", {"username":"Test1", "password":"test1"})
 
 def home(l):
     l.client.get("/")
@@ -16,8 +16,7 @@ class UserBehavior(TaskSet):
     tasks = {home:1, perfil:1, nuevo_evento:1, perfil:2, nuevo_evento:1, home: 3}
 
     def on_start(self):
-        #login(self)
-        pass
+        login(self)
 
 class WebsiteUser(HttpLocust):
     task_set = UserBehavior
