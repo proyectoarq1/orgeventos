@@ -3,10 +3,10 @@ from flask_restful import Resource, Api
 from flask.ext.login import LoginManager, login_user , logout_user , current_user , login_required
 from db.models import Session, Usuario, Evento
 from formularios.evento_form import EventoForm
-from db.adapter import adapter
 import datetime
 from flask import request, redirect, url_for, session
 import os
+from db.adapter_selected import adapter
 from controllers.homeController import HomeController
 from controllers.registerController import RegisterController
 from controllers.loginController import LoginController
@@ -17,7 +17,6 @@ from controllers.nuevoEventoController import NuevoEventoController
 import logging
 from logging.handlers import TimedRotatingFileHandler
 from logging import getLogger
-
 
 app = Flask(__name__)
 api = Api(app)

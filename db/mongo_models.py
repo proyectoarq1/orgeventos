@@ -9,8 +9,12 @@ from alchemy_encoder import AlchemyEncoder, MongoAlchemyEncoder
 import dbsettings
 
 url = os.getenv('DATABASE_URL', dbsettings.MONGO_DATABASE["url_conection"])
-print url
-#session = Session.connect("prueba3")
+
+db_seleccionada = os.getenv('TIPO_BASE_DE_DATOS', 'MySQL')
+
+session=None
+if db_seleccionada=='MongoDB':
+    session = Session.connect("prueba3")
 
 #mongod --config c:\mongodb\mongo.config
 
@@ -22,13 +26,6 @@ class User(Document):
     email = StringField()
     email_index = Index().ascending('email').unique()
     registered_on = DateTimeField(default=datetime.datetime.utcnow())
- 
-    #def __init__(self , username ,password , email):
-
-    #    self.username = username
-    #    self.password = password
-    #    self.email = email
-    #    self.registered_on = datetime.datetime.utcnow()
     
     def is_authenticated(self):
         return True
@@ -50,14 +47,15 @@ class Evento(Document):
     nombre = StringField()
     organizador = StringField()
     descripcion = StringField()
+    ubicacion =  StringField()
     fecha = DateTimeField()
     asistiran = IntField(default=0)
-    organizador_id = StringField()
-    invitados = ListField(StringField(),required=False,default=[])
+    organizador_id = ObjectIdField()
+    invitados = ListField(ObjectIdField(),required=False,default=[])
 
 if __name__ == '__main__':
-    session.clear_collection(User)
-    user=User(username='Jeff3', password='Jenkins3', email="algoalgo3")
+    #session.clear_collection(User)
+    user=User(username='Jeff31', password='Jenkins31', email="algoalgo31")
     session.save(user)
     print user.get_id()
     user1 = session.query(User).filter_by(mongo_id=user.get_id()).first()

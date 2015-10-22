@@ -3,7 +3,7 @@ from flask.ext.login import LoginManager, login_user , logout_user , current_use
 from flask_restful import Resource
 from db.models import Usuario, Evento
 from formularios.evento_form import EventoForm
-from db.adapter import adapter
+from db.adapter_selected import adapter
 from flask import request, redirect, url_for, session
 import os
 

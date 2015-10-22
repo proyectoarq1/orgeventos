@@ -2,6 +2,7 @@ from sqlalchemy.ext.declarative import DeclarativeMeta
 from mongoalchemy.document import Document
 import json
 from models import Usuario, Session
+from mongoalchemy.fields import *
 
 class AlchemyEncoder(json.JSONEncoder):
     def default(self, obj):
@@ -15,7 +16,6 @@ class AlchemyEncoder(json.JSONEncoder):
                     fields[field] = data
                 except TypeError as e:
                     fields[field] = str(data)
-                    print e
             # a json-encodable dict
             fields = self.agregar__id(fields)
 
@@ -31,18 +31,25 @@ class AlchemyEncoder(json.JSONEncoder):
 
 class MongoAlchemyEncoder(json.JSONEncoder):
     def default(self, obj):
-        print "holaaaa"
         if isinstance(obj.__class__, Document.__class__):
             out = {}
             for field in obj.get_fields().keys():
                 data = obj.__getattribute__(field)
                 try:
-                    json.dumps(data) # this will fail on non-encodable values, like other classes
-                    out[field] = data
+                    if isinstance(data, (list)):
+                        print "encontre la lista"
+                        print data
+                        out[field] = [self.default(item) for item in data]
+                    else:
+                        json.dumps(data) # this will fail on non-encodable values, like other classes
+                        out[field] = data
                 except TypeError as e:
                     out[field] = str(data)
-                    print e
+                    #print e
+                    #if isinstance(data.__class__, ObjectId.__class__):
             self.agregar__id(out)
+        else:
+            out = str(obj)
         return out
 
     def agregar__id(self, out):
