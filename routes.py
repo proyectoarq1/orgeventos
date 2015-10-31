@@ -94,7 +94,7 @@ def nuevo_evento():
 
 @app.route('/evento/<evento_id>')
 def evento(evento_id):	
-	evento = adapter.get_evento(session['usuario_id'],evento_id)
+	evento = adapter.get_evento(evento_id)
 	return render_template('evento.html',evento=evento)
 
 @app.route('/perfil')

@@ -35,6 +35,9 @@ class MySQLAdapter(Adapter):
 	def get_user_by_id(self,user_id):
 		return self.db_session.query(User).filter_by(id=user_id).first() 
 
+	def get_all_users(self):
+		return self.db_session.query(User).all() 
+
 	def get_evento(self,evento_id):
 		evento = self.db_session.query(Evento).filter_by(id=evento_id).first()
 		return self.to_json(evento)

@@ -51,6 +51,10 @@ class Adapter():
 		  usuarios.append(self.to_json(u))
 		return usuarios
 
+	@abstractmethod
+	def get_all_users(self):
+		pass
+
 	def borrar_usuario(self,usuario_id):
 		usuario = self.get_user_by_id(user_id)
 		eventos_usuario = self.db_session.query(Evento).filter_by(organizador_id=usuario_id).all()
