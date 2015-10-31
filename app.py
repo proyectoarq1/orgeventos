@@ -28,9 +28,9 @@ login_manager.init_app(app)
 def load_user(user_id):
 	return adapter.get_user_by_id(user_id)
 
-#@app.errorhandler(404)
-#def page_not_found(e):
-#    return render_template('login.html'), 404
+@app.errorhandler(400)
+def page_not_found(e):
+    return render_template('home.html'),400
 
 app.config.from_object('config')
  

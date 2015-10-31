@@ -9,10 +9,11 @@ def doLogin():
   username = request.form['username']
   password = request.form['password']
   registered_user = adapter.get_user_by_name_and_pass(username,password)
+  current_app.logger.info(registered_user)
   if registered_user is None:
     current_app.logger.error('login user  ')
     flash('Username or Password is invalid' , 'error')
-    return abort(404)#redirect(url_for('login'))
+    abort(400)#redirect(url_for('login'))
   current_app.logger.info('login user : ')
   login_user(registered_user)
   flash('Logged in successfully','success')
