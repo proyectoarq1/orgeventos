@@ -51,7 +51,16 @@ box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.3);
  
 div.jumbo {
   padding: 10px 0 30px 0;
-  background-color: #fdfdd3;
+  background-color: #ECF6CE;
+  -webkit-border-radius: 6px;
+     -moz-border-radius: 6px;
+          border-radius: 6px;
+  height:600px;
+}
+
+div.jumbo_verde {
+  padding: 10px 0 30px 0;
+  background-color: #ECF6CE;
   -webkit-border-radius: 6px;
      -moz-border-radius: 6px;
           border-radius: 6px;
@@ -107,3 +116,77 @@ p {
   color: #999;
   text-decoration: none;
 }
+
+#container1 {
+    float:left;
+    height:25%;
+}
+
+#container_foto {
+    float:left;
+    height:50%;
+    width:50%;
+    background-size: cover;
+}
+
+#col1 {
+    float:left;
+    width:37%;
+    vertical-align: middle;
+
+}
+#col2 {
+    float:right;
+    width:63%;
+
+}
+
+#left
+    {
+      width: 500px;
+      float: left;
+    }
+
+#right
+{
+    margin-left: 500px; 
+}
+
+#left_grande
+    {
+      width: 650px;
+      float: left;
+    }
+
+#right_menor
+{
+    margin-left: 350px; 
+}
+
+.clear
+{
+      clear: both;
+}
+
+  #banner
+  {
+    position: relative;
+    background: #333 url(http://www.portadas.biz/covers/preview/luces_colores.jpg) no-repeat center;
+    background-size: cover;
+    height:100px;
+  }
+
+  #fiesta
+  {
+    position: relative;
+    background: #333 url(http://static.elobservador.com.uy/adjuntos/184/imagenes/000/296/0000296601.jpg) no-repeat center;
+    height:300px;
+  }
+  
+  .homepage #banner
+  {
+  }
+
+  .bottom-three {
+     margin-bottom: 1cm;
+  }

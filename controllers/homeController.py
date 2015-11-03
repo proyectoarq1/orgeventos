@@ -23,5 +23,6 @@ def hacer_usuario_y_ejemplo():
 
 class HomeController(Resource):
     def get(self):
+    	eventos_publicos = adapter.obtener_eventos_publicos()
     	headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('home.html'),200,headers)
+        return make_response(render_template('home.html',eventos_publicos=eventos_publicos),200,headers)

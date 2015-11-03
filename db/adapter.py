@@ -71,6 +71,7 @@ class Adapter():
 						fecha=datetime.datetime.strptime(form.fecha.data + " " + form.hora.data, "%d/%m/%Y %H:%M"),
 						descripcion=form.descripcion.data,
 						ubicacion=form.ubicacion.data,
+						url_imagen=form.url_imagen.data,
 						asistiran=0)
 		self.guardar(evento)
 		return evento

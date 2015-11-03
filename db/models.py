@@ -68,6 +68,7 @@ class Evento(Base):
     categoria = Column(String(50))
     descripcion = Column(String(700))
     ubicacion = Column(String(700))
+    url_imagen = Column(String(700))
     fecha = Column(DateTime)
     asistiran = Column(Integer(), default=0)
     organizador_id = Column(Integer, ForeignKey('users.user_id'))
@@ -81,5 +82,5 @@ class Invitacion(Base):
 if __name__ == '__main__':
 	#os.environ.setdefault("DJANGO_SETTINGS_MODULE", "dbsettings")
 	#session = Session()
-	Base.metadata.drop_all(engine)
+	#Base.metadata.drop_all(engine)
 	Base.metadata.create_all(engine)

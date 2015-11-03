@@ -3,13 +3,21 @@
   
 {% block content %}
   <h2>{{ evento.nombre }}</h2>
+  
   <div class="jumbo">
-	 	<h3></h3>
+  	<div id="container">
+  	<div id="left">
+  		<h3></h3>
+  		<div id="container_foto">
+		  	<img  hspace="20" src="http://localhost:5000/static/imagenes/ensalada_verduras.jpg"/>
+		 </div>
+		 <div>
 		  {% if evento.descripcion %}
 		    <p >{{evento.descripcion}}</p>
 		  {% endif %}
 		  <p>Fecha: {{evento.fecha}}</p>
-		  <p>Asistiran: {{evento.asistiran}}</p>
+		  
+		  <p>Asistir&aacute;n: {{evento.asistiran}}</p>
 		  {% for usuario_invitado in usuarios_invitados %}
 				<p> {{usuario_invitado}} </p>
 		  {% endfor %}
@@ -27,15 +35,21 @@
 				</td>
 		   </form>
 		  {% endif %}
-		  <h4>Clima</h4>
+    </div>
+  	</div>
+  	<div id="right">
+  		<div class="bottom-three"></div>
+  		<h4>Clima</h4>
 		  <img src="http://openweathermap.org/img/w/{{clima_actual.icono}}.png"/>
-		  <p>Ubicacion(conacento): {{clima_actual.ubicacion}}</p>
 		  <p>Cielo: {{clima_actual.cielo}}</p>
-		  <p>Descripcion(conacento): {{clima_actual.descripcion}}</p>
+		  <p>Descripci&oacute;n: {{clima_actual.descripcion}}</p>
 		  <p>Temperatura: {{clima_actual.temperatura}}</p>
-	  
+  	</div>		 	
+</div>
   </div>
+    	<div class="jumbo_verde">
+  	</div>
   
   <!--<div class="pull-right"><button type="submit" class="btn btn-default"><a href="{{ url_for('perfil') }}">Volver</button></div>-->
-  <div class="pull-left"><button on-click="doSomething()" class="btn btn-default">Sasa</button></div>
+  <div class="pull-right"><button on-click="doSomething()" class="btn btn-default">Sasa</button></div>
 {% endblock %}

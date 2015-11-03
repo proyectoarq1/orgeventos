@@ -12,6 +12,7 @@ class OpenWeatherMapAdapter:
                              "light rain":"Lluvias moderadas",
                              "few clouds": "Pocas nubes",
                              "scattered clouds": "Nubes espesas",
+                             "overcast clouds": "Nubes de tormenta",
                              "broken clouds":"Nubes de tormenta",
                              "shower rain": "Lluvias copiosas",
                              "rain": "Lluvias de moderadas a fuertes",
