@@ -123,10 +123,8 @@ p {
 }
 
 #container_foto {
-    float:left;
     height:50%;
     width:50%;
-    background-size: cover;
 }
 
 #col1 {

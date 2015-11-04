@@ -5,41 +5,43 @@
   <h2>{{ evento.nombre }}</h2>
   
   <div class="jumbo">
+  	<div>
+  		<div id="container_foto">
+		  	<img style="margin-top:3em;" class="img-circle" hspace="25" src="http://localhost:5000/static/imagenes/ensalada_verduras.jpg"/>
+		</div>
+  	</div>
   	<div id="container">
   	<div id="left">
-  		<h3></h3>
-  		<div id="container_foto">
-		  	<img  hspace="20" src="http://localhost:5000/static/imagenes/ensalada_verduras.jpg"/>
-		 </div>
 		 <div>
 		  {% if evento.descripcion %}
-		    <p >{{evento.descripcion}}</p>
+		    <h3 >{{evento.descripcion}}</h3>
 		  {% endif %}
-		  <p>Fecha: {{evento.fecha}}</p>
+		  <h4 style="margin-left:5em;"><u>Fecha</u>: {{evento.fecha}}</h4>
 		  
-		  <p>Asistir&aacute;n: {{evento.asistiran}}</p>
-		  {% for usuario_invitado in usuarios_invitados %}
-				<p> {{usuario_invitado}} </p>
-		  {% endfor %}
+		  <h4 style="margin-left:5em;" ><u>Asistir&aacute;n</u>: {{evento.asistiran}}</h4>
+		  {% if usuarios_invitados %}
+		  	<h4 style="margin-left:5em;"> <u>Usuarios invitados</u>:</h4>
+			  {% for usuario_invitado in usuarios_invitados %}
+					<h5 style="margin-left:7em;"> {{usuario_invitado.username}} </h4>
+			  {% endfor %}
+		  {% endif %}
 		  {% if evento.organizador_id == current_user.id %}
 		  <form method=post action="">
-			  	<p>Invitar a:
+			  	<h4 style="margin-left:5em;"><u>Invitar a</u>:
 				  	<select id="invitado" name="invitado">
 						{% for a_user in all_users %}
 						    <option value="{{ a_user.id }}" SELECTED>{{ a_user.username }}</option>
 						{% endfor %}
 					</select>
-		  		</p>
-				<td>
-				    <input class="btn btn-success" type=submit value="Select">
-				</td>
+					<input class="btn btn-success" type=submit style="margin-bottom:1em;"value="Select">
+		  		</h4>
+
 		   </form>
 		  {% endif %}
     </div>
   	</div>
   	<div id="right">
-  		<div class="bottom-three"></div>
-  		<h4>Clima</h4>
+  		<h3><u>Clima</u></h3>
 		  <img src="http://openweathermap.org/img/w/{{clima_actual.icono}}.png"/>
 		  <p>Cielo: {{clima_actual.cielo}}</p>
 		  <p>Descripci&oacute;n: {{clima_actual.descripcion}}</p>
@@ -47,8 +49,7 @@
   	</div>		 	
 </div>
   </div>
-    	<div class="jumbo_verde">
-  	</div>
+
   
   <!--<div class="pull-right"><button type="submit" class="btn btn-default"><a href="{{ url_for('perfil') }}">Volver</button></div>-->
   <div class="pull-right"><button on-click="doSomething()" class="btn btn-default">Sasa</button></div>

@@ -8,6 +8,8 @@ import urllib2, json
 
 openweathermap = OpenWeatherMapAdapter()
 
+
+
 class EventoController(Resource):
     
 

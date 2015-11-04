@@ -15,7 +15,8 @@ class OpenWeatherMapAdapter:
                              "overcast clouds": "Nubes de tormenta",
                              "broken clouds":"Nubes de tormenta",
                              "shower rain": "Lluvias copiosas",
-                             "rain": "Lluvias de moderadas a fuertes",
+                             "rain": "Probabilidad de lluvias y chaparrones",
+                             "moderate rain": "Lluvias moderadas",
                              "thunderstorm": "Tormentas de rayos",
                              "snow": "Se esperan nevadas",
                              "mist": "Probabilidad de neblina"
