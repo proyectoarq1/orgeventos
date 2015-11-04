@@ -9,6 +9,7 @@ from sqlalchemy.orm import relationship, backref
 from sqlalchemy import ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, DateTime, Float
+from sqlalchemy.types import Boolean
 from sqlalchemy.engine.url import URL
 from sqlalchemy_utils import database_exists, create_database
 
@@ -74,11 +75,11 @@ class Evento(Base):
     organizador_id = Column(Integer, ForeignKey('users.user_id'))
 
 class Invitacion(Base):
-	__tablename__ = 'invitacion'
-	evento_id = Column(Integer, primary_key=True)
-	usuario_id = Column(Integer, primary_key=True)
-
-
+    __tablename__ = 'invitacion'
+    evento_id = Column(Integer, primary_key=True)
+    usuario_id = Column(Integer, primary_key=True)
+    asiste = Column(Boolean, unique=False,default=False)
+    
 if __name__ == '__main__':
 	#os.environ.setdefault("DJANGO_SETTINGS_MODULE", "dbsettings")
 	#session = Session()

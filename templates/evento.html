@@ -22,7 +22,7 @@
 		  {% if usuarios_invitados %}
 		  	<h4 style="margin-left:5em;"> <u>Usuarios invitados</u>:</h4>
 			  {% for usuario_invitado in usuarios_invitados %}
-					<h5 style="margin-left:7em;"> {{usuario_invitado.username}} </h4>
+					<h5 style="margin-left:7em;"> {{usuario_invitado.username}} </h5>
 			  {% endfor %}
 		  {% endif %}
 		  {% if evento.organizador_id == current_user.id %}
@@ -37,6 +37,14 @@
 		  		</h4>
 
 		   </form>
+		  {% else %}
+		  	<h5 style="margin-left:7em;"> Asistencia: </h4>
+		  	{% if asistencia %}
+		  		"Siiiiiiiiiiiii"
+		  	{% else %}
+		  		"Por default en Noooooooooooooo"
+			    </form>
+		  	{% endif %}
 		  {% endif %}
     </div>
   	</div>

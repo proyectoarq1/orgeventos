@@ -49,6 +49,17 @@ class MySQLAdapter(Adapter):
 		  eventos.append(self.to_json(e))
 		return eventos
 
+	def obtener_eventos_invitados(self, usuario_id):
+		eventos_invitados = self.db_session.query(Invitacion).filter_by(usuario_id=usuario_id).all()
+		eventos = []
+		for e in eventos_invitados:
+			evento = self.get_evento(e.evento_id)
+			print evento['organizador_id']
+			print usuario_id
+			if evento['organizador_id'] != usuario_id:
+				eventos.append(evento)
+		return eventos
+
 	def obtener_eventos_publicos(self):
 		eventos_publicos = self.db_session.query(Evento).filter_by(categoria="Publico").all()
 		eventos = []
@@ -71,6 +82,29 @@ class MySQLAdapter(Adapter):
 		for invitacion in invitaciones_evento:
 			usuarios_invitados.append(invitacion.usuario_id)
 		return usuarios_invitados
+
+	def obtener_usuario_invitado_evento(self, evento_id, usuario_id):
+		db_session = self.db_session
+		usuario_invitado = self.db_session.query(Invitacion).filter_by(evento_id=evento_id, usuario_id=usuario_id).first()
+		return get_user_by_id(usuario_invitado)
+
+	def confirma_asistencia_a_evento(self, evento_id, usuario_id):
+		db_session = self.db_session
+		invitacion = self.db_session.query(Invitacion).filter_by(evento_id=evento_id, usuario_id=usuario_id).first()
+		return invitacion.asiste
+
+	def confirmar_asistencia_a_evento(self, evento_id, usuario_id):
+		db_session = self.db_session
+		invitacion = self.db_session.query(Invitacion).filter_by(evento_id=evento_id, usuario_id=usuario_id).first()
+		invitacion.asiste = True
+		print invitacion
+		self.guardar(invitacion)
+
+	def rechazar_asistencia_a_evento(self, evento_id, usuario_id):
+		db_session = self.db_session
+		invitacion = self.db_session.query(Invitacion).filter_by(evento_id=evento_id, usuario_id=usuario_id).first()
+		invitacion.asiste = False
+		guardar(invitacion)
 
 	def obtener_invitaciones_usuario(self, usuario_id):
 		invitaciones_usuario = self.db_session.query(Invitacion).filter_by(usuario_id=usuario_id).all()

@@ -73,7 +73,10 @@ class Adapter():
 						ubicacion=form.ubicacion.data,
 						url_imagen=form.url_imagen.data,
 						asistiran=0)
+		
 		self.guardar(evento)
+		self.crear_invitacion(evento.id, usuario_id)
+		self.confirmar_asistencia_a_evento(evento.id, usuario_id)
 		return evento
 
  	def obtener_eventos_asignados(self, usuario_id):
@@ -104,6 +107,26 @@ class Adapter():
 
 	@abstractmethod
 	def obtener_usuarios_invitados_evento(self, evento_id):
+		pass
+
+	@abstractmethod
+	def obtener_usuario_invitado_evento(self, evento_id, usuario_id):
+		pass
+
+	@abstractmethod
+	def confirma_asistencia_a_evento(self, evento_id, usuario_id):
+		pass
+
+	@abstractmethod
+	def confirmar_asistencia_a_evento(self, evento_id, usuario_id):
+		pass
+
+	@abstractmethod
+	def obtener_eventos_invitados(self, usuario_id):
+		pass
+
+	@abstractmethod
+	def rechazar_asistencia_a_evento(self, evento_id, usuario_id):
 		pass
 
 	@abstractmethod
