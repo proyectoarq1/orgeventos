@@ -13,7 +13,9 @@ from controllers.loginController import LoginController
 from controllers.logoutController import LogoutController
 from controllers.perfilController import PerfilController
 from controllers.eventoController import EventoController
+from controllers.editarEventoController import EditarEventoController
 from controllers.nuevoEventoController import NuevoEventoController
+
 import logging
 from logging.handlers import TimedRotatingFileHandler
 from logging import getLogger
@@ -47,7 +49,9 @@ api.add_resource(LoginController, '/login',endpoint="login")
 api.add_resource(LogoutController, '/logout',endpoint="logout")
 api.add_resource(PerfilController, '/perfil',endpoint="perfil")
 api.add_resource(EventoController, '/evento/<evento_id>',endpoint="evento")
+api.add_resource(EditarEventoController, '/editar/<evento_id>',endpoint="editar_evento")
 api.add_resource(NuevoEventoController, '/nuevo_evento',endpoint="nuevo_evento")
+
 
 
 

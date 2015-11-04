@@ -8,7 +8,7 @@ from sqlalchemy.orm import relationship, backref
 
 from sqlalchemy import ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, DateTime, Float
+from sqlalchemy import Column, Integer, String, Float, DateTime, Date, Time
 from sqlalchemy.types import Boolean
 from sqlalchemy.engine.url import URL
 from sqlalchemy_utils import database_exists, create_database
@@ -70,7 +70,8 @@ class Evento(Base):
     descripcion = Column(String(700))
     ubicacion = Column(String(700))
     url_imagen = Column(String(700))
-    fecha = Column(DateTime)
+    fecha = Column(Date)
+    hora = Column(String(5))
     asistiran = Column(Integer(), default=0)
     organizador_id = Column(Integer, ForeignKey('users.user_id'))
 

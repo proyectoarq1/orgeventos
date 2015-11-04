@@ -68,7 +68,8 @@ class Adapter():
 						organizador_id=usuario_id,
 						nombre=form.nombre.data,
 						categoria=form.categoria.data,
-						fecha=datetime.datetime.strptime(form.fecha.data + " " + form.hora.data, "%d/%m/%Y %H:%M"),
+						fecha=datetime.datetime.strptime(form.fecha.data, "%d/%m/%Y"),
+						hora= form.hora.data,
 						descripcion=form.descripcion.data,
 						ubicacion=form.ubicacion.data,
 						url_imagen=form.url_imagen.data,
@@ -78,6 +79,25 @@ class Adapter():
 		self.crear_invitacion(evento.id, usuario_id)
 		self.confirmar_asistencia_a_evento(evento.id, usuario_id)
 		return evento
+
+	@abstractmethod
+	def get_evento_object(self,evento_id):
+		pass
+
+	def guardar_edicion_a_evento(self, evento_id, form):
+		evento = self.get_evento_object(evento_id)
+		
+		evento.nombre = form.nombre.data
+		evento.categoria=form.categoria.data
+		evento.fecha=datetime.datetime.strptime(form.fecha.data, "%d/%m/%Y")
+		evento.hora= form.hora.data
+		evento.descripcion=form.descripcion.data
+		evento.ubicacion=form.ubicacion.data
+		evento.url_imagen=form.url_imagen.data
+		
+		self.guardar(evento)
+		return evento
+
 
  	def obtener_eventos_asignados(self, usuario_id):
 		eventos_usuario = self.session.query(Evento).filter_by(organizador_id=usuario_id, categoria="Privado").all()

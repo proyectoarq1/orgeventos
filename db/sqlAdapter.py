@@ -16,7 +16,7 @@ from adapter import Adapter
 class MySQLAdapter(Adapter):
 
 	db_session=Session()
-	#db_session.rollback()
+	db_session.rollback()
 
 	def to_json(self, db_object):
 		return json.loads(json.dumps(db_object, cls=AlchemyEncoder))
@@ -37,6 +37,10 @@ class MySQLAdapter(Adapter):
 
 	def get_all_users(self):
 		return self.db_session.query(User).all() 
+
+	def get_evento_object(self,evento_id):
+		evento = self.db_session.query(Evento).filter_by(id=evento_id).first()
+		return evento
 
 	def get_evento(self,evento_id):
 		evento = self.db_session.query(Evento).filter_by(id=evento_id).first()
@@ -81,7 +85,8 @@ class MySQLAdapter(Adapter):
 		usuarios_invitados = []
 		for invitacion in invitaciones_evento:
 			usuarios_invitados.append(invitacion.usuario_id)
-		return usuarios_invitados
+		usuarios = db_session.query(User).filter(User.id.in_(usuarios_invitados)).all()
+		return usuarios
 
 	def obtener_usuario_invitado_evento(self, evento_id, usuario_id):
 		db_session = self.db_session
@@ -91,7 +96,10 @@ class MySQLAdapter(Adapter):
 	def confirma_asistencia_a_evento(self, evento_id, usuario_id):
 		db_session = self.db_session
 		invitacion = self.db_session.query(Invitacion).filter_by(evento_id=evento_id, usuario_id=usuario_id).first()
-		return invitacion.asiste
+		if invitacion:
+			return invitacion.asiste
+		else: 
+			return False
 
 	def confirmar_asistencia_a_evento(self, evento_id, usuario_id):
 		db_session = self.db_session

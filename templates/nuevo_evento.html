@@ -3,9 +3,16 @@
 
   
 {% block content %}
-  <h2>Crear nuevo evento</h2>
+  {% if editar %}
+    <h2>Editar evento</h2>
+  {%else%}
+    <h2>Crear nuevo evento</h2>
+  {% endif %}
+  
   <div class="jumbo">
-	 <form method=post action="/nuevo_evento">
+   
+	 <form method="post" action={{action}}>
+
     <dl>
       {{ render_field(form.nombre) }}
       {{ render_field(form.fecha) }}
@@ -21,6 +28,7 @@
 	  
   </div>
 
-  
-  <div class="pull-right"><a role="button" class="btn btn-default" href="{{ url_for('perfil') }}">Volver</a></div>
+
+    <div class="pull-right"><a role="button" class="btn btn-default" href="{{ url_for('perfil') }}">Volver</a></div>
+
 {% endblock %}

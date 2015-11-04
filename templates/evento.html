@@ -17,6 +17,7 @@
 		    <h3 >{{evento.descripcion}}</h3>
 		  {% endif %}
 		  <h4 style="margin-left:5em;"><u>Fecha</u>: {{evento.fecha}}</h4>
+		  <h4 style="margin-left:5em;"><u>Hora</u>: {{evento.hora}}</h4>
 		  
 		  <h4 style="margin-left:5em;" ><u>Asistir&aacute;n</u>: {{evento.asistiran}}</h4>
 		  {% if usuarios_invitados %}
@@ -25,7 +26,7 @@
 					<h5 style="margin-left:7em;"> {{usuario_invitado.username}} </h5>
 			  {% endfor %}
 		  {% endif %}
-		  {% if evento.organizador_id == current_user.id %}
+		  {% if evento.organizador_id == current_user.id and all_users != [] %}
 		  <form method=post action="">
 			  	<h4 style="margin-left:5em;"><u>Invitar a</u>:
 				  	<select id="invitado" name="invitado">
@@ -47,6 +48,9 @@
 		  	{% endif %}
 		  {% endif %}
     </div>
+
+    <div class="pull-right">
+    <a role="button" class="btn btn-default" href="{{ url_for('editar_evento', evento_id=evento.id) }}">Editar</a></div>
   	</div>
   	<div id="right">
   		<h3><u>Clima</u></h3>
@@ -58,7 +62,6 @@
 </div>
   </div>
 
+  <div class="pull-right"><a role="button" class="btn btn-default" href="{{ url_for('perfil') }}">Volver</a></div>
   
-  <!--<div class="pull-right"><button type="submit" class="btn btn-default"><a href="{{ url_for('perfil') }}">Volver</button></div>-->
-  <div class="pull-right"><button on-click="doSomething()" class="btn btn-default">Sasa</button></div>
 {% endblock %}

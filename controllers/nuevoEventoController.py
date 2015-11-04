@@ -10,7 +10,7 @@ class NuevoEventoController(Resource):
     def get(self):
     	form = EventoForm(request.form)
     	headers = {'Content-Type': 'text/html'}
-    	return make_response(render_template('nuevo_evento.html', form=form),200,headers)
+    	return make_response(render_template('nuevo_evento.html', form=form, method="post", action="/nuevo_evento"),200,headers)
 
     def post(self):
     	form = EventoForm(request.form)
@@ -20,4 +20,4 @@ class NuevoEventoController(Resource):
     		return redirect(url_for('perfil'))
     	else :
     		headers = {'Content-Type': 'text/html'}
-	    	return make_response(render_template('nuevo_evento.html', form=form),200,headers)
+	    	return make_response(render_template('nuevo_evento.html', form=form, method="post", action="/nuevo_evento"),200,headers)
