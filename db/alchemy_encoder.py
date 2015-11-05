@@ -1,7 +1,7 @@
 from sqlalchemy.ext.declarative import DeclarativeMeta
 from mongoalchemy.document import Document
 import json
-from models import Usuario, Session
+from models import Session
 from mongoalchemy.fields import *
 
 class AlchemyEncoder(json.JSONEncoder):

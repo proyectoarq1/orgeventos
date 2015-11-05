@@ -1,4 +1,4 @@
-from models import Usuario, User, Session, Evento, Invitacion
+from models import User, Session, Evento, Invitacion
 import datetime
 from alchemy_encoder import AlchemyEncoder
 import dbsettings

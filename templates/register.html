@@ -1,36 +1,28 @@
 {% extends "layout.html" %}
+{% from "_formhelpers.html" import render_field %}
 {% block content %}
-  <form action="" method=post class="form-horizontal">
+ 
+
+{% if editar %}
+    <h2>Editar mi perfil</h2>
+  {%else%}
     <h2>Registrarse</h2>
-    <div class="bottom-three"></div>
-    <div class="control-group">
-        <div class="controls">
-          <input type="text" id="username" name="username" class="input-xlarge"
-            placeholder="Enter Username" value="{{ request.form.username }}"
-            required>
-        </div>
-    </div>
- 
-    <div class="control-group">
-        <div class="controls">
-          <input type="password" id="password" name="password" class="input-xlarge"
-            placeholder="Enter Password" value="{{ request.form.password }}"
-            required>
-        </div>
-    </div>
- 
-    <div class="control-group">
-        <div class="controls">
-          <input type="email" id="email" name="email" class="input-xlarge"
-            placeholder="Enter Email" value="{{ request.form.username }}"
-            required>
-        </div>
-    </div>
- 
-    <div class="control-group">
-        <div class="controls">
-          <button type="submit" class="btn btn-success">Signup</button>
-        </div>
-    </div>
-  </form>
+  {% endif %}  
+
+   
+     <form method="post" class="form-horizontal" action="">
+
+    <dl>
+      {{ render_field(form.username) }}
+      {{ render_field(form.email) }}
+      {{ render_field(form.password) }}
+      {{ render_field(form.confirm) }}
+    </dl>
+    <p><input type=submit value=Guardar class="btn btn-success">
+   </form>
+
+
+
+    <div class="pull-right"><a role="button" class="btn btn-default" href="{{ url_for('perfil') }}">Volver</a></div>
+
 {% endblock %}

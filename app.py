@@ -1,7 +1,7 @@
 from flask import Flask, render_template, make_response
 from flask_restful import Resource, Api
 from flask.ext.login import LoginManager, login_user , logout_user , current_user , login_required
-from db.models import Session, Usuario, Evento
+from db.models import Session, Evento
 from formularios.evento_form import EventoForm
 import datetime
 from flask import request, redirect, url_for, session
@@ -15,6 +15,8 @@ from controllers.perfilController import PerfilController
 from controllers.eventoController import EventoController
 from controllers.editarEventoController import EditarEventoController
 from controllers.nuevoEventoController import NuevoEventoController
+from controllers.editarUsuarioController import EditarUsuarioController
+
 
 import logging
 from logging.handlers import TimedRotatingFileHandler
@@ -48,6 +50,7 @@ api.add_resource(RegisterController, '/register',endpoint="register")
 api.add_resource(LoginController, '/login',endpoint="login")
 api.add_resource(LogoutController, '/logout',endpoint="logout")
 api.add_resource(PerfilController, '/perfil',endpoint="perfil")
+api.add_resource(EditarUsuarioController, '/editarme', endpoint="editar_perfil")
 api.add_resource(EventoController, '/evento/<evento_id>',endpoint="evento")
 api.add_resource(EditarEventoController, '/editar/<evento_id>',endpoint="editar_evento")
 api.add_resource(NuevoEventoController, '/nuevo_evento',endpoint="nuevo_evento")

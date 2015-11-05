@@ -28,11 +28,6 @@ if (os.getenv('DATABASE_URL') is None) and not database_exists(engine.url):
 Session = sessionmaker(bind=engine)
 Base = declarative_base()
 
-class Usuario(Base):
-	__tablename__ = 'usuario'
-	id = Column(Integer, primary_key=True)
-	nombre = Column(String(500))
-
 class User(Base):
     __tablename__ = "users"
     id = Column('user_id',Integer , primary_key=True)

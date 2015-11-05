@@ -20,7 +20,8 @@
               <li class="active"><a href="{{ url_for('home') }}">Home</a></li>
               {% if current_user.is_authenticated() %}
                 <li><a href="{{ url_for('perfil') }}">Perfil</a></li>
-                <li><a href="{{ url_for('logout') }}">Desloguearse</a></li>  
+                <li><a href="{{ url_for('editar_perfil') }}">Editarme</a></li>
+                <li><a href="{{ url_for('logout') }}">Desloguearse</a></li>
               {% else %}
                 <li><a href="{{ url_for('login') }}">Login</a></li>
                 <li><a href="{{ url_for('register') }}">Registrarse</a></li>

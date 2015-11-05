@@ -26,11 +26,22 @@ class Adapter():
 
 	__metaclass__ = ABCMeta
 
-
-	def create_user(self, user_username, user_password, user_email):# ESTE VA PARA ARRIBA
-		user = User(username=user_username, password=user_password , email=user_email)
+	def create_user(self, form):# ESTE VA PARA ARRIBA
+		user = User(username=form.username.data, 
+					password=form.password.data , 
+					email=form.email.data)
 	  	self.guardar(user)
 	  	return user
+
+	def guardar_edicion_a_usuario(self, usuario_id, form):
+		usuario = self.get_user_by_id(usuario_id)
+	
+		usuario.username = form.username.data
+		usuario.password=form.password.data
+		usuario.email=form.email.data
+			
+		self.guardar(usuario)
+		return usuario
 
 	def get_user_by_name_and_pass(self,username, password):
 		registered_user = self.db_session.query(User).filter_by(username=username,password=password).first()
