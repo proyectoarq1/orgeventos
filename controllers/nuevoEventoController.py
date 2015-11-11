@@ -3,10 +3,11 @@ from formularios.evento_form import EventoForm
 from flask_restful import Resource
 from db.adapter_selected import adapter
 from flask import session, request, redirect
-from flask.ext.login import current_user
+from flask.ext.login import current_user, login_required
 
 
 class NuevoEventoController(Resource):
+    @login_required
     def get(self):
     	form = EventoForm(request.form)
     	headers = {'Content-Type': 'text/html'}

@@ -58,9 +58,7 @@ class MySQLAdapter(Adapter):
 		eventos = []
 		for e in eventos_invitados:
 			evento = self.get_evento(e.evento_id)
-			print evento['organizador_id']
-			print usuario_id
-			if evento['organizador_id'] != usuario_id:
+			if str(evento['organizador_id']) != str(usuario_id):
 				eventos.append(evento)
 		return eventos
 

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, make_response
+from flask import Flask, render_template, make_response, flash
 from flask_restful import Resource, Api
 from flask.ext.login import LoginManager, login_user , logout_user , current_user , login_required
 from db.models import Session, Evento
@@ -30,14 +30,21 @@ api = Api(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
+login_manager.login_view = "login"
+login_manager.login_message = "Necesitas estar logueado para acceder a esa pagina"
 
 @login_manager.user_loader
 def load_user(user_id):
 	return adapter.get_user_by_id(user_id)
 
+#@login_manager.unauthorized_handler
+#def unauthorized():
+#    return 'Loggueate capo'
+
+
 @app.errorhandler(400)
 def page_not_found(e):
-    return render_template('home.html'),400
+    return render_template('login.html'),400
 
 app.config.from_object('config')
  

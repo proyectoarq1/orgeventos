@@ -46,14 +46,14 @@
   <ol class="carousel-indicators">
   	{% set count = 0 %}
   	{% for evento in eventos_publicos %}
-  		{% if count>0 %}
-  			{% set is_active = '' %}
-  		{% else %}
-  			{% set is_active = 'active' %}
-  		{% endif %}
-
-    	<li data-target="#myCarousel" data-slide-to={{ count }} class={{is_active}}></li>
     	{% set count = count + 1 %}
+      {% if count>0 %}
+        {% set is_active = '' %}
+      {% else %}
+        {% set is_active = 'active' %}
+      {% endif %}
+
+      <li data-target="#myCarousel" data-slide-to={{ count }} class={{is_active}}></li>
     {% endfor %}
    
   </ol>
@@ -62,21 +62,21 @@
   <div class="carousel-inner" role="listbox">
   	{% set count = 0 %}
   	{% for evento in eventos_publicos %}
-  		{% if count>0 %}
-  			{% set item_active = 'item' %}
-  		{% else %}
-  			{% set item_active = 'item active' %}
-  		{% endif %}
-	  	<div class={{item_active}}>
-	      <a href="{{ url_for('evento', evento_id=evento._id) }}">
-	      	<img src="https://i.ytimg.com/vi/qSLd5VBktu4/maxresdefault.jpg">
-	      </a>
-	      <div class="carousel-caption">
-	          <h3>{{evento.nombre}}</h3>
-	          <p>{{evento.descripcion}}</p>
-	      </div>
-	    </div>
 	    {% set count = count + 1 %}
+      {% if count>0 %}
+        {% set item_active = 'item' %}
+      {% else %}
+        {% set item_active = 'item active' %}
+      {% endif %}
+      <div class={{item_active}}>
+        <a href="{{ url_for('evento', evento_id=evento._id) }}">
+          <img src="https://i.ytimg.com/vi/qSLd5VBktu4/maxresdefault.jpg">
+        </a>
+        <div class="carousel-caption">
+            <h3>{{evento.nombre}}</h3>
+            <p>{{evento.descripcion}}</p>
+        </div>
+      </div>
 	{% endfor %}
   </div>
 

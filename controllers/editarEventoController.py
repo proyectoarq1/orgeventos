@@ -2,10 +2,12 @@ from flask import render_template, make_response, request, redirect, url_for
 from formularios.evento_form import EventoForm
 from flask_restful import Resource
 from db.adapter_selected import adapter
+from flask.ext.login import login_required
 
 
 
 class EditarEventoController(Resource):
+    @login_required
     def get(self,evento_id):
         evento = adapter.get_evento_object(evento_id)
         form = EventoForm(obj=evento)

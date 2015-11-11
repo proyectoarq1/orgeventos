@@ -2,11 +2,12 @@ from flask import render_template, make_response, request, redirect, url_for
 from formularios.usuario_form import UserForm
 from flask_restful import Resource
 from db.adapter_selected import adapter
-from flask.ext.login import current_user
+from flask.ext.login import current_user, login_required
 
 
 
 class EditarUsuarioController(Resource):
+    @login_required
     def get(self):
 
         form = UserForm(obj=current_user)

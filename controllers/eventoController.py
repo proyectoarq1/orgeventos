@@ -2,7 +2,7 @@ from flask import Flask, render_template, make_response, redirect, url_for, curr
 from flask_restful import Resource
 from db.adapter_selected import adapter
 from flask import session,request
-from flask.ext.login import current_user
+from flask.ext.login import current_user, login_required
 from servicios.openWeatherMapAdapter import OpenWeatherMapAdapter
 import urllib2, json
 
@@ -12,7 +12,7 @@ openweathermap = OpenWeatherMapAdapter()
 
 class EventoController(Resource):
     
-
+    @login_required
     def get(self,evento_id):
         evento = adapter.get_evento(evento_id)
         clima_actual = openweathermap.get_clima(evento["ubicacion"])
