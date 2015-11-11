@@ -19,7 +19,6 @@ class EventoController(Resource):
         all_users = adapter.get_all_users()
         usuarios_invitados = adapter.obtener_usuarios_invitados_evento(evento_id)
         users_to_invite = [user for user in all_users if user not in usuarios_invitados]
-        for user in all_users:
         asistencia = adapter.confirma_asistencia_a_evento(evento_id,current_user.get_id())
     	current_app.logger.info('invitados')
         headers = {'Content-Type': 'text/html'}
