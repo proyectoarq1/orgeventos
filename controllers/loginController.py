@@ -22,6 +22,5 @@ class LoginController(Resource):
         return redirect(url_for('login'))
       current_app.logger.info('login user : ')
       login_user(registered_user,True)
-      #flash('Logged in successfully','success')
       return redirect(request.args.get('next') or url_for('perfil'))
 

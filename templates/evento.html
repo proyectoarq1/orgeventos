@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-
+{% from "_formhelpers.html" import render_field %}
   
 {% block content %}
   <h2>{{ evento.nombre }}</h2>
@@ -27,7 +27,7 @@
 				  {% endfor %}
 			  {% endif %}
 			  {% if evento.organizador_id == current_user.id and all_users != [] %}
-			  <form method=post action="">
+			  <form method=post value="invitado" action="">
 				  	<h4 style="margin-left:5em;"><u>Invitar a</u>:
 					  	<select id="invitado" name="invitado">
 							{% for a_user in all_users %}
@@ -63,5 +63,44 @@
   </div>
 
   <div class="pull-right"><a role="button" class="btn btn-default" href="{{ url_for('perfil') }}">Volver</a></div>
+
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modalRequerimiento" >Crear requerimiento</button>
+
+  <!-- Modal -->
+  <div class="modal fade" id="modalRequerimiento" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Crear un requerimiento</h4>
+        </div>
+        <div class="modal-body">
+         
+         <form style="margin-left:50px;" method="post" action="{{ url_for('crear_recurso', evento_id=evento.id) }}">
+
+		    <dl>
+		      {{ render_field(form_requerimientos.nombre,required="true") }}
+		      {{ render_field(form_requerimientos.descripccion,required="true") }}
+		      {{ render_field(form_requerimientos.cantidad,required="true", type="number") }}
+
+		    </dl>
+		    <p><input type=submit value=Guardar class="btn btn-success">
+		  </form>
+
+
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
   
 {% endblock %}

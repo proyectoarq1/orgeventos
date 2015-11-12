@@ -1,4 +1,4 @@
-from models import User, Session, Evento, Invitacion
+from models import User, Session, Evento, Invitacion, Requerimiento
 import datetime
 from alchemy_encoder import AlchemyEncoder
 import dbsettings
@@ -123,6 +123,20 @@ class MySQLAdapter(Adapter):
 		invitacion = self.db_session.query(Invitacion).filter_by(evento_id=evento_id, usuario_id=usuario_id).first()
 		self.borrar(invitacion)
 
+	def borrar_requerimiento(self, requerimiento_id):
+		requerimiento = self.db_session.query(Requerimiento).filter_by(id=requerimiento_id).first()
+		#Tambien hay que borrar todos los requerimientos asignados!!!
+		requerimientos_asignados = self.db_session.query(RequerimientoAsignado).filter_by(requerimiento_id=requerimiento_id).all()
+		for r in requerimientos_asignados:
+			self.borrar(r)
+		self.borrar(requerimiento)
+
+	def obtener_requerimientos_evento(self, evento_id):
+		requerimientos = self.db_session.query(Requerimiento).filter_by(evento_id=evento_id).all()
+		requerimientos_json = []
+		for r in requerimientos:
+		  requerimientos_json.append(self.to_json(r))
+		return requerimientos_json
 
 
 

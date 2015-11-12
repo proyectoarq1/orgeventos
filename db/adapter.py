@@ -6,7 +6,7 @@ db_seleccionada = os.getenv('TIPO_BASE_DE_DATOS', 'MySQL')
 if db_seleccionada=='MongoDB':
 	from mongo_models import User, Evento
 else:
-	from models import User, Evento
+	from models import User, Evento, Requerimiento
 
 import datetime
 from alchemy_encoder import AlchemyEncoder
@@ -168,8 +168,24 @@ class Adapter():
 	def borrar_invitacion(self, evento_id, usuario_id):
 		pass
 
+	def crear_requerimiento(self, evento_id, form):
+		
+		requerimiento = Requerimiento(
+			nombre=form.nombre.data,
+			descripccion=form.descripccion.data,
+			cantidad=form.cantidad.data)
+		
+		self.guardar(requerimiento)
+		
+		return requerimiento
 
-if __name__ == '__main__':
+	@abstractmethod
+	def borrar_requerimiento(self, requerimiento_id):
+		pass
 
-	pass
+	@abstractmethod
+	def obtener_requerimientos_evento(self, evento_id):
+		pass
+
+
 
