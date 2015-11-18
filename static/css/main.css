@@ -188,3 +188,16 @@ p {
   .bottom-three {
      margin-bottom: 1cm;
   }
+
+  #trashicon {
+    width: 2em;  height: 2em;
+}
+
+a {
+   color: #1e54c8;
+   text-decoration: none; 
+}
+
+a:hover {
+   text-decoration: underline;
+}

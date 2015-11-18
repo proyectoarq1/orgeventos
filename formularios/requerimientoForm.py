@@ -7,6 +7,7 @@ class RequerimientoForm(Form):
     descripccion = TextField('Descripcion del requerimiento', [validators.Length(min=4, max=200),validators.Required(message="Por favor ingrese una descripcion para el requerimiento. Ej:'Necesitamos coca para el fernet' ")])
     cantidad = IntegerField('Cantidad del requerimiento, como minimo cero', [validators.Required(message="Por favor ingrese una cantidad para el requerimiento")])
 
+    
 if __name__ == '__main__':
 	#os.environ.setdefault("DJANGO_SETTINGS_MODULE", "dbsettings")
 	#session = Session()

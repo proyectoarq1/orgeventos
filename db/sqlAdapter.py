@@ -1,4 +1,4 @@
-from models import User, Session, Evento, Invitacion, Requerimiento
+from models import User, Session, Evento, Invitacion, Requerimiento, RequerimientoAsignado
 import datetime
 from alchemy_encoder import AlchemyEncoder
 import dbsettings
@@ -133,6 +133,12 @@ class MySQLAdapter(Adapter):
 
 	def obtener_requerimientos_evento(self, evento_id):
 		requerimientos = self.db_session.query(Requerimiento).filter_by(evento_id=evento_id).all()
+		requerimientos_json = []
+		
+		return requerimientos
+
+	def obtener_requerimientos_evento_json(self, evento_id):
+		requerimientos = self.obtener_requerimientos_evento(evento_id)
 		requerimientos_json = []
 		for r in requerimientos:
 		  requerimientos_json.append(self.to_json(r))

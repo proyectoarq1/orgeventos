@@ -169,15 +169,26 @@ class Adapter():
 		pass
 
 	def crear_requerimiento(self, evento_id, form):
-		
+
 		requerimiento = Requerimiento(
 			nombre=form.nombre.data,
 			descripccion=form.descripccion.data,
-			cantidad=form.cantidad.data)
+			cantidad=form.cantidad.data,
+			evento_id = evento_id)
 		
 		self.guardar(requerimiento)
 		
-		return requerimiento
+		return self.to_json(requerimiento)
+
+	def guardar_edicion_a_requerimiento(self, requerimiento_id, form):
+		requerimiento = self.db_session.query(Requerimiento).filter_by(id=requerimiento_id).first()
+	
+		requerimiento.nombre=form.nombre.data
+		requerimiento.descripccion=form.descripccion.data
+		requerimiento.cantidad=form.cantidad.data
+			
+		self.guardar(requerimiento)
+		return self.to_json(requerimiento)
 
 	@abstractmethod
 	def borrar_requerimiento(self, requerimiento_id):

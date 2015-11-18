@@ -16,16 +16,24 @@ class EventoController(Resource):
     @login_required
     def get(self,evento_id):
         evento = adapter.get_evento(evento_id)
+
+        puede_editar= str(current_user.id == evento["organizador_id"]).lower()
+
         clima_actual = openweathermap.get_clima(evento["ubicacion"])
         all_users = adapter.get_all_users()
         usuarios_invitados = adapter.obtener_usuarios_invitados_evento(evento_id)
         users_to_invite = [user for user in all_users if user not in usuarios_invitados]
         asistencia = adapter.confirma_asistencia_a_evento(evento_id,current_user.get_id())
-        form_requerimiento = RequerimientoForm()
+        #form_requerimiento = RequerimientoForm()
+        requerimientos = adapter.obtener_requerimientos_evento(evento_id)
+        #requerimientos = adapter.obtener_requerimientos_evento_json(evento_id)
+
+        #requerimientos = [{"requerimiento": r, "form": RequerimientoForm(obj=r)} for r in requerimientos]
 
         headers = {'Content-Type': 'text/html'}
-    	return make_response(render_template('evento.html',form_requerimientos=form_requerimiento,evento=evento,all_users=users_to_invite,usuarios_invitados=usuarios_invitados, clima_actual=clima_actual, asistencia=asistencia),200,headers)
+    	return make_response(render_template('evento.html',puede_editar=puede_editar,evento=evento,all_users=users_to_invite,usuarios_invitados=usuarios_invitados, clima_actual=clima_actual, asistencia=asistencia, requerimientos=requerimientos),200,headers)
 
+    @login_required    
     def post(self,evento_id): 
       
 
