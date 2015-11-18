@@ -9,11 +9,9 @@ function borrar_evento(id) {
 
         success : function() {
 
-            console.log("eliminado con exito");
             window.location.replace("http://localhost:5000/perfil");
         },
 
-        // handle a non-successful response
         error : function(xhr,errmsg,err) {
 
             $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
