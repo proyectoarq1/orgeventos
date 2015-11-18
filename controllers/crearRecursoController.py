@@ -11,7 +11,6 @@ class CrearRecursoController(Resource):
     
     @login_required
     def post(self):
-        print "sassssssssssssssssss"
     	form = RequerimientoForm(request.form)
 
         evento_id = request.form["evento_id"]

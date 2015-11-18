@@ -71,6 +71,12 @@ class MySQLAdapter(Adapter):
 
 	def borrar_evento(self,user_id,evento_id):
 		evento = self.db_session.query(Evento).filter_by(id=evento_id).first()
+		requerimientos = self.obtener_requerimientos_evento(evento_id)
+		for r in requerimientos:
+			self.borrar_requerimiento(r.id)
+		invitaciones_evento = self.db_session.query(Invitacion).filter_by(evento_id=evento_id).all()
+		for i in invitaciones_evento:
+			self.borrar(i)
 		self.borrar(evento)
 
 	def crear_invitacion(self, evento_id, usuario_id):
@@ -132,9 +138,7 @@ class MySQLAdapter(Adapter):
 		self.borrar(requerimiento)
 
 	def obtener_requerimientos_evento(self, evento_id):
-		requerimientos = self.db_session.query(Requerimiento).filter_by(evento_id=evento_id).all()
-		requerimientos_json = []
-		
+		requerimientos = self.db_session.query(Requerimiento).filter_by(evento_id=evento_id).all()		
 		return requerimientos
 
 	def obtener_requerimientos_evento_json(self, evento_id):
