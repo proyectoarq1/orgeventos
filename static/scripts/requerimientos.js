@@ -1,11 +1,7 @@
 
 function asiganarse_requerimiento(id_form) {
-    console.log(id_form)
-    console.log($('form[id="form_asignarse'+id_form+'"]').serialize())
-    
-    //max = $('[name=cantidad_llevar]').attr("max");
-    //form_serialized = $('form[id="form_asignarse'+id_form+'"]').serialize(),
-
+    //console.log(id_form)
+    //console.log($('form[id="form_asignarse'+id_form+'"]').serialize())
 
     $.ajax({
         url : "/asignar_recurso",
@@ -14,17 +10,16 @@ function asiganarse_requerimiento(id_form) {
 
         success : function(json) {
 
-            console.log(json);
-            $('#'+json.requerimiento.requerimiento_id).modal('toggle');
-            $('#contenedor'+id_form).attr('onclick', 'habilitar_edicion('+json.requerimiento.id+',"'+json.requerimiento.nombre+'","'+json.requerimiento.descripccion+'",'+json.requerimiento.cantidad+','+json.faltan_reservar+')');
+            $('#'+json.requerimiento.id).modal('toggle');
+            $('#contenedor'+id_form).attr('onclick', 'habilitar_edicion('+json.requerimiento.id+',"'+json.requerimiento.nombre+'","'+json.requerimiento.descripccion+'",'+json.requerimiento.cantidad+','+json.faltan_reservar+','+json.asignacion_propia.cantidad+')');
 
         },
 
         error : function(xhr,errmsg,err) {
 
             $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
-                " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
-            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                " <a href='#' class='close'>&times;</a></div>"); 
+            console.log(xhr.status + ": " + xhr.responseText); 
         }
     });
 };
@@ -32,7 +27,7 @@ function asiganarse_requerimiento(id_form) {
 
 
 function borrar_recurso(id) {
-    console.log("delete post is working!") // sanity check
+    console.log("delete post is working!")
     
     $.ajax({
         url : "/crear_recurso",
@@ -47,12 +42,11 @@ function borrar_recurso(id) {
 
         },
 
-        // handle a non-successful response
         error : function(xhr,errmsg,err) {
 
             $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
-                " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
-            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                " <a href='#' class='close'>&times;</a></div>"); 
+            console.log(xhr.status + ": " + xhr.responseText); 
         }
     });
 };
@@ -75,12 +69,12 @@ function editar_recurso(id_form) {
 
         },
 
-        // handle a non-successful response
+
         error : function(xhr,errmsg,err) {
 
             $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
-                " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
-            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                " <a href='#' class='close'>&times;</a></div>"); 
+            console.log(xhr.status + ": " + xhr.responseText); 
         }
     });
 };
@@ -149,14 +143,13 @@ function creando_requerimiento() {
             
             $('#modalRequerimiento').modal('toggle');
             $( "#requerimientos_lista" ).append( a );
-            //$("#modalRequerimiento").removeData("modal");
         },
  
         error : function(xhr,errmsg,err) {
 
             $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
-                " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
-            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
+                " <a href='#' class='close'>&times;</a></div>"); 
+            console.log(xhr.status + ": " + xhr.responseText); 
         }
     });
 };

@@ -29,7 +29,7 @@ class EventoController(Resource):
         for r in requerimientos:
             asignaciones = adapter.obtener_asignaciones_requerimiento(r.id)
             faltan_reservar = r.cantidad
-            asignacion_propia = None
+            asignacion_propia = {"cantidad":1}
             for a in asignaciones:
                 faltan_reservar = faltan_reservar - a["cantidad"]
                 if a["usuario_id"]==current_user.id:
