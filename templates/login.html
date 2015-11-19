@@ -2,27 +2,29 @@
 {% block content %}
 
   <h2>Login </h2>
-  <form style="margin-left:70px;" action="" method=post class="form-horizontal">
-    
-    <div class="bottom-three"></div>
-    <div class="control-group">
-        <div class="controls">
-          <input type="text" id="username" name="username" class="input-xlarge"
-            placeholder="Enter Username" required>
-        </div>
-    </div>
- 
-    <div class="control-group">
-        <div class="controls">
-          <input type="password" id="password" name="password" class="input-xlarge"
-            placeholder="Enter Password" required>
-        </div>
-    </div>
- 
-    <div class="control-group">
-        <div class="controls">
-          <button type="submit" class="btn btn-success">Signin</button>
-        </div>
-    </div>
-  </form>
+  <div class="col-md-7">
+    <form style="margin-left:150px;" action="" method=post class="form-horizontal">
+      
+      <div class="bottom-three"></div>
+      <div class="control-group">
+          <div class="controls">
+            <input class="form-control" type="text" id="username" name="username" class="input-xlarge"
+              placeholder="Enter Username" required style="margin-top:5px;">
+          </div>
+      </div>
+   
+      <div class="control-group">
+          <div class="controls">
+            <input class="form-control" type="password" id="password" name="password" class="input-xlarge"
+              placeholder="Enter Password" required style="margin-top:5px;">
+          </div>
+      </div>
+   
+      <div class="control-group">
+          <div class="controls">
+            <button type="submit" class="btn btn-success" style="margin-top:5px;">Signin</button>
+          </div>
+      </div>
+    </form>
+</div>
 {% endblock %}

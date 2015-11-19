@@ -91,7 +91,6 @@
 				{% endwith %}
 		  			
 				{% for r in requerimientos_con_datos %}
-					{{r}}
 					{% set contenedor_id = 'contenedor' ~ r.requerimiento.id %}
 					{% set contenedor_columna_id = 'contenedor_columna' ~ r.requerimiento.id %}
 					<div>

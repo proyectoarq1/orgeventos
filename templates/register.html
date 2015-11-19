@@ -9,20 +9,20 @@
     <h2>Registrarse</h2>
   {% endif %}  
 
+  <div class="col-md-7">   
+     <form style="margin-left:125px;" method="post" class="form-horizontal" action="">
+
+        <dl>
+          {{ render_field(form.username,style="margin-top:5px;",class="form-control") }}
+          {{ render_field(form.email,style="margin-top:5px;",class="form-control") }}
+          {{ render_field(form.password,style="margin-top:5px;",class="form-control") }}
+          {{ render_field(form.confirm,style="margin-top:5px;",class="form-control") }}
+        </dl>
+        <p><input type=submit value=Guardar class="btn btn-success" style="float: right; width:120px; height:30px;  margin-top:5px;">
+     </form>
+ </div>
+
+
    
-     <form style="margin-left:250px;" method="post" class="form-horizontal" action="">
-
-    <dl>
-      {{ render_field(form.username) }}
-      {{ render_field(form.email) }}
-      {{ render_field(form.password) }}
-      {{ render_field(form.confirm) }}
-    </dl>
-    <p><input type=submit value=Guardar class="btn btn-success">
-   </form>
-
-
-
-    <div class="pull-right"><a role="button" class="btn btn-default" href="{{ url_for('perfil') }}">Volver</a></div>
 
 {% endblock %}
