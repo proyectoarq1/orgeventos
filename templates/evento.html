@@ -20,10 +20,16 @@
 			  <h4 style="margin-left:5em;"><u>Hora</u>: {{evento.hora}}</h4>
 			  
 			  <h4 style="margin-left:5em;" ><u>Asistir&aacute;n</u>: {{evento.asistiran}}</h4>
-			  {% if usuarios_invitados %}
+			  {% if usuarios_confirmados or usuarios_pendientes %}
 			  	<h4 style="margin-left:5em;"> <u>Usuarios invitados</u>:</h4>
-				  {% for usuario_invitado in usuarios_invitados %}
-						<h5 style="margin-left:7em;"> {{usuario_invitado.username}} </h5>
+				  {% for usuario_confirmado in usuarios_confirmados %}
+						<h5 style="margin-left:7em;"> {{usuario_confirmado.username}} - Asiste </h5>
+				  {% endfor %}
+				  {% for usuario_pendiente in usuarios_pendientes %}
+						<h5 style="margin-left:7em;"> {{usuario_pendiente.username}} - Pendiente </h5>
+				  {% endfor %}
+				  {% for usuario_rechazado in usuarios_rechazados %}
+						<h5 style="margin-left:7em;"> {{usuario_rechazado.username}} - No Asiste </h5>
 				  {% endfor %}
 			  {% endif %}
 			  {% if evento.organizador_id == current_user.id and all_users != [] %}
@@ -39,12 +45,7 @@
 
 			   </form>
 			  {% else %}
-			  	<h5 style="margin-left:7em;"> Asistencia: </h4>
-			  	{% if asistencia %}
-			  		"Siiiiiiiiiiiii"
-			  	{% else %}
-			  		"Por default en Nooooooooooooo"
-			  	{% endif %}
+			
 			  {% endif %}
 	    </div>
 

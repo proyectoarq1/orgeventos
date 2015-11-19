@@ -1,4 +1,3 @@
-
 from mongoAdapter import MongoAdapter
 from sqlAdapter import MySQLAdapter
 import os

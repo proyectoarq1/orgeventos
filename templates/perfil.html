@@ -3,40 +3,31 @@
 {% block content %}
   {% if current_user.is_authenticated %}
   	<h2>Bienvenido, {{ current_user.username }}</h2>
+  	{{eventos_invitados_y_asistencia}}
   {% endif %}
   <div class="jumbo">
   	 <div id="left">
 
   	 	  <h3>Lista de eventos publicos</h3>
-		  {% for evento in eventos_publicos %}
-		    <p><a href="{{ url_for('evento', evento_id=evento._id) }}"> {{ evento.nombre }}</a></p>
-		  {% endfor %}
+		  
+		  {% with eventos=eventos_publicos,user=current_user %}
+				{% include "_lista_de_eventos.html" %}
+		  {% endwith %}
 
      </div>
      <div id="right">
 
 		  <h3>Lista de eventos propios</h3>
-		  {% for evento_usuario in eventos %}
-		    <p><a href="{{ url_for('evento', evento_id=evento_usuario._id) }}"> {{ evento_usuario.nombre }}</a></p>
-		  {% endfor %}
+
+		  {% with eventos=eventos,user=current_user %}
+				{% include "_lista_de_eventos.html" %}
+		  {% endwith %}
 
 		  <h3>Lista de eventos invitados</h3>
-		  <form style="margin-left:70px;" action="" id="form-asistir" method=post class="form-horizontal">
-		  {% for evento_inv in eventos_invitados %}
-		    <p>
-		    	<a href="{{ url_for('evento', evento_id=evento_inv._id) }}"> {{ evento_inv.nombre }}</a>
-		    </p>
-			<h5>Asistir:
-			  	<select id="asistir" name="asistir">
-				    <option value={{evento_inv._id}},1>Como pinia!!</option>
-				    <option value={{evento_inv._id}},2 SELECTED>Em..veo..</option>
-				</select>
-				<input class="btn btn-success" type=submit value="Ok">
-	  		</h5>
-
-		    	
-		  {% endfor %}
-		</form>
+		
+		  {% with eventos=eventos_invitados,user=current_user %}
+				{% include "_lista_de_eventos.html" %}
+		  {% endwith %}
 
 	  </div>
 	  <p class="pull-right"><a role="button" class="btn btn-primary" href="{{ url_for('nuevo_evento', _method='GET') }}">Crear nuevo evento</a></p>

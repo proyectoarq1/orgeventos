@@ -12,6 +12,8 @@ from sqlalchemy import Column, Integer, String, Float, DateTime, Date, Time
 from sqlalchemy.types import Boolean
 from sqlalchemy.engine.url import URL
 from sqlalchemy_utils import database_exists, create_database
+from utils.Asistencia import *
+from sqlalchemy_enum34 import EnumType
 
 import dbsettings
 
@@ -74,7 +76,7 @@ class Invitacion(Base):
     __tablename__ = 'invitacion'
     evento_id = Column(Integer, primary_key=True)
     usuario_id = Column(Integer, primary_key=True)
-    asiste = Column(Boolean, unique=False,default=False)
+    asiste = Column(EnumType(Asistencia))
     
 if __name__ == '__main__':
 	#os.environ.setdefault("DJANGO_SETTINGS_MODULE", "dbsettings")

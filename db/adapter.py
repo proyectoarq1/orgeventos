@@ -16,6 +16,7 @@ import json, os
 from bson.objectid import ObjectId
 from datetime import date
 from abc import ABCMeta, abstractmethod
+from utils.Asistencia import *
 
 from flask import current_app
 import mongoAdapter
@@ -88,7 +89,7 @@ class Adapter():
 		
 		self.guardar(evento)
 		self.crear_invitacion(evento.id, usuario_id)
-		self.confirmar_asistencia_a_evento(evento.id, usuario_id)
+		self.responder_asistencia_a_evento(evento.id, usuario_id, Asistencia.Asisto)
 		return evento
 
 	@abstractmethod
@@ -137,7 +138,7 @@ class Adapter():
 		pass
 
 	@abstractmethod
-	def obtener_usuarios_invitados_evento(self, evento_id):
+	def obtener_usuarios_invitados_evento(self, evento_id, respuesta):
 		pass
 
 	@abstractmethod
@@ -149,15 +150,11 @@ class Adapter():
 		pass
 
 	@abstractmethod
-	def confirmar_asistencia_a_evento(self, evento_id, usuario_id):
+	def responder_asistencia_a_evento(self, evento_id, usuario_id, respuesta):
 		pass
 
 	@abstractmethod
 	def obtener_eventos_invitados(self, usuario_id):
-		pass
-
-	@abstractmethod
-	def rechazar_asistencia_a_evento(self, evento_id, usuario_id):
 		pass
 
 	@abstractmethod
@@ -166,6 +163,10 @@ class Adapter():
 
 	@abstractmethod
 	def borrar_invitacion(self, evento_id, usuario_id):
+		pass
+
+	@abstractmethod
+	def obtener_asistencia_a_evento(self, evento_id, usuario_id):
 		pass
 
 

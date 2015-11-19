@@ -1,35 +1,40 @@
 $(function() {
 
-// Submit post on submit
-$('#form-asistir').on('submit', function(event){
-    event.preventDefault();
-    console.log("form submitted!")
-    contestando_asistencia();
+//$('#form-asistir').on('submit', function(event){
+//    event.preventDefault();
+//    contestando_asistencia();
+//});
+
+//$('#asistir').on('change', function(){
+//    if(this.value != "0"){
+//        contestando_asistencia();
+//    }
+//});
+
+//$("#asistir1").val(eventos_invitados_y_asistencia[1].evento.id+","+eventos_invitados_y_asistencia[1].asistencia.value);
+
+
 });
+function contestando_asistencia(evento_id) {
+    var opcionSeleccionada = $('#asistir'+evento_id).val()
+    if (opcionSeleccionada !="0"){ 
+        $.ajax({
+            url : "perfil",
+            type : "POST",
+            data : { asistir : opcionSeleccionada},
 
-function contestando_asistencia() {
-    console.log("create post is working!") // sanity check
-    $.ajax({
-        url : "perfil", // the endpoint
-        type : "POST", // http method
-        data : { asistir : $('#asistir').val()
-        	
-         }, // data sent with the post request 
-
-        // handle a successful response
         success : function(json) {
-            $('#form-asistir').hide(); // remove the value from the input
-            console.log(json); // log the returned json to the console
-            console.log("success"); // another sanity check
-        },
+            $('#respuesta').hide(); 
+            console.log(json);
+            console.log("success");
+          },
 
-        // handle a non-successful response
         error : function(xhr,errmsg,err) {
-            $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
-                " <a href='#' class='close'>&times;</a></div>"); // add the error to the dom
-            console.log(xhr.status + ": " + xhr.responseText); // provide a bit more info about the error to the console
-        }
-    });
+            //$('#results').html("<div class='alert-box alert radius' data-alert>Oops! error: "+errmsg+
+            //    " <a href='#' class='close'>&times;</a></div>");
+            console.log("error");
+         //       console.log(xhr.status + ": " + xhr.responseText);
+          }
+        });
+    }
 };
-
-});

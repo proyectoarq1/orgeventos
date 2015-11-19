@@ -15,28 +15,33 @@
   <body>
    
     <header>
-      <div class="navbar navbar-inverse">
-        <div class="navbar-inner">
-          <a class="brand" href="#">Prueba app</a>
-          <div class="pull-right">
-            <ul class="nav">
-              <li class="active"><a href="{{ url_for('home') }}">Home</a></li>
-              {% if current_user.is_authenticated() %}
-                <li><a href="{{ url_for('perfil') }}">Perfil</a></li>
-                <li><a href="{{ url_for('editar_perfil') }}">Editarme</a></li>
-                <li><a href="{{ url_for('logout') }}">Desloguearse</a></li>
-              {% else %}
-                <li><a href="{{ url_for('login') }}">Login</a></li>
-                <li><a href="{{ url_for('register') }}">Registrarse</a></li>
-              {% endif %}
-            </ul>
-        </div>
-        </div>
-      </div>
-
+      <nav class="navbar navbar-inverse" role="navigation">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Prueba app</a>
+          </div>
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <ul class="nav navbar-nav navbar-right">
+                <li class="active"><a href="{{ url_for('home') }}">Home</a></li>
+                {% if current_user.is_authenticated() %}
+                  <li><a href="{{ url_for('perfil') }}">Perfil</a></li>
+                  <li><a href="{{ url_for('editar_perfil') }}">Editarme</a></li>
+                  <li><a href="{{ url_for('logout') }}">Desloguearse</a></li>
+                {% else %}
+                  <li><a href="{{ url_for('login') }}">Login</a></li>
+                  <li><a href="{{ url_for('register') }}">Registrarse</a></li>
+                {% endif %}
+              </ul>
+          </div>
+      </nav>
 
     </header> 
-    <div id="banner">&nbsp;</div>
+    <!--<div id="banner">&nbsp;</div>-->
     <div class="bottom-three"></div>
 
 

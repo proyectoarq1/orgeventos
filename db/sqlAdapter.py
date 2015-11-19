@@ -7,6 +7,7 @@ import json, os
 from bson.objectid import ObjectId
 from datetime import date
 from abc import ABCMeta, abstractmethod
+from utils.Asistencia import *
 
 from flask import current_app
 from adapter import Adapter
@@ -74,12 +75,12 @@ class MySQLAdapter(Adapter):
 		self.borrar(evento)
 
 	def crear_invitacion(self, evento_id, usuario_id):
-		invitacion = Invitacion(evento_id=evento_id, usuario_id=usuario_id)
+		invitacion = Invitacion(evento_id=evento_id, usuario_id=usuario_id, asiste=Asistencia.Pendiente)
 		self.guardar(invitacion)
 
-	def obtener_usuarios_invitados_evento(self, evento_id):
+	def obtener_usuarios_invitados_evento(self, evento_id, respuesta):
 		db_session = self.db_session
-		invitaciones_evento = self.db_session.query(Invitacion).filter_by(evento_id=evento_id).all()
+		invitaciones_evento = self.db_session.query(Invitacion).filter_by(evento_id=evento_id, asiste=respuesta).all()
 		usuarios_invitados = []
 		for invitacion in invitaciones_evento:
 			usuarios_invitados.append(invitacion.usuario_id)
@@ -99,18 +100,11 @@ class MySQLAdapter(Adapter):
 		else: 
 			return False
 
-	def confirmar_asistencia_a_evento(self, evento_id, usuario_id):
+	def responder_asistencia_a_evento(self, evento_id, usuario_id, respuesta):
 		db_session = self.db_session
 		invitacion = self.db_session.query(Invitacion).filter_by(evento_id=evento_id, usuario_id=usuario_id).first()
-		invitacion.asiste = True
-		print invitacion
+		invitacion.asiste = respuesta
 		self.guardar(invitacion)
-
-	def rechazar_asistencia_a_evento(self, evento_id, usuario_id):
-		db_session = self.db_session
-		invitacion = self.db_session.query(Invitacion).filter_by(evento_id=evento_id, usuario_id=usuario_id).first()
-		invitacion.asiste = False
-		guardar(invitacion)
 
 	def obtener_invitaciones_usuario(self, usuario_id):
 		invitaciones_usuario = self.db_session.query(Invitacion).filter_by(usuario_id=usuario_id).all()
@@ -122,6 +116,11 @@ class MySQLAdapter(Adapter):
 	def borrar_invitacion(self, evento_id, usuario_id):
 		invitacion = self.db_session.query(Invitacion).filter_by(evento_id=evento_id, usuario_id=usuario_id).first()
 		self.borrar(invitacion)
+
+	def obtener_asistencia_a_evento(self, evento_id, usuario_id):
+		db_session = self.db_session
+		invitacion = self.db_session.query(Invitacion).filter_by(evento_id=evento_id, usuario_id=usuario_id).first()
+		return invitacion.asiste
 
 
 

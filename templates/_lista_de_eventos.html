@@ -1,0 +1,19 @@
+{% for ev in eventos %}
+<div class="panel panel-success">
+	<div class="panel-heading">
+		<a href="{{ url_for('evento', evento_id=ev._id) }}"> {{ ev.nombre }}</a>
+		{% if user.id != ev.organizador_id %}
+	  	<select class="btn btn-default btn-sm pull-right" id="asistir{{ev.id}}" value="1,2" onchange="contestando_asistencia({{ev.id}})" name="asistir">
+	  		<option value=0>Seleccione</option>
+	  		{% for asist in Asistencia %}
+		  		<option value={{ev._id}},{{asist.value}}>{{asist.name}}</option>	
+		    {% endfor %}
+		</select>
+		{% endif %}
+		</div>
+  	<div class="panel-body">
+  		{{ev.descripcion}}
+	</div>
+</div>
+	
+{% endfor %}
