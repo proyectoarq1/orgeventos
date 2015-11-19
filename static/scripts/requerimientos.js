@@ -182,7 +182,7 @@ function habilitar_edicion(id_form, nombre,descripccion,cantidad,faltan_reservar
 
 
     if(puede_editar==="true") {
-        //console.log("puede_editar");
+        //console.log("puede_editar")
         $("#"+id_form+" :input").attr("disabled",false);
     }
 
