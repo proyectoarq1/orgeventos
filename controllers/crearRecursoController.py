@@ -7,6 +7,7 @@ from flask.ext.login import current_user, login_required
 from formularios.requerimientoForm import RequerimientoForm
 
 
+
 class CrearRecursoController(Resource):
     
     @login_required
@@ -16,7 +17,7 @@ class CrearRecursoController(Resource):
         evento_id = request.form["evento_id"]
         if form.validate():
             requerimiento = adapter.crear_requerimiento(evento_id,form)
-            return requerimiento
+            return {"requerimiento":requerimiento,"faltan_reservar":requerimiento["cantidad"],"asignacion_propia":None}
 
     @login_required
     def put(self):

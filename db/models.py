@@ -86,6 +86,7 @@ class Requerimiento(Base):
 
 class RequerimientoAsignado(Base):
     __tablename__ = 'requerimientos_asignados'
+    id = Column(Integer, primary_key=True)
     requerimiento_id = Column(Integer, primary_key=True)
     usuario_id = Column(Integer, primary_key=True)
     cantidad = Column(Integer, default=1)

@@ -129,6 +129,10 @@ class MySQLAdapter(Adapter):
 		invitacion = self.db_session.query(Invitacion).filter_by(evento_id=evento_id, usuario_id=usuario_id).first()
 		self.borrar(invitacion)
 
+	def obtener_requerimiento(self, requerimiento_id):
+		requerimiento = self.db_session.query(Requerimiento).filter_by(id=requerimiento_id).first()
+		return self.to_json(requerimiento)
+
 	def borrar_requerimiento(self, requerimiento_id):
 		requerimiento = self.db_session.query(Requerimiento).filter_by(id=requerimiento_id).first()
 		#Tambien hay que borrar todos los requerimientos asignados!!!
@@ -147,6 +151,13 @@ class MySQLAdapter(Adapter):
 		for r in requerimientos:
 		  requerimientos_json.append(self.to_json(r))
 		return requerimientos_json
+
+	def obtener_asignaciones_requerimiento(self, requerimiento_id):
+		requerimientos_asignados = self.db_session.query(RequerimientoAsignado).filter_by(requerimiento_id=requerimiento_id).all()
+		requerimientos_asignados_json = []
+		for r in requerimientos_asignados:
+		  requerimientos_asignados_json.append(self.to_json(r))
+		return requerimientos_asignados_json
 
 
 

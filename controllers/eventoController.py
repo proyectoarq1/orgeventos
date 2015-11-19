@@ -24,14 +24,22 @@ class EventoController(Resource):
         usuarios_invitados = adapter.obtener_usuarios_invitados_evento(evento_id)
         users_to_invite = [user for user in all_users if user not in usuarios_invitados]
         asistencia = adapter.confirma_asistencia_a_evento(evento_id,current_user.get_id())
-        #form_requerimiento = RequerimientoForm()
         requerimientos = adapter.obtener_requerimientos_evento(evento_id)
-        #requerimientos = adapter.obtener_requerimientos_evento_json(evento_id)
+        requerimientos_con_datos = []
+        for r in requerimientos:
+            asignaciones = adapter.obtener_asignaciones_requerimiento(r.id)
+            faltan_reservar = r.cantidad
+            asignacion_propia = None
+            for a in asignaciones:
+                faltan_reservar = faltan_reservar - a["cantidad"]
+                if a["usuario_id"]==current_user.id:
+                    asignacion_propia = a
+                    faltan_reservar = faltan_reservar + a["cantidad"]
 
-        #requerimientos = [{"requerimiento": r, "form": RequerimientoForm(obj=r)} for r in requerimientos]
+            requerimientos_con_datos.append({"requerimiento":r,"faltan_reservar":faltan_reservar,"asignacion_propia":asignacion_propia})
 
         headers = {'Content-Type': 'text/html'}
-    	return make_response(render_template('evento.html',puede_editar=puede_editar,evento=evento,all_users=users_to_invite,usuarios_invitados=usuarios_invitados, clima_actual=clima_actual, asistencia=asistencia, requerimientos=requerimientos),200,headers)
+    	return make_response(render_template('evento.html',puede_editar=puede_editar,evento=evento,all_users=users_to_invite,usuarios_invitados=usuarios_invitados, clima_actual=clima_actual, asistencia=asistencia, requerimientos_con_datos=requerimientos_con_datos),200,headers)
 
     @login_required    
     def post(self,evento_id): 
