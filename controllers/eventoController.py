@@ -6,6 +6,7 @@ from flask.ext.login import current_user, login_required
 from servicios.openWeatherMapAdapter import OpenWeatherMapAdapter
 import urllib2, json
 from db.utils.Asistencia import *
+from formularios.requerimientoForm import RequerimientoForm
 
 openweathermap = OpenWeatherMapAdapter()
 
@@ -16,6 +17,9 @@ class EventoController(Resource):
     @login_required
     def get(self,evento_id):
         evento = adapter.get_evento(evento_id)
+
+        puede_editar= str(current_user.id == evento["organizador_id"]).lower()
+
         clima_actual = openweathermap.get_clima(evento["ubicacion"])
         all_users = adapter.get_all_users()
         usuarios_confirmados = adapter.obtener_usuarios_invitados_evento(evento_id,Asistencia.Asisto)
@@ -23,14 +27,25 @@ class EventoController(Resource):
         usuarios_rechazados = adapter.obtener_usuarios_invitados_evento(evento_id,Asistencia.NoAsisto)
         usuarios_invitados = usuarios_confirmados+usuarios_pendientes+usuarios_rechazados
         users_to_invite = [user for user in all_users if user not in usuarios_invitados]
+        requerimientos = adapter.obtener_requerimientos_evento(evento_id)
+        requerimientos_con_datos = []
+        for r in requerimientos:
+            asignaciones = adapter.obtener_asignaciones_requerimiento(r.id)
+            faltan_reservar = r.cantidad
+            asignacion_propia = {"cantidad":1}
+            for a in asignaciones:
+                faltan_reservar = faltan_reservar - a["cantidad"]
+                if a["usuario_id"]==current_user.id:
+                    asignacion_propia = a
+                    faltan_reservar = faltan_reservar + a["cantidad"]
 
-        asistencia_actual = adapter.confirma_asistencia_a_evento(evento_id,current_user.get_id())
-    	current_app.logger.info('invitados')
+            requerimientos_con_datos.append({"requerimiento":r,"faltan_reservar":faltan_reservar,"asignacion_propia":asignacion_propia})
+
         headers = {'Content-Type': 'text/html'}
-    	return make_response(render_template('evento.html',evento=evento,all_users=users_to_invite,usuarios_rechazados=usuarios_rechazados,usuarios_confirmados=usuarios_confirmados,usuarios_pendientes=usuarios_pendientes, clima_actual=clima_actual, asistencia_actual=asistencia_actual, asistencias=Asistencia),200,headers)
+    	return make_response(render_template('evento.html',puede_editar=puede_editar,evento=evento,all_users=users_to_invite,usuarios_rechazados=usuarios_rechazados,usuarios_confirmados=usuarios_confirmados,usuarios_pendientes=usuarios_pendientes, clima_actual=clima_actual, requerimientos_con_datos=requerimientos_con_datos),200,headers)
 
-    def post(self,evento_id):        
-        current_app.logger.info('Agregando un invitado')
+    @login_required    
+    def post(self,evento_id): 
         invitado_id = request.form['invitado']
         adapter.crear_invitacion(evento_id,invitado_id)
         headers = {'Content-Type': 'text/html'}

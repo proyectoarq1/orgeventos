@@ -17,11 +17,10 @@ class LoginController(Resource):
       current_app.logger.info(registered_user)
       if registered_user is None:
         current_app.logger.error('login user  ')
-        flash('Username or Password is invalid' , 'error')
+        flash('El nombre de usario o la password ingresada es invalida' , 'error')
         #abort(400)
         return redirect(url_for('login'))
       current_app.logger.info('login user : ')
       login_user(registered_user,True)
-      flash('Logged in successfully','success')
       return redirect(request.args.get('next') or url_for('perfil'))
 

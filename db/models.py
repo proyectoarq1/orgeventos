@@ -77,6 +77,21 @@ class Invitacion(Base):
     evento_id = Column(Integer, primary_key=True)
     usuario_id = Column(Integer, primary_key=True)
     asiste = Column(EnumType(Asistencia))
+
+class Requerimiento(Base):
+    __tablename__ = 'requerimientos'
+    id = Column(Integer, primary_key=True)
+    evento_id = Column(Integer)
+    nombre = Column(String(50))
+    descripccion = Column(String(200))
+    cantidad = Column(Integer, default=1)
+
+class RequerimientoAsignado(Base):
+    __tablename__ = 'requerimientos_asignados'
+    id = Column(Integer, primary_key=True)
+    requerimiento_id = Column(Integer, primary_key=True)
+    usuario_id = Column(Integer, primary_key=True)
+    cantidad = Column(Integer, default=1)
     
 if __name__ == '__main__':
 	#os.environ.setdefault("DJANGO_SETTINGS_MODULE", "dbsettings")

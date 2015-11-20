@@ -6,7 +6,7 @@ db_seleccionada = os.getenv('TIPO_BASE_DE_DATOS', 'MySQL')
 if db_seleccionada=='MongoDB':
 	from mongo_models import User, Evento
 else:
-	from models import User, Evento
+	from models import User, Evento, Requerimiento, RequerimientoAsignado
 
 import datetime
 from alchemy_encoder import AlchemyEncoder
@@ -169,8 +169,71 @@ class Adapter():
 	def obtener_asistencia_a_evento(self, evento_id, usuario_id):
 		pass
 
+	def crear_requerimiento(self, evento_id, form):
 
-if __name__ == '__main__':
+		requerimiento = Requerimiento(
+			nombre=form.nombre.data,
+			descripccion=form.descripccion.data,
+			cantidad=form.cantidad.data,
+			evento_id = evento_id)
+		
+		self.guardar(requerimiento)
+		
+		return self.to_json(requerimiento)
 
-	pass
+	def guardar_edicion_a_requerimiento(self, requerimiento_id, form):
+		requerimiento = self.db_session.query(Requerimiento).filter_by(id=requerimiento_id).first()
+	
+		requerimiento.nombre=form.nombre.data
+		requerimiento.descripccion=form.descripccion.data
+		requerimiento.cantidad=form.cantidad.data
+			
+		self.guardar(requerimiento)
+		return self.to_json(requerimiento)
+
+	@abstractmethod
+	def obtener_requerimiento(self, requerimiento_id):
+		pass
+
+	@abstractmethod
+	def borrar_requerimiento(self, requerimiento_id):
+		pass
+
+	@abstractmethod
+	def obtener_requerimientos_evento(self, evento_id):
+		pass
+
+	def asignar_requerimiento(self, requerimiento_id, usuario_id, cantidad):
+		requerimiento_asginado = RequerimientoAsignado(
+			requerimiento_id=requerimiento_id,
+			usuario_id=usuario_id,
+			cantidad=cantidad)
+
+		self.guardar(requerimiento_asginado)
+		
+		return self.to_json(requerimiento_asginado) 
+
+	@abstractmethod
+	def obtener_asignaciones_requerimiento(self, requerimiento_id):
+		pass
+
+	def obtener_asignacion_usuario(self, requerimiento_id, usuario_id):
+		asignacion = self.db_session.query(RequerimientoAsignado).filter_by(requerimiento_id=requerimiento_id,usuario_id=usuario_id).first()
+		return asignacion
+
+	def editar_asignacion_requerimiento(self,asignacion,cantidad):
+		asignacion.cantidad = cantidad
+		self.guardar(asignacion)
+		return self.to_json(asignacion)
+
+	def obtener_asignaciones_usuario(self, usuario_id):
+		asignaciones = self.db_session.query(RequerimientoAsignado).filter_by(usuario_id=usuario_id).all()
+		asignaciones_json = []
+		for a in asignaciones:
+			asignaciones_json.append(self.to_json(a))
+		return asignaciones_json
+
+		
+
+
 

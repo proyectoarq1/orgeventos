@@ -1,68 +1,123 @@
 {% extends "layout.html" %}
 
+{% from "_formhelpers.html" import render_field %}
   
 {% block content %}
-  <h2>{{ evento.nombre }}</h2>
+  <input type="hidden" name="_method" id="puede_editar_evento" value={{puede_editar}} />
+  <h2>
+  	{{ evento.nombre }}
+  	{% if evento.organizador_id == current_user.id%}
+		
+		    <a role="button" class="btn btn-default" href="{{ url_for('editar_evento', evento_id=evento.id) }}">
+		    	<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+		    </a>
+
+	{% endif %}
+  </h2>
   
   <div class="jumbo">
   	<div>
-  		<div id="container_foto">
-		  	<img style="margin-top:3em;" class="img-circle" hspace="25" src="http://localhost:5000/static/imagenes/ensalada_verduras.jpg"/>
-		</div>
-  	</div>
-  	<div id="container">
-	  	<div id="left">
-			 <div>
-			  {% if evento.descripcion %}
-			    <h3 >{{evento.descripcion}}</h3>
-			  {% endif %}
-			  <h4 style="margin-left:5em;"><u>Fecha</u>: {{evento.fecha}}</h4>
-			  <h4 style="margin-left:5em;"><u>Hora</u>: {{evento.hora}}</h4>
-			  
-			  <h4 style="margin-left:5em;" ><u>Asistir&aacute;n</u>: {{evento.asistiran}}</h4>
-			  {% if usuarios_confirmados or usuarios_pendientes %}
-			  	<h4 style="margin-left:5em;"> <u>Usuarios invitados</u>:</h4>
-				  {% for usuario_confirmado in usuarios_confirmados %}
-						<h5 style="margin-left:7em;"> {{usuario_confirmado.username}} - Asiste </h5>
-				  {% endfor %}
-				  {% for usuario_pendiente in usuarios_pendientes %}
-						<h5 style="margin-left:7em;"> {{usuario_pendiente.username}} - Pendiente </h5>
-				  {% endfor %}
-				  {% for usuario_rechazado in usuarios_rechazados %}
-						<h5 style="margin-left:7em;"> {{usuario_rechazado.username}} - No Asiste </h5>
-				  {% endfor %}
-			  {% endif %}
-			  {% if evento.organizador_id == current_user.id and all_users != [] %}
-			  <form method=post action="">
-				  	<h4 style="margin-left:5em;"><u>Invitar a</u>:
-					  	<select id="invitado" name="invitado">
-							{% for a_user in all_users %}
-							    <option value="{{ a_user.id }}" SELECTED>{{ a_user.username }}</option>
-							{% endfor %}
-						</select>
-						<input class="btn btn-success" type=submit style="margin-bottom:1em;"value="Select">
-			  		</h4>
+	  	<div class="col-md-7">
+		  	<div>
+		  		<div>
+				  	<img style="margin-left:4em;" class="img-circle"src="http://localhost:5000/static/imagenes/ensalada_verduras.jpg"/>
+				</div>
+		  	</div>
+	  	</div>
+	  	<div class="col-md-5">
+	  		<h3><u>Clima</u></h3>
+			<div class="col-md-7">
+				<p>Cielo: {{clima_actual.cielo}}</p>
+				<p>Descripci&oacute;n: {{clima_actual.descripcion}}</p>
+				<p>Temperatura: {{clima_actual.temperatura}}</p>
+			</div>
+			<div class="col-md-3">
+				<img src="http://openweathermap.org/img/w/{{clima_actual.icono}}.png"/>
+			</div>
 
-			   </form>
-			  {% else %}
-			
-			  {% endif %}
-	    </div>
+	  	</div>
+	</div>
 
-	    {% if evento.organizador_id == current_user.id%}
-	    	<div class="pull-right"><a role="button" class="btn btn-default" href="{{ url_for('editar_evento', evento_id=evento.id) }}">Editar</a></div>
-	    {% endif %}
-  	</div>
-  	<div id="right">
-  		<h3><u>Clima</u></h3>
-		<img src="http://openweathermap.org/img/w/{{clima_actual.icono}}.png"/>
-		<p>Cielo: {{clima_actual.cielo}}</p>
-		<p>Descripci&oacute;n: {{clima_actual.descripcion}}</p>
-		<p>Temperatura: {{clima_actual.temperatura}}</p>
-  	</div>		 	
-</div>
+  	<div>
+	  	<div class="col-md-7">
+			<div>
+				  {% if evento.descripcion %}
+				    <h3 >{{evento.descripcion}}</h3>
+				  {% endif %}
+				  <h4 style="margin-left:5em;"><u>Fecha</u>: {{evento.fecha}}</h4>
+				  <h4 style="margin-left:5em;"><u>Hora</u>: {{evento.hora}}</h4>
+				  
+				  <h4 style="margin-left:5em;" ><u>Asistir&aacute;n</u>: {{evento.asistiran}}</h4>
+				  {% if usuarios_confirmados or usuarios_pendientes %}
+				  	<h4 style="margin-left:5em;"> <u>Usuarios invitados</u>:</h4>
+					  {% for usuario_confirmado in usuarios_confirmados %}
+							<h5 style="margin-left:7em;"> {{usuario_confirmado.username}} - Asiste </h5>
+					  {% endfor %}
+					  {% for usuario_pendiente in usuarios_pendientes %}
+							<h5 style="margin-left:7em;"> {{usuario_pendiente.username}} - Pendiente </h5>
+					  {% endfor %}
+					  {% for usuario_rechazado in usuarios_rechazados %}
+							<h5 style="margin-left:7em;"> {{usuario_rechazado.username}} - No Asiste </h5>
+					  {% endfor %}
+				  {% endif %}
+				  {% if evento.organizador_id == current_user.id and all_users != [] %}
+				  <form method=post value="invitado" action="">
+					  	<h4 style="margin-left:5em;"><u>Invitar a</u>:
+						  	<select id="invitado" name="invitado">
+								{% for a_user in all_users %}
+								    <option value="{{ a_user.id }}" SELECTED>{{ a_user.username }}</option>
+								{% endfor %}
+							</select>
+							<input class="btn btn-success" type=submit style="margin-bottom:1em;"value="Select">
+				  		</h4>
+				  </form>
+				  {% else %}
+				  {% endif %}
+	    	</div>
+  		</div>
+  		<div class="col-md-5" >
+	  		<div id="requerimientos_lista">
+		  		<h3>
+		  			<u>Cosas para traer</u>
+
+
+		  			<button data-toggle="modal" id="agregar_requerimiento" style="margin-left:1em;" class="btn btn-success" data-target="#modalRequerimiento" onclick="habilitar_edicion('modalRequerimiento')">
+		  				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+		  			</button>
+
+		  		</h3>
+		  		{% with form_requerimientos=form_requerimientos, id_modal="modalRequerimiento", requerimiento="", evento_id=evento.id %}
+					{% include 'modal_requerimiento.html' %}
+				{% endwith %}
+		  			
+				{% for r in requerimientos_con_datos %}
+					{% set contenedor_id = 'contenedor' ~ r.requerimiento.id %}
+					{% set contenedor_columna_id = 'contenedor_columna' ~ r.requerimiento.id %}
+					<div>
+						<div class="col-md-8" style="margin-top:1em;" id={{contenedor_columna_id}}>
+							{% set contenedor_nombre = 'contenedor_nombre' ~ r.requerimiento.id %}
+							<a id={{contenedor_id}} href="" data-toggle="modal" data-target=#{{r.requerimiento.id}} class="modal_req" 
+							onclick="habilitar_edicion({{r.requerimiento.id}},'{{r.requerimiento.nombre}}','{{r.requerimiento.descripccion}}',{{r.requerimiento.cantidad}}, {{r.faltan_reservar}}, {{r.asignacion_propia.cantidad}})">
+								<b id={{contenedor_nombre}}>{{r.requerimiento.nombre}}</b>
+							</a>
+							{% with id_modal=r.requerimiento.id, requerimiento=r.requerimiento%}
+								{% include 'modal_requerimiento.html' %}
+							{% endwith %}
+						</div>
+					</div>
+				{% endfor %}
+				<input type="hidden" name="_modal" value="put" />
+			</div>
+  		</div>		 	
+	</div>
   </div>
 
   <div class="pull-right"><a role="button" class="btn btn-default" href="{{ url_for('perfil') }}">Volver</a></div>
+
+  <!-- Modal -->
+  
+ 
+  
+</div>
   
 {% endblock %}

@@ -1,4 +1,4 @@
-from models import User, Session, Evento, Invitacion
+from models import User, Session, Evento, Invitacion, Requerimiento, RequerimientoAsignado
 import datetime
 from alchemy_encoder import AlchemyEncoder
 import dbsettings
@@ -72,6 +72,12 @@ class MySQLAdapter(Adapter):
 
 	def borrar_evento(self,user_id,evento_id):
 		evento = self.db_session.query(Evento).filter_by(id=evento_id).first()
+		requerimientos = self.obtener_requerimientos_evento(evento_id)
+		for r in requerimientos:
+			self.borrar_requerimiento(r.id)
+		invitaciones_evento = self.db_session.query(Invitacion).filter_by(evento_id=evento_id).all()
+		for i in invitaciones_evento:
+			self.borrar(i)
 		self.borrar(evento)
 
 	def crear_invitacion(self, evento_id, usuario_id):
@@ -122,6 +128,35 @@ class MySQLAdapter(Adapter):
 		invitacion = self.db_session.query(Invitacion).filter_by(evento_id=evento_id, usuario_id=usuario_id).first()
 		return invitacion.asiste
 
+	def obtener_requerimiento(self, requerimiento_id):
+		requerimiento = self.db_session.query(Requerimiento).filter_by(id=requerimiento_id).first()
+		return self.to_json(requerimiento)
+
+	def borrar_requerimiento(self, requerimiento_id):
+		requerimiento = self.db_session.query(Requerimiento).filter_by(id=requerimiento_id).first()
+		#Tambien hay que borrar todos los requerimientos asignados!!!
+		requerimientos_asignados = self.db_session.query(RequerimientoAsignado).filter_by(requerimiento_id=requerimiento_id).all()
+		for r in requerimientos_asignados:
+			self.borrar(r)
+		self.borrar(requerimiento)
+
+	def obtener_requerimientos_evento(self, evento_id):
+		requerimientos = self.db_session.query(Requerimiento).filter_by(evento_id=evento_id).all()		
+		return requerimientos
+
+	def obtener_requerimientos_evento_json(self, evento_id):
+		requerimientos = self.obtener_requerimientos_evento(evento_id)
+		requerimientos_json = []
+		for r in requerimientos:
+		  requerimientos_json.append(self.to_json(r))
+		return requerimientos_json
+
+	def obtener_asignaciones_requerimiento(self, requerimiento_id):
+		requerimientos_asignados = self.db_session.query(RequerimientoAsignado).filter_by(requerimiento_id=requerimiento_id).all()
+		requerimientos_asignados_json = []
+		for r in requerimientos_asignados:
+		  requerimientos_asignados_json.append(self.to_json(r))
+		return requerimientos_asignados_json
 
 
 

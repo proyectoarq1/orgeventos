@@ -1,0 +1,93 @@
+{% from "_formhelpers.html" import render_field %}
+<div class="modal fade" id={{id_modal}} role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+           {% if requerimiento != ""%}              
+                <h4 class="modal-title">Detalle del requerimiento</h4>
+            {% else %}         
+                <h4 class="modal-title">Crear un requerimiento</h4>
+            {% endif %}
+        </div>
+        <div class="modal-body">
+         
+         <form id={{id_modal}} style="margin-left:50px;" method="post">
+
+              {% if requerimiento != ""%}              
+                <input type="hidden" name="recurso_id" value="{{id_modal}}" />
+              {% endif %}
+
+  		      
+  		       <input type="hidden" name="evento_id" value="{{evento.id}}" />
+             <label>Nombre del requerimiento</label>
+             <input disabled="true" class="form-control" name="nombre" id="nombre" required="true" />
+             <label>Descripcion del requerimiento</label>
+             <input disabled="true" class="form-control" name="descripccion" id="descripccion" required="true" />
+             <label>Cantidad del requerimiento</label>
+             <input disabled="true" type="number"  min="1" max="99" class="form-control" name="cantidad" id="cantidad" required="true" />
+
+
+          {% if evento.organizador_id == current_user.id%}
+              {% if requerimiento == ""%}
+                <p><input type=submit value=Guardar class="btn btn-success" style=" margin-top:5px; height:30px; width:120px; float: right;" ></p>
+              {% endif %}
+          {% endif %}
+      
+        </form>
+
+        {% if evento.organizador_id == current_user.id and requerimiento != ""  %}
+            <p>
+              {% set id_form_asignarse = 'form_asignarse' ~ id_modal %}
+              <form id={{id_form_asignarse}} style="margin-left:50px;" method="post" >
+                  <input type="hidden" name="id_recurso" value="{{requerimiento.id}}" />
+                  <div class="col-md-3">
+                    <label style="float: right;">Yo llevo: </label>
+                  </div> 
+                  <div class="col-md-4">
+                    <input type="number" min="1" max="99" class="form-control" name="cantidad_llevar" id="cantidad_llevar" required="true"/>
+                  </div>
+              </form>
+              <div class="col-md-4">
+                      <button style="" class="btn btn-success" onclick="asiganarse_requerimiento({{id_modal}})">Aceptar</button>
+              </div>
+              &nbsp;
+            </p>
+        {% endif %}
+
+      </div>
+        <div class="modal-footer" style=" margin-top:15px;" >
+          {% if evento.organizador_id == current_user.id%}
+              {% if requerimiento != ""%}              
+                <button style="margin-left:50px;" class="btn btn-success" onclick="editar_recurso({{id_modal}})">Guardar Cambios</button>
+                <button type="button" class="btn btn-danger" onclick="borrar_recurso({{id_modal}})">
+                  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                </button>
+              {% endif %}
+          {% endif %}
+
+
+        {% if evento.organizador_id != current_user.id%}
+        <form class="form-inline" style="margin-left:4em;">
+          <div class="form-group">
+            <p class="form-control-static">Yo llevo:</p>
+          </div>
+          <div class="form-group">
+            <label for="inputPassword2" class="sr-only">Cantidad</label>
+            <input name="asignarme_cant" class="form-control" type="number" min="1",max={{requerimiento.cantidad}},class="form-control">
+          </div>
+          <div class="form-group">
+            <button type="submit"  class="btn btn-default" >Guardar</button>
+          </div>
+        </form>
+            
+        {% endif %}
+
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
