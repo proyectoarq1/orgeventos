@@ -46,6 +46,7 @@
 				  {% endif %}
 				  <h4 style="margin-left:5em;"><u>Fecha</u>: {{evento.fecha}}</h4>
 				  <h4 style="margin-left:5em;"><u>Hora</u>: {{evento.hora}}</h4>
+				  <h4 style="margin-left:5em;"><u>Ciudad</u>: {{evento.ubicacion}}</h4>
 				  
 				  <h4 style="margin-left:5em;" ><u>Asistir&aacute;n</u>: {{evento.asistiran}}</h4>
 				  {% if usuarios_confirmados or usuarios_pendientes %}
@@ -111,7 +112,6 @@
   		</div>		 	
 	</div>
   </div>
-
   <div class="pull-right"><a role="button" class="btn btn-default" href="{{ url_for('perfil') }}">Volver</a></div>
 
   <!-- Modal -->

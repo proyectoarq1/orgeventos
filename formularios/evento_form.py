@@ -9,7 +9,7 @@ class EventoForm(Form):
     hora = TextField('Hora del evento', [validators.Regexp('^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$', flags=0, message='Por favor ingrese una hora valida con formato hh:mm')]) 
     descripcion = TextField('Descripcion del evento', [validators.Length(min=4, max=200),validators.Required(message="Por favor ingrese una descripcion para el evento")])
     url_imagen = TextField('URL imagen', [validators.Regexp('((http?):((//)|(\\\\))+([\w\d:#@%/;$()~_?\+-=\\\.&](#!)?)*)', flags=0, message='Por favor ingrese una URL de imagen que comience con http://')]) 
-    ubicacion = SelectField('Ciudad',choices=[('Formosa', 'Formosa'), ('Mendoza', 'Mendoza'), ('Chubut','Chubut')])
+    ubicacion = TextField('Ciudad',[validators.Required(message="Por favor ingrese el nombre de una ciudad.")])
     categoria = SelectField('Categoria',choices=[('Publico', 'Publico'), ('Privado', 'Privado')])
 
 if __name__ == '__main__':
