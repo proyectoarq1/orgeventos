@@ -38,7 +38,7 @@
       
         </form>
 
-        {% if evento.organizador_id == current_user.id and requerimiento != ""  %}
+        {% if evento.organizador_id != current_user.id and requerimiento != ""  %}
             <p>
               {% set id_form_asignarse = 'form_asignarse' ~ id_modal %}
               <form id={{id_form_asignarse}} style="margin-left:50px;" method="post" >

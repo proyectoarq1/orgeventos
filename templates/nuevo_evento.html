@@ -8,7 +8,7 @@
   {%else%}
     <h2>Crear nuevo evento</h2>
   {% endif %}
-  
+
   <div class="jumbo">
    <div class="col-md-7">
 	 <form style="margin-left:50px;" method="post" action={{action}}>
@@ -18,7 +18,7 @@
       {{ render_field(form.fecha,class="form-control") }}
       {{ render_field(form.hora,class="form-control") }}
       {{ render_field(form.descripcion,class="form-control") }}
-      {{ render_field(form.ubicacion,class="form-control") }}
+      {{ render_field(form.ubicacion,class="form-control autocomplete_ciudades") }}
       {{ render_field(form.url_imagen,class="form-control")}}
       {{ render_field(form.categoria,class="form-control") }}
 
