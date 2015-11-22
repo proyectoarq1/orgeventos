@@ -37,6 +37,7 @@ class OpenWeatherMapAdapter:
             return resultado
 
     def hacer_request(self,nombre_ciudad):
+        nombre_ciudad = nombre_ciudad.replace(" ","%20")
         url = "http://api.openweathermap.org/data/2.5/weather?q="+nombre_ciudad+"&units=metric"+"&appid="+ self.appid
 
         request = urllib2.Request(url)

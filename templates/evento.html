@@ -81,16 +81,20 @@
 		  		<h3>
 		  			<u>Cosas para traer</u>
 
-
-		  			<button data-toggle="modal" id="agregar_requerimiento" style="margin-left:1em;" class="btn btn-success" data-target="#modalRequerimiento" onclick="habilitar_edicion('modalRequerimiento')">
-		  				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-		  			</button>
+		  			 {% if evento.organizador_id == current_user.id %}
+			  			<button data-toggle="modal" id="agregar_requerimiento" style="margin-left:1em;" class="btn btn-success" data-target="#modalRequerimiento" onclick="habilitar_edicion('modalRequerimiento')">
+			  				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+			  			</button>
+		  			{% endif %}
 
 		  		</h3>
 		  		{% with form_requerimientos=form_requerimientos, id_modal="modalRequerimiento", requerimiento="", evento_id=evento.id %}
 					{% include 'modal_requerimiento.html' %}
 				{% endwith %}
 		  			
+		  		{% if requerimientos_con_datos == [] %}
+		  			<p id="no_hay_requerimientos"> Todavia no hay requerimientos para traer al evento!</p>
+		  		{% endif %}
 				{% for r in requerimientos_con_datos %}
 					{% set contenedor_id = 'contenedor' ~ r.requerimiento.id %}
 					{% set contenedor_columna_id = 'contenedor_columna' ~ r.requerimiento.id %}
