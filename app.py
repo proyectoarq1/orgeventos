@@ -18,6 +18,7 @@ from controllers.nuevoEventoController import NuevoEventoController
 from controllers.editarUsuarioController import EditarUsuarioController
 from controllers.crearRecursoController import CrearRecursoController
 from controllers.asignarRecursoController import AsignarRecursoController
+from controllers.eventoYAsistenciaController import EventoYAsistenciaController
 
 
 import logging
@@ -65,9 +66,7 @@ api.add_resource(EditarEventoController, '/editar/<evento_id>',endpoint="editar_
 api.add_resource(NuevoEventoController, '/nuevo_evento',endpoint="nuevo_evento")
 api.add_resource(CrearRecursoController, '/crear_recurso',endpoint="crear_recurso")
 api.add_resource(AsignarRecursoController, '/asignar_recurso', endpoint="asignar_recurso")
-
-
-
+api.add_resource(EventoYAsistenciaController, '/evento_asistencia', endpoint="evento_asistencia")
 
 
 if __name__ == '__main__':

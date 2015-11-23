@@ -3,7 +3,6 @@
 {% block content %}
   {% if current_user.is_authenticated %}
   	<h2>Bienvenido, {{ current_user.username }}</h2>
-  	{{eventos_invitados_y_asistencia}}
   {% endif %}
   <div class="jumbo">
   	 <div id="left">

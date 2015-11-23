@@ -3,17 +3,35 @@
 {% from "_formhelpers.html" import render_field %}
   
 {% block content %}
+	<script src="/static/scripts/evento.js"></script>
+	<script type="text/javascript">
+		var asistencia_actual = {{asistencia_actual | tojson }}
+		console.log(asistencia_actual)
+	</script>
   <input type="hidden" name="_method" id="puede_editar_evento" value={{puede_editar}} />
   <h2>
   	{{ evento.nombre }}
   	{% if evento.organizador_id == current_user.id%}
-		
-		    <a role="button" class="btn btn-default" href="{{ url_for('editar_evento', evento_id=evento.id) }}">
-		    	<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-		    </a>
-
+	    <a role="button" class="btn btn-default" href="{{ url_for('editar_evento', evento_id=evento.id) }}">
+	    	<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+	    </a>
+	</h2>
+    {% else %}
+    </h2>
+    	<h3>
+	    	Asistencia: 
+		  	<select class="btn btn-default btn-sm" id="asistir" onchange="contestando_asistencia_a_evento({{evento.id}})" name="asistir">
+		  		<option value=0>Seleccione</option>
+		  		{% for asist in Asistencias %}
+		  			{% if asist.value == asistencia_actual %}
+						<option value={{asist.value}} SELECTED>{{asist.name}}</option>
+					{% else %}
+			  			<option value={{asist.value}}>{{asist.name}}</option>
+					{% endif %}
+			    {% endfor %}
+			</select>
+		</h3>
 	{% endif %}
-  </h2>
   
   <div class="jumbo">
   	<div>
@@ -50,28 +68,31 @@
 				  
 				  <h4 style="margin-left:5em;" ><u>Asistir&aacute;n</u>: {{evento.asistiran}}</h4>
 				  {% if usuarios_confirmados or usuarios_pendientes %}
+				  <div id="usuarios_invitados">
 				  	<h4 style="margin-left:5em;"> <u>Usuarios invitados</u>:</h4>
 					  {% for usuario_confirmado in usuarios_confirmados %}
-							<h5 style="margin-left:7em;"> {{usuario_confirmado.username}} - Asiste </h5>
+							<h5 id="{{usuario_confirmado.username}}" style="margin-left:7em;"> {{usuario_confirmado.username}} - Asiste </h5>
 					  {% endfor %}
 					  {% for usuario_pendiente in usuarios_pendientes %}
-							<h5 style="margin-left:7em;"> {{usuario_pendiente.username}} - Pendiente </h5>
+							<h5 id="{{usuario_pendiente.username}}" style="margin-left:7em;"> {{usuario_pendiente.username}} - Pendiente </h5>
 					  {% endfor %}
 					  {% for usuario_rechazado in usuarios_rechazados %}
-							<h5 style="margin-left:7em;"> {{usuario_rechazado.username}} - No Asiste </h5>
+							<h5 id="{{usuario_rechazado.username}}" style="margin-left:7em;"> {{usuario_rechazado.username}} - No Asiste </h5>
 					  {% endfor %}
+				  </div>
 				  {% endif %}
 				  {% if evento.organizador_id == current_user.id and all_users != [] %}
-				  <form method=post value="invitado" action="">
+				
 					  	<h4 style="margin-left:5em;"><u>Invitar a</u>:
-						  	<select id="invitado" name="invitado">
+						  	<select class="btn btn-default btn-sm" id="invitado" name="invitado">
 								{% for a_user in all_users %}
-								    <option value="{{ a_user.id }}" SELECTED>{{ a_user.username }}</option>
+								    <option id="{{ a_user.id }}" value="{{ a_user.id }}">{{ a_user.username }}</option>
 								{% endfor %}
 							</select>
-							<input class="btn btn-success" type=submit style="margin-bottom:1em;"value="Select">
+							<button type="button" class="btn btn-success" value="Invitar" onclick="invitar({{evento.id}})" style="height:30px; margin-left:5px;">Invitar</button>    
+							
 				  		</h4>
-				  </form>
+		
 				  {% else %}
 				  {% endif %}
 	    	</div>
@@ -80,11 +101,11 @@
 	  		<div id="requerimientos_lista">
 		  		<h3>
 		  			<u>Cosas para traer</u>
-
-
-		  			<button data-toggle="modal" id="agregar_requerimiento" style="margin-left:1em;" class="btn btn-success" data-target="#modalRequerimiento" onclick="habilitar_edicion('modalRequerimiento')">
-		  				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-		  			</button>
+		  			
+			  			<button data-toggle="modal" id="agregar_requerimiento" style="margin-left:1em;" class="btn btn-success" data-target="#modalRequerimiento" onclick="habilitar_edicion('modalRequerimiento')">
+			  				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+			  			</button>
+			  		
 
 		  		</h3>
 		  		{% with form_requerimientos=form_requerimientos, id_modal="modalRequerimiento", requerimiento="", evento_id=evento.id %}

@@ -20,6 +20,8 @@ class EventoController(Resource):
 
         puede_editar= str(current_user.id == evento["organizador_id"]).lower()
 
+        asistencia_actual = adapter.obtener_asistencia_a_evento(evento_id, current_user.id)
+
         clima_actual = openweathermap.get_clima(evento["ubicacion"])
         all_users = adapter.get_all_users()
         usuarios_confirmados = adapter.obtener_usuarios_invitados_evento(evento_id,Asistencia.Asisto)
@@ -42,14 +44,13 @@ class EventoController(Resource):
             requerimientos_con_datos.append({"requerimiento":r,"faltan_reservar":faltan_reservar,"asignacion_propia":asignacion_propia})
 
         headers = {'Content-Type': 'text/html'}
-    	return make_response(render_template('evento.html',puede_editar=puede_editar,evento=evento,all_users=users_to_invite,usuarios_rechazados=usuarios_rechazados,usuarios_confirmados=usuarios_confirmados,usuarios_pendientes=usuarios_pendientes, clima_actual=clima_actual, requerimientos_con_datos=requerimientos_con_datos),200,headers)
+    	return make_response(render_template('evento.html',Asistencias=Asistencia,asistencia_actual=asistencia_actual.value,puede_editar=puede_editar,evento=evento,all_users=users_to_invite,usuarios_rechazados=usuarios_rechazados,usuarios_confirmados=usuarios_confirmados,usuarios_pendientes=usuarios_pendientes, clima_actual=clima_actual, requerimientos_con_datos=requerimientos_con_datos),200,headers)
 
     @login_required    
     def post(self,evento_id): 
         invitado_id = request.form['invitado']
         adapter.crear_invitacion(evento_id,invitado_id)
-        headers = {'Content-Type': 'text/html'}
-        return redirect(url_for('evento', evento_id=evento_id))
+        return {'invitado': invitado_id}
 
     def doSomething():
         current_app.logger.info('doSomething')

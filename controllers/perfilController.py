@@ -35,6 +35,3 @@ class PerfilController(Resource):
 			else:
 				adapter.responder_asistencia_a_evento(resp[0], current_user.get_id(), Asistencia.NoAsisto)
 		return json.dumps({"nothing to see": "this isn't happening"})
-
-	def sasa(self):
-		print "sasa"

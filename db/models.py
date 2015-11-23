@@ -76,7 +76,7 @@ class Invitacion(Base):
     __tablename__ = 'invitacion'
     evento_id = Column(Integer, primary_key=True)
     usuario_id = Column(Integer, primary_key=True)
-    asiste = Column(EnumType(Asistencia))
+    asiste = Column(EnumType(Asistencia),name="asiste")
 
 class Requerimiento(Base):
     __tablename__ = 'requerimientos'

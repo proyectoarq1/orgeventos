@@ -154,6 +154,10 @@ class Adapter():
 		pass
 
 	@abstractmethod
+	def responder_asistencia_a_evento_por_id(self, evento_id, usuario_id, respuesta_id):
+		pass
+
+	@abstractmethod
 	def obtener_eventos_invitados(self, usuario_id):
 		pass
 

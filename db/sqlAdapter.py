@@ -112,6 +112,9 @@ class MySQLAdapter(Adapter):
 		invitacion.asiste = respuesta
 		self.guardar(invitacion)
 
+	def responder_asistencia_a_evento_por_id(self, evento_id, usuario_id, respuesta_id):
+		self.responder_asistencia_a_evento(evento_id, usuario_id, Asistencia(respuesta_id))
+
 	def obtener_invitaciones_usuario(self, usuario_id):
 		invitaciones_usuario = self.db_session.query(Invitacion).filter_by(usuario_id=usuario_id).all()
 		lista_invitaciones = []
