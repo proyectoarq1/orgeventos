@@ -24,12 +24,24 @@ class EventoController(Resource):
 
         clima_actual = openweathermap.get_clima(evento["ubicacion"])
         all_users = adapter.get_all_users()
+        
+        current_app.logger.info('Obteniendo usuarios confirmados...')
         usuarios_confirmados = adapter.obtener_usuarios_invitados_evento(evento_id,Asistencia.Asisto)
+
+        current_app.logger.info('Obteniendo usuarios pendientes...')
         usuarios_pendientes = adapter.obtener_usuarios_invitados_evento(evento_id,Asistencia.Pendiente)
+
+        current_app.logger.info('Obteniendo usuarios rechazados...')
         usuarios_rechazados = adapter.obtener_usuarios_invitados_evento(evento_id,Asistencia.NoAsisto)
+
+        current_app.logger.info('Obteniendo usuarios invitados...')
         usuarios_invitados = usuarios_confirmados+usuarios_pendientes+usuarios_rechazados
+
+        current_app.logger.info('Obteniendo usuarios para invitar...')
         users_to_invite = [user for user in all_users if user not in usuarios_invitados]
         requerimientos = adapter.obtener_requerimientos_evento(evento_id)
+
+        current_app.logger.info('Obteniendo requerimientos con datos...')
         requerimientos_con_datos = []
         for r in requerimientos:
             asignaciones = adapter.obtener_asignaciones_requerimiento(r.id)
@@ -50,6 +62,7 @@ class EventoController(Resource):
     def post(self,evento_id): 
         invitado_id = request.form['invitado']
         adapter.crear_invitacion(evento_id,invitado_id)
+        current_app.logger.info('El usuario '+ invitado_id + ' fue invitado con exito al evento ' + evento_id)
         return {'invitado': invitado_id}
 
     def doSomething():

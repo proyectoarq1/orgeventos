@@ -1,4 +1,4 @@
-from flask import Flask, render_template, make_response, url_for
+from flask import Flask, render_template, make_response, url_for, current_app
 from formularios.evento_form import EventoForm
 from flask_restful import Resource
 from db.adapter_selected import adapter
@@ -15,10 +15,11 @@ class NuevoEventoController(Resource):
 
     def post(self):
     	form = EventoForm(request.form)
-        print request.form
     	if form.validate():
-    		adapter.crear_evento(current_user.get_id(),form)
-    		return redirect(url_for('perfil'))
+            adapter.crear_evento(current_user.get_id(),form)
+            current_app.logger.info('Creando nuevo evento con exito')
+            return redirect(url_for('perfil'))
     	else :
-    		headers = {'Content-Type': 'text/html'}
-	    	return make_response(render_template('nuevo_evento.html', form=form, method="post", action="/nuevo_evento"),200,headers)
+            current_app.logger.error('No se pudo crear el evento. Uno o mas datos del form son invalidos')
+            headers = {'Content-Type': 'text/html'}
+            return make_response(render_template('nuevo_evento.html', form=form, method="post", action="/nuevo_evento"),200,headers)

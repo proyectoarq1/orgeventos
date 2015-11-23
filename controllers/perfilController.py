@@ -1,4 +1,4 @@
-from flask import Flask, render_template, make_response, flash, request, json
+from flask import Flask, render_template, make_response, flash, request, json, current_app
 from flask_restful import Resource
 from db.adapter_selected import adapter
 from flask import session
@@ -12,9 +12,13 @@ class PerfilController(Resource):
 	def get(self):
 		eventos_invitados_y_asistencia = []
 		usuario = adapter.get_userJson_by_id(current_user.get_id())
+		
+		current_app.logger.info('Obnetiendo eventos propios para cargar en el perfil')
 		eventos = adapter.obtener_eventos_asignados(current_user.get_id())
+		
+		current_app.logger.info('Obnetiendo eventos a los que el usuario esta invitado para cargar en el perfil')
 		eventos_invitados = adapter.obtener_eventos_invitados(current_user.get_id())
-		print eventos_invitados
+
 		for ev in eventos_invitados:
 			asistencia_actual = adapter.obtener_asistencia_a_evento(ev['id'], usuario['id'])
 			eventos_invitados_y_asistencia = eventos_invitados_y_asistencia + [{"evento":ev, "asistencia":asistencia_actual}] 

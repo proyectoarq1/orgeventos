@@ -17,6 +17,7 @@ class CrearRecursoController(Resource):
         evento_id = request.form["evento_id"]
         if form.validate():
             requerimiento = adapter.crear_requerimiento(evento_id,form)
+            current_app.logger.info('Creando nuevo requerimiento ' + requerimiento["nombre"] )
             return {"requerimiento":requerimiento,"faltan_reservar":requerimiento["cantidad"],"asignacion_propia":None}
 
     @login_required
@@ -24,6 +25,7 @@ class CrearRecursoController(Resource):
         form = RequerimientoForm(request.form)
         if form.validate():
             requerimiento = adapter.guardar_edicion_a_requerimiento(request.form["recurso_id"],form)
+            current_app.logger.info('Guardando edicion del requerimiento ' + requerimiento["nombre"] )
 
             return requerimiento
 
@@ -31,6 +33,7 @@ class CrearRecursoController(Resource):
     def delete(self):
         recurso_id = request.form["id_recurso"]
         adapter.borrar_requerimiento(recurso_id)
+        current_app.logger.info('Se borro el requerimiento ' + recurso_id + ' con exito')
         return recurso_id
             
 

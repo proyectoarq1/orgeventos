@@ -16,9 +16,8 @@ class LoginController(Resource):
       registered_user = adapter.get_user_by_name_and_pass(username,password)
       current_app.logger.info(registered_user)
       if registered_user is None:
-        current_app.logger.error('login user is not reigster ')
+        current_app.logger.error('El usuario no esta registrado o la contrasenia es incorrecta')
         flash('El nombre de usario o la password ingresada es invalida' , 'error')
-        #abort(400)
         return redirect(url_for('login'))
       current_app.logger.info('login user : ' + registered_user.username)
       login_user(registered_user,True)

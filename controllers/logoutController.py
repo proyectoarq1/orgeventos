@@ -7,7 +7,7 @@ import os
 class LogoutController(Resource):
 	@login_required
 	def get(self):
-  		current_app.logger.info('logout user  ')
+  		current_app.logger.info('Deslogueando usuario y redirigiendo a home')
   		logout_user()
   		#print current_user.is_authenticated
   		return redirect(url_for('home')) 

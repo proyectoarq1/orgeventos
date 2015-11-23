@@ -1,4 +1,4 @@
-from flask import Flask, render_template, make_response
+from flask import Flask, render_template, make_response, current_app
 from flask.ext.login import LoginManager, login_user , logout_user , current_user , login_required
 from flask_restful import Resource
 from db.models import Evento
@@ -9,6 +9,7 @@ import os
 
 class HomeController(Resource):
     def get(self):
+    	current_app.logger.info('Obteniendo eventos publicos...')
     	eventos_publicos = adapter.obtener_eventos_publicos()
     	headers = {'Content-Type': 'text/html'}
         return make_response(render_template('home.html',eventos_publicos=eventos_publicos),200,headers)

@@ -16,10 +16,10 @@ class AsignarRecursoController(Resource):
 
         asignado = adapter.obtener_asignacion_usuario(recurso_id, usuario_id)
         if asignado:
-            print "ey estoy asignado puto"
+            current_app.logger.info('El recursa ya fue asignado, se guarda la edicion del mismo')
             asignado = adapter.editar_asignacion_requerimiento(asignado, cantidad)
         else:
-            print "no estaba asignado viejita"
+            current_app.logger.info('Nueva asignacion de recurso para un usuario')
             asignado = adapter.asignar_requerimiento(recurso_id,usuario_id,cantidad)
 
         requerimiento = adapter.obtener_requerimiento(recurso_id)
@@ -28,8 +28,6 @@ class AsignarRecursoController(Resource):
         asignacion_propia = asignado
         for a in asignaciones:
             faltan_reservar = faltan_reservar - a["cantidad"]
-
-        print asignacion_propia["cantidad"]
         
         requerimiento_con_datos={"requerimiento":requerimiento,"faltan_reservar":(faltan_reservar+asignacion_propia["cantidad"]),"asignacion_propia":asignacion_propia}
 
