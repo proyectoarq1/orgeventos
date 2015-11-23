@@ -140,9 +140,9 @@ function creando_requerimiento() {
         console.log(a)
 
 
-            
+            $('#no_hay_requerimientos').replaceWith( '<p id="no_hay_requerimientos"></p>' );
             $('#modalRequerimiento').modal('toggle');
-            $( "#requerimientos_lista" ).append( a );
+            $('#requerimientos_lista' ).append( a );
         },
  
         error : function(xhr,errmsg,err) {
