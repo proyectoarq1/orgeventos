@@ -9,7 +9,7 @@ import os
 
 class HomeController(Resource):
     def get(self):
-    	current_app.logger.info('Obteniendo eventos publicos...')
+    	current_app.logger.info('Obteniendo eventos publicos..')
     	eventos_publicos = adapter.obtener_eventos_publicos()
     	headers = {'Content-Type': 'text/html'}
         return make_response(render_template('home.html',eventos_publicos=eventos_publicos),200,headers)
