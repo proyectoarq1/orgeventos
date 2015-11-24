@@ -38,7 +38,12 @@
 	  	<div class="col-md-7">
 		  	<div>
 		  		<div>
-				  	<img style="margin-left:4em;width:300px;" class="img-circle"src="{{evento.url_imagen}}"/>
+		  			{% if evento.url_imagen !="" %}
+    					{% set url_imagen = evento.url_imagen %}
+					{% else %}
+    					{% set url_imagen = 'http://www.edsaugustablog.com/wp-content/uploads/2015/02/fiesta1.jpg' %}
+					{% endif %}
+				  	<img style="margin-left:4em;width:300px;" class="img-circle"src="{{url_imagen}}"/>
 				</div>
 		  	</div>
 	  	</div>
