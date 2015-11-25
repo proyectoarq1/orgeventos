@@ -1,3 +1,14 @@
+$(function() {
+  $('#fecha')
+      .datepicker({
+          format: 'mm/dd/yyyy',
+          startDate: '01/01/2015',
+          endDate: '12/30/2030'
+      });
+ 
+});
+
+
 function borrar_evento(id) {
     console.log("delete is working!") // sanity check
     
