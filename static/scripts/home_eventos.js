@@ -1,4 +1,4 @@
-function otros_12_eventos(ultimo_id, tipo, pre_post) {
+function otros_12_eventos(ultimo_id, tipo, pre_post, id_lista, id_navegador) {
 
     $.ajax({
         url : "/dealer_eventos",
@@ -12,7 +12,7 @@ function otros_12_eventos(ultimo_id, tipo, pre_post) {
             if (json.hay_eventos==="true"){
                 eventos = json.eventos
                 a = ""
-                $('#lista_publicos_eventos').replaceWith( '<div id="lista_publicos_eventos"></div>' );
+                $('#'+id_lista).replaceWith( '<div id="lista_publicos_eventos"></div>' );
 
                 var tamanio = eventos.length;
                 for (var i = 0; i < tamanio; i++) {
@@ -35,22 +35,22 @@ function otros_12_eventos(ultimo_id, tipo, pre_post) {
                     a = a + '</div>'
                     a = a + '</div>'
 
-                    $('#lista_publicos_eventos' ).append( a );
+                    $('#'+id_lista).append( a );
                 }
             }
 
 
-            else{ $('#lista_publicos_eventos').replaceWith( '<div id="lista_publicos_eventos"><h3>No hay eventos que mostrar</h3></div>' ); }
+            else{ $('#'+id_lista).replaceWith( '<div id="lista_publicos_eventos"><h3>No hay eventos que mostrar</h3></div>' ); }
             a = ''
             a = a + '<div id="navegador_eventos">'
             a = a + '<nav style=" margin-top:5px;">'
             a = a + '<ul class="pager">'
-            a = a + '<li class="previous"><a onclick="otros_12_eventos('+json.primer_id+',&#39;publico&#39;,&#39;pre&#39;)"><span aria-hidden="true">&larr;</span> Anterior pagina</a></li>'
-            a = a + '<li class="next"><a onclick="otros_12_eventos('+json.ultimo_id+',&#39;publico&#39;,&#39;post&#39;)">Proxima pagina <span aria-hidden="true">&rarr;</span></a></li>'
+            a = a + '<li class="previous"><a onclick="otros_12_eventos('+json.primer_id+',&#39;publico&#39;,&#39;pre&#39;,&#39;'+id_lista+'&#39;,&#39;'+id_navegador+'&#39;)"><span aria-hidden="true">&larr;</span> Anterior pagina</a></li>'
+            a = a + '<li class="next"><a onclick="otros_12_eventos('+json.ultimo_id+',&#39;publico&#39;,&#39;post&#39;,&#39;'+id_lista+'&#39;,&#39;'+id_navegador+'&#39;)">Proxima pagina <span aria-hidden="true">&rarr;</span></a></li>'
             a = a + '</ul>'
             a = a + '</nav>'
             a = a + '</div>'
-            $('#navegador_eventos').replaceWith(a);
+            $('#'+id_navegador).replaceWith(a);
             
 
         },
