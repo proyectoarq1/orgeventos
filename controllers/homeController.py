@@ -14,9 +14,11 @@ class HomeController(Resource):
     	eventos_publicos = adapter.obtener_eventos_publicos_limit(12)
     	#for e in eventos_publicos:
     	#	print e["_id"]
-
-    	last_id = eventos_publicos[-1]["_id"]
-    	primer_id = eventos_publicos[0]["_id"]
+        last_id = 0
+        primer_id = 0
+        if eventos_publicos != []:
+        	last_id = eventos_publicos[-1]["_id"]
+        	primer_id = eventos_publicos[0]["_id"]
     	#print last_id
     	headers = {'Content-Type': 'text/html'}
         return make_response(render_template('home.html',eventos_publicos=eventos_publicos, last_id=last_id, primer_id=primer_id),200,headers)
