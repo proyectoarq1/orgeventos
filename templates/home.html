@@ -19,73 +19,35 @@
     	 		<p>&iquest;No tenes una cuenta? &iexcl;No importa!  
     	 		<a href="{{ url_for('register') }}">registrate</a>, es f&aacute;cil, r&aacute;pido y gratis!</small><p>
     	 	{% endif %}
-    	<!--<div>
-    	<div id="left_grande">
-	    	<div class="bottom-three"></div>
-	    	<div id="fiesta">&nbsp;</div>
-	    	<div class="bottom-three"></div>
-	    </div>
-	    <div id="right_menor">
-	    	<div class="bottom-three"></div>
-	    	<p><u>Eventos publicos</u></p>
-			  {% for evento in eventos_publicos %}
-			    <p><a href="{{ url_for('evento', evento_id=evento._id) }}"> {{ evento.nombre }}</a></p>
-			  {% endfor %}
 
-	    </div>
-	</div>
-    	
-  </div>-->
-
-
-  <div id="myCarousel" class="carousel slide" data-ride="carousel">
-  <!-- Indicators -->
-  <ol class="carousel-indicators">
-  	{% set count = 0 %}
-  	{% for evento in eventos_publicos %}
-    	{% set count = count + 1 %}
-      {% if count>0 %}
-        {% set is_active = '' %}
-      {% else %}
-        {% set is_active = 'active' %}
-      {% endif %}
-
-      <li data-target="#myCarousel" data-slide-to={{ count }} class={{is_active}}></li>
-    {% endfor %}
-   
-  </ol>
-
-  <!-- Wrapper for slides -->
-  <div class="carousel-inner" role="listbox">
-  	{% set count = 0 %}
-  	{% for evento in eventos_publicos %}
-	    {% set count = count + 1 %}
-      {% if count>0 %}
-        {% set item_active = 'item' %}
-      {% else %}
-        {% set item_active = 'item active' %}
-      {% endif %}
-      <div class={{item_active}}>
-        <a href="{{ url_for('evento', evento_id=evento._id) }}">
-          <img src="https://i.ytimg.com/vi/qSLd5VBktu4/maxresdefault.jpg">
-        </a>
-        <div class="carousel-caption">
-            <h3>{{evento.nombre}}</h3>
-            <p>{{evento.descripcion}}</p>
-        </div>
+  <div id="lista_publicos_eventos">
+  {% for evento in eventos_publicos %}
+    <div class="col-md-4" style=" margin-top:5px;">
+      <div class="row">
+           <div>
+                 {% if evento.url_imagen !="" %}
+                      {% set url_imagen = evento.url_imagen %}
+                  {% else %}
+                      {% set url_imagen = 'http://www.edsaugustablog.com/wp-content/uploads/2015/02/fiesta1.jpg' %}
+                  {% endif %}
+                  <img style="margin-left:25px; margin-top:5px;width:100px;height:100px;" align="left" class="img-circle"src="{{url_imagen}}"/>
+            </div>
+            <p style="margin-top:25px;font-size:20px" align="left">
+              <a href="{{ url_for('evento', evento_id=evento._id) }}"> {{ evento.nombre }}</a>
+            </p>
       </div>
-	{% endfor %}
+    </div>
+  {% endfor %}
   </div>
 
-  <!-- Left and right controls -->
-  <a style="margin-top:10em;" class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a style="margin-top:10em;" class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
 </div>
+<div id="navegador_eventos">
+  <nav style=" margin-top:5px;">
+    <ul class="pager">
+      <li class="previous"><a onclick="otros_12_eventos({{primer_id}},'publico','pre')"><span aria-hidden="true">&larr;</span> Anterior pagina</a></li>
+      <li class="next"><a onclick="otros_12_eventos({{last_id}},'publico','post')">Proxima pagina <span aria-hidden="true">&rarr;</span></a></li>
+    </ul>
+  </nav>
 </div>
+
 {% endblock %}

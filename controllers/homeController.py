@@ -10,6 +10,13 @@ import os
 class HomeController(Resource):
     def get(self):
     	current_app.logger.info('Obteniendo eventos publicos..')
-    	eventos_publicos = adapter.obtener_eventos_publicos()
+    	#eventos_publicos = adapter.obtener_eventos_publicos()
+    	eventos_publicos = adapter.obtener_eventos_publicos_limit(12)
+    	#for e in eventos_publicos:
+    	#	print e["_id"]
+
+    	last_id = eventos_publicos[-1]["_id"]
+    	primer_id = eventos_publicos[0]["_id"]
+    	#print last_id
     	headers = {'Content-Type': 'text/html'}
-        return make_response(render_template('home.html',eventos_publicos=eventos_publicos),200,headers)
+        return make_response(render_template('home.html',eventos_publicos=eventos_publicos, last_id=last_id, primer_id=primer_id),200,headers)

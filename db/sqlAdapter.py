@@ -17,6 +17,7 @@ from adapter import Adapter
 class MySQLAdapter(Adapter):
 
 	db_session=Session()
+	encoder = AlchemyEncoder
 	db_session.rollback()
 
 	def to_json(self, db_object):
@@ -160,6 +161,39 @@ class MySQLAdapter(Adapter):
 		for r in requerimientos_asignados:
 		  requerimientos_asignados_json.append(self.to_json(r))
 		return requerimientos_asignados_json
+
+
+	def obtener_eventos_publicos_limit(self,limit):
+		eventos_publicos = self.db_session.query(Evento).filter_by(categoria="Publico").order_by(Evento.id).limit(limit)
+		eventos = []
+		for e in eventos_publicos:
+		  eventos.append(self.to_json(e))
+		return eventos
+
+	def obtener_eventos_tipo_pivote_id_lugar(self,tipo,pivote_id,pre_post,limit):
+		print "llegue"
+		obj_eventos = []
+		eventos = []
+
+		if tipo=="publico":
+			print "publique"
+			if pre_post=="post":
+				print "postee"
+				obj_eventos = self.db_session.query(Evento).filter_by(categoria="Publico").filter(Evento.id>pivote_id).order_by(Evento.id).limit(limit)
+			else:
+				obj_eventos = self.db_session.query(Evento).filter_by(categoria="Publico").filter(Evento.id<pivote_id).order_by(Evento.id.desc()).limit(limit)
+				
+
+		for o in obj_eventos:
+		  eventos.append(self.to_json(o))
+
+		if pre_post=="pre":
+			print "reverseando"
+			eventos.reverse()
+		return eventos
+
+
+
 
 
 
