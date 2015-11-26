@@ -1,7 +1,6 @@
 from flask import Flask, render_template, make_response
 from flask_restful import Resource, Api
 from flask.ext.login import LoginManager, login_user , logout_user , current_user , login_required
-from db.models import Session, Usuario, Evento
 from formularios.evento_form import EventoForm
 import datetime
 from flask import request, redirect, url_for, session
