@@ -19,7 +19,7 @@ function borrar_evento(id) {
 
         success : function() {
 
-            window.location.replace("http://localhost:5000/perfil");
+            window.location.replace("https://glacial-scrubland-6807.herokuapp.com/perfil");
         },
 
         error : function(xhr,errmsg,err) {
