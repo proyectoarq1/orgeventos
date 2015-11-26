@@ -14,7 +14,7 @@ db_seleccionada = os.getenv('TIPO_BASE_DE_DATOS', 'MySQL')
 
 session=None
 if db_seleccionada=='MongoDB':
-    session = Session.connect(url)
+    session = Session.connect("mongodb://heroku_mlh2bvbl:90lgulqppq9fpvreerdjqt8h0r@ds059654.mongolab.com:59654/heroku_mlh2bvbl")
 
 #mongod --config c:\mongodb\mongo.config
 
