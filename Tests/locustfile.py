@@ -20,7 +20,7 @@ def crear_evento(l):
         {"nombre": 'Fulbito', "descripcion": 'A ver si asi somos mas de 4 alguna vez', "foto": "http://thumbs.dreamstime.com/x/soccer-balls-23191644.jpg" },
         {"nombre": 'Merienda', "descripcion": 'Merienda de abuelas en lo de pocha' , "foto": "http://static.guiainfantil.com/pictures/recetas/5505-4-muffins-o-magdalenas-de-arandanos-para-la-merienda-de-los-ninos.jpg" } ]
     horas = ['07:00','00:00', '15:00', '22:00', '21:00', '16:45', '03:00', '23:00']
-    fechas = ['23/03/2016','10/12/2015','01/01/2016','25/12/2015','20/07/2016','28/02/2016','03/08/2016']
+    fechas = ['03/23/2016','10/12/2015','01/01/2016','12/12/2015','07/07/2016','02/28/2016','03/08/2016']
     ubicaciones = ['Manantiales Chicos', 'Mendoza', 'General Alvear', 'Departamento de Cafayate', 'Cafayate','Gobernador Benegas', 'Azcuenaga', 'Olaeta', 'Los Condores', 'De la Garma', 'La Calera', 'Lartigau', 'Arroyo Cabral', 'Gobernador Gregores', 'Santa Regina', 'Amadores', 'Guerrico', 'San Carlos Sur', 'Alto de la Piedra', 'Puerto Ruiz', 'El Pueblito']    
     categorias = ['Publico','Privado']
 
