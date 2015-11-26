@@ -7,6 +7,7 @@ from servicios.openWeatherMapAdapter import OpenWeatherMapAdapter
 import urllib2, json
 from db.utils.Asistencia import *
 from formularios.requerimientoForm import RequerimientoForm
+from flask.ext.mail import Message, Mail
 
 openweathermap = OpenWeatherMapAdapter()
 
@@ -67,6 +68,14 @@ class EventoController(Resource):
         invitado_id = request.form['invitado']
         adapter.crear_invitacion(evento_id,invitado_id)
         current_app.logger.info('El usuario '+ invitado_id + ' fue invitado con exito al evento ' + evento_id)
+        #
+        user = adapter.get_user_by_id(invitado_id)
+        mail = Mail()
+        mail.init_app(current_app)
+        msg = Message("Arreglamos Eh", sender="arqsoft12015@gmail.com", recipients=[user.email])
+        msg.html = "<b>Mira!!, el usuario: " + current_user.username +  " Te han invitado a un evento</b>"
+        mail.send(msg)
+        #
         return {'invitado': invitado_id}
 
     def doSomething():

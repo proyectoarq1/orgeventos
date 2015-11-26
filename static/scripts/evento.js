@@ -32,7 +32,7 @@ function invitar(evento_id){
      //       console.log(xhr.status + ": " + xhr.responseText);
       }
     });
-}
+};
 
 function contestando_asistencia_a_evento(evento_id) {
     var opcionSeleccionada = $('#asistir').val()
@@ -61,4 +61,26 @@ function contestando_asistencia_a_evento(evento_id) {
           }
         });
     }
+};
+
+function borrar_invitacion(evento_id) {
+    console.log("delete is working!")
+    
+    $.ajax({
+        url : "/evento_invitacion/"+evento_id,
+        type : "DELETE",
+        data : {id_evento:evento_id}, 
+
+        success : function() {
+
+            window.location.replace("http://localhost:5000/perfil");
+        },
+
+        error : function(xhr,errmsg,err) {
+
+            $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                " <a href='#' class='close'>&times;</a></div>");
+            console.log(xhr.status + ": " + xhr.responseText);
+        }
+    });
 };

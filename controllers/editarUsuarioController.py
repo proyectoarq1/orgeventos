@@ -32,6 +32,6 @@ class EditarUsuarioController(Resource):
             current_app.logger.info('Se guardo con exito la edicion del usuario ' + usuario["nombre"])
             return redirect(url_for('perfil'))
     	else :
-            current_app.logger.info('No se pudo guardar la edicion del usario ya que el form no esta validado')
+            current_app.logger.info('No se pudo guardar la edicion del usuario ya que el form no esta validado')
             headers = {'Content-Type': 'text/html'}
             return make_response(render_template("register.html", editar=True, form=form),200,headers)

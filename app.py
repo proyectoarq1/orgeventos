@@ -5,6 +5,7 @@ from db.models import Session, Evento
 from formularios.evento_form import EventoForm
 import datetime
 from flask import request, redirect, url_for, session
+from flask_mail import Mail, Message
 import os
 from db.adapter_selected import adapter
 from controllers.homeController import HomeController
@@ -19,6 +20,7 @@ from controllers.editarUsuarioController import EditarUsuarioController
 from controllers.crearRecursoController import CrearRecursoController
 from controllers.asignarRecursoController import AsignarRecursoController
 from controllers.eventoYAsistenciaController import EventoYAsistenciaController
+from controllers.invitacionController import InvitacionController
 from controllers.dealerEventosController import DealerEventosController
 
 
@@ -33,6 +35,7 @@ app = Flask(__name__)
 api = Api(app)
 
 login_manager = LoginManager()
+
 login_manager.init_app(app)
 login_manager.login_view = "login"
 login_manager.login_message = "Necesitas estar logueado para acceder a esa pagina"
@@ -40,11 +43,6 @@ login_manager.login_message = "Necesitas estar logueado para acceder a esa pagin
 @login_manager.user_loader
 def load_user(user_id):
 	return adapter.get_user_by_id(user_id)
-
-#@login_manager.unauthorized_handler
-#def unauthorized():
-#    return 'Loggueate capo'
-
 
 @app.errorhandler(400)
 def page_not_found(e):
@@ -55,6 +53,12 @@ app.config.from_object('config')
 app.config['SECURITY_POST_LOGIN'] = '/profile'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+app.config['MAIL_SERVER']='smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'arqsoft12015@gmail.com'
+app.config['MAIL_PASSWORD'] = 'arquitectura2015'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
 
 api.add_resource(HomeController, '/',endpoint="home")
 api.add_resource(RegisterController, '/register',endpoint="register")
@@ -68,6 +72,7 @@ api.add_resource(NuevoEventoController, '/nuevo_evento',endpoint="nuevo_evento")
 api.add_resource(CrearRecursoController, '/crear_recurso',endpoint="crear_recurso")
 api.add_resource(AsignarRecursoController, '/asignar_recurso', endpoint="asignar_recurso")
 api.add_resource(EventoYAsistenciaController, '/evento_asistencia', endpoint="evento_asistencia")
+api.add_resource(InvitacionController, '/evento_invitacion/<evento_id>', endpoint="evento_invitacion")
 api.add_resource(DealerEventosController, '/dealer_eventos', endpoint='dealer_eventos')
 
 

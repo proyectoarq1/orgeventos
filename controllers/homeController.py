@@ -9,7 +9,7 @@ import os
 
 class HomeController(Resource):
     def get(self):
-    	current_app.logger.info('Obteniendo eventos publicos..')
+        current_app.logger.info('Obteniendo eventos publicos..')
     	#eventos_publicos = adapter.obtener_eventos_publicos()
     	eventos_publicos = adapter.obtener_eventos_publicos_limit(12)
     	#for e in eventos_publicos:
