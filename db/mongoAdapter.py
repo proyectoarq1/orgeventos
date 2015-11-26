@@ -15,6 +15,7 @@ from evento_form import EventoForm
 class MongoAdapter(Adapter):
 
 	session=session
+	db_session=session
 	encoder = MongoAlchemyEncoder
 
 	def to_json(self, db_object):
