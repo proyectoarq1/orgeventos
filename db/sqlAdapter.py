@@ -49,7 +49,7 @@ class MySQLAdapter(Adapter):
 		return self.to_json(evento)
 
 	def obtener_eventos_asignados(self, usuario_id):
-		eventos_usuario = self.db_session.query(Evento).filter_by(organizador_id=usuario_id, categoria="Privado").all()
+		eventos_usuario = self.db_session.query(Evento).filter_by(organizador_id=usuario_id).all()
 		eventos = []
 		for e in eventos_usuario:
 		  eventos.append(self.to_json(e))
@@ -84,6 +84,7 @@ class MySQLAdapter(Adapter):
 	def crear_invitacion(self, evento_id, usuario_id):
 		invitacion = Invitacion(evento_id=evento_id, usuario_id=usuario_id, asiste=Asistencia.Pendiente)
 		self.guardar(invitacion)
+		return invitacion
 
 	def obtener_usuarios_invitados_evento(self, evento_id, respuesta):
 		db_session = self.db_session
@@ -130,6 +131,8 @@ class MySQLAdapter(Adapter):
 	def obtener_asistencia_a_evento(self, evento_id, usuario_id):
 		db_session = self.db_session
 		invitacion = self.db_session.query(Invitacion).filter_by(evento_id=evento_id, usuario_id=usuario_id).first()
+		if invitacion is None:
+			invitacion = self.crear_invitacion(evento_id, usuario_id)
 		return invitacion.asiste
 
 	def obtener_requerimiento(self, requerimiento_id):

@@ -18,19 +18,21 @@
 	</h2>
     {% else %}
     </h2>
-    	<h3>
-	    	Asistencia: 
-		  	<select class="btn btn-default btn-sm" id="asistir" onchange="contestando_asistencia_a_evento({{evento.id}})" name="asistir">
-		  		<option value=0>Seleccione</option>
-		  		{% for asist in Asistencias %}
-		  			{% if asist.value == asistencia_actual %}
-						<option value={{asist.value}} SELECTED>{{asist.name}}</option>
-					{% else %}
-			  			<option value={{asist.value}}>{{asist.name}}</option>
-					{% endif %}
-			    {% endfor %}
-			</select>
-		</h3>
+    	{% if current_user.is_authenticated() %}
+	    	<h3>
+		    	Asistencia: 
+			  	<select class="btn btn-default btn-sm" id="asistir" onchange="contestando_asistencia_a_evento({{evento.id}})" name="asistir">
+			  		<option value=0>Seleccione</option>
+			  		{% for asist in Asistencias %}
+			  			{% if asist.value == asistencia_actual %}
+							<option value={{asist.value}} SELECTED>{{asist.name}}</option>
+						{% else %}
+				  			<option value={{asist.value}}>{{asist.name}}</option>
+						{% endif %}
+				    {% endfor %}
+				</select>
+			</h3>
+		{% endif %}
 	{% endif %}
   
   <div class="jumbo">

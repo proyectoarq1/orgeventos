@@ -12,11 +12,11 @@
 {% block content %}
   <div class="jumbo">
     	 <h3><u>Eventos p&uacute;blicos</u><h3>
-    	 	<p><small>Cualquier persona puede ver los eventos publicos.</p> 
+    	 	<p><small>Cualquier persona puede ver los eventos p&uacute;blicos.</p> 
     	 	{% if not current_user.is_authenticated() %}
     	 	<p>Para marcar asistencia o crear tus propios eventos 
     	 		<a href="{{ url_for('login') }}">loggeate</a></p> 
-    	 		<p>&iquest;No tenes una cuenta? &iexcl;No importa!  
+    	 		<p>&iquest;No ten&eacute;s una cuenta? &iexcl;No importa!  
     	 		<a href="{{ url_for('register') }}">registrate</a>, es f&aacute;cil, r&aacute;pido y gratis!</small><p>
     	 	{% endif %}
 
@@ -41,13 +41,14 @@
   </div>
 
 </div>
-<div id="navegador_eventos">
-  <nav style=" margin-top:5px;">
-    <ul class="pager">
-      <li class="previous"><a onclick="otros_12_eventos({{primer_id}},'publico','pre','lista_publicos_eventos','navegador_eventos')"><span aria-hidden="true">&larr;</span>Anterior</a></li>
-      <li class="next"><a onclick="otros_12_eventos({{last_id}},'publico','post','lista_publicos_eventos','navegador_eventos')"><span aria-hidden="true">Proxima&rarr;</span></a></li>
-    </ul>
-  </nav>
-</div>
-
+{% if eventos_publicos != [] %}
+  <div id="navegador_eventos">
+    <nav style=" margin-top:5px;">
+      <ul class="pager">
+        <li class="previous"><a onclick="otros_12_eventos({{primer_id}},'publico','pre','lista_publicos_eventos','navegador_eventos')"><span aria-hidden="true">&larr;</span>Anterior</a></li>
+        <li class="next"><a onclick="otros_12_eventos({{last_id}},'publico','post','lista_publicos_eventos','navegador_eventos')"><span aria-hidden="true">Proxima&rarr;</span></a></li>
+      </ul>
+    </nav>
+  </div>
+{% endif %}
 {% endblock %}

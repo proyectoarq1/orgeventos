@@ -12,7 +12,7 @@ class PerfilController(Resource):
 	def get(self):
 		usuario = adapter.get_userJson_by_id(current_user.get_id())
 
-		current_app.logger.info('Obnetiendo eventos propios para cargar en el perfil')
+		current_app.logger.info('Obteniendo eventos propios para cargar en el perfil')
 		eventos = adapter.obtener_eventos_asignados(current_user.get_id())[:5]
 		last_id_propios = 0
 		primer_id_propios = 0
@@ -21,7 +21,7 @@ class PerfilController(Resource):
 			last_id_propios = eventos[-1]["_id"]
 			primer_id_propios = eventos[0]["_id"]
 
-		current_app.logger.info('Obnetiendo eventos a los que el usuario esta invitado para cargar en el perfil')
+		current_app.logger.info('Obteniendo eventos a los que el usuario esta invitado para cargar en el perfil')
 		eventos_invitados = adapter.obtener_eventos_invitados(current_user.get_id())[:5]
 		last_id_invitados = 0
 		primer_id_invitados = 0

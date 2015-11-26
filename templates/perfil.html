@@ -27,15 +27,16 @@
 		    </div>
 		  {% endfor %}
 		  </div>
-
-		<div id="navegador_eventos_propios" style=" margin-top:30px;">
-		  <nav style=" margin-top:5px;">
-		    <ul class="pager">
-		      <li class="previous"><a onclick="otros_12_eventos({{primer_id_propios}},'propios','pre','lista_propios_eventos','navegador_eventos_propios')"><span aria-hidden="true">&larr;</span>Anterior</a></li>
-		      <li class="next"><a onclick="otros_12_eventos({{last_id_propios}},'propios','post','lista_propios_eventos','navegador_eventos_propios')"><span aria-hidden="true">Proxima&rarr;</span></a></li>
-		    </ul>
-		  </nav>
-		</div>
+		{% if eventos != [] %}
+			<div id="navegador_eventos_propios" style=" margin-top:30px;">
+			  <nav style=" margin-top:5px;">
+			    <ul class="pager">
+			      <li class="previous"><a onclick="otros_12_eventos({{primer_id_propios}},'propios','pre','lista_propios_eventos','navegador_eventos_propios')"><span aria-hidden="true">&larr;</span>Anterior</a></li>
+			      <li class="next"><a onclick="otros_12_eventos({{last_id_propios}},'propios','post','lista_propios_eventos','navegador_eventos_propios')"><span aria-hidden="true">Proxima&rarr;</span></a></li>
+			    </ul>
+			  </nav>
+			</div>
+		{% endif %}
 
 
      </div>
@@ -63,14 +64,16 @@
 		  {% endfor %}
 		</div>
 
-		  <div id="navegador_eventos_invitado" style="margin-top:30px;">
-		  <nav style=" margin-top:5px;">
-		    <ul class="pager">
-		      <li class="previous"><a onclick="otros_12_eventos({{primer_id_invitados}},'invitados','pre','lista_invitados_eventos','navegador_eventos_invitado')"><span aria-hidden="true">&larr;</span>Anterior</a></li>
-		      <li class="next"><a onclick="otros_12_eventos({{last_id_invitados}},'invitados','post','lista_invitados_eventos','navegador_eventos_invitado')"><span aria-hidden="true">Proxima&rarr;</span></a></li>
-		    </ul>
-		  </nav>
-		</div>
+		{% if eventos_invitados != [] %}
+			<div id="navegador_eventos_invitado" style="margin-top:30px;">
+			  <nav style=" margin-top:5px;">
+			    <ul class="pager">
+			      <li class="previous"><a onclick="otros_12_eventos({{primer_id_invitados}},'invitados','pre','lista_invitados_eventos','navegador_eventos_invitado')"><span aria-hidden="true">&larr;</span>Anterior</a></li>
+			      <li class="next"><a onclick="otros_12_eventos({{last_id_invitados}},'invitados','post','lista_invitados_eventos','navegador_eventos_invitado')"><span aria-hidden="true">Proxima&rarr;</span></a></li>
+			    </ul>
+			  </nav>
+			</div>
+		{% endif %}
 
 
 	  </div>
