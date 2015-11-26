@@ -80,7 +80,7 @@ class Adapter():
 						organizador_id=usuario_id,
 						nombre=form.nombre.data,
 						categoria=form.categoria.data,
-						fecha=datetime.datetime.strptime(form.fecha.data, "%d/%m/%Y"),
+						fecha=datetime.datetime.strptime(form.fecha.data, "%m/%d/%Y"),
 						hora= form.hora.data,
 						descripcion=form.descripcion.data,
 						ubicacion=form.ubicacion.data,
@@ -101,7 +101,7 @@ class Adapter():
 		
 		evento.nombre = form.nombre.data
 		evento.categoria=form.categoria.data
-		evento.fecha=datetime.datetime.strptime(form.fecha.data, "%d/%m/%Y")
+		evento.fecha=datetime.datetime.strptime(form.fecha.data, "%m/%d/%Y")
 		evento.hora= form.hora.data
 		evento.descripcion=form.descripcion.data
 		evento.ubicacion=form.ubicacion.data
