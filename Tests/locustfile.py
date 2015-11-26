@@ -39,7 +39,7 @@ def register(l):
     l.client.post("/register", {"username":"test", "password":"test111", "confirm":"test111", "email": "test1@test1.com"})
 
 def login(l):
-    l.client.post("/login", {"username":"test2", "password":"test22"})
+    l.client.post("/login", {"username":"tatiana", "password":"tatiana"})
 
 def home(l):
     l.client.get("/")
@@ -55,7 +55,7 @@ def logout(l):
 
 class UserBehavior(TaskSet):
     #tasks = {login:1,home:1, perfil:1, nuevo_evento:1, perfil:2, nuevo_evento:1, crear_evento:1, home: 3}
-    tasks = {nuevo_evento:1,crear_evento:1}
+    tasks = {nuevo_evento:1,crear_evento:1, home:3}
 
     #def on_start(self):
     #    register(self)
