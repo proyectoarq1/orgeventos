@@ -12,8 +12,7 @@ class EditarEventoController(Resource):
         evento = adapter.get_evento_object(evento_id)
         form = EventoForm(obj=evento)
         splited = str(form.fecha.data).split("-")
-        print splited
-        nueva_fecha = splited[2] + "/"+ splited[1] + "/"+ splited[0]
+        nueva_fecha = splited[1] + "/"+ splited[2] + "/"+ splited[0]
         form.fecha.data = nueva_fecha
 
         headers = {'Content-Type': 'text/html'}

@@ -18,7 +18,7 @@ class MySQLAdapter(Adapter):
 
 	db_session=Session()
 	encoder = AlchemyEncoder
-	db_session.rollback()
+	#db_session.rollback()
 
 	def to_json(self, db_object):
 		return json.loads(json.dumps(db_object, cls=AlchemyEncoder))

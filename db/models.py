@@ -96,5 +96,5 @@ class RequerimientoAsignado(Base):
 if __name__ == '__main__':
 	#os.environ.setdefault("DJANGO_SETTINGS_MODULE", "dbsettings")
 	#session = Session()
-	Base.metadata.drop_all(engine)
+	#Base.metadata.drop_all(engine)
 	Base.metadata.create_all(engine)
