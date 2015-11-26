@@ -4,7 +4,6 @@ from db.adapter_selected import adapter
 import os
 
 def doRegister():
-	session=Session()
 	username = request.form['username']
 	password = request.form['password']
 	email = request.form['email']
