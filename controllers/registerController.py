@@ -3,6 +3,7 @@ from flask_restful import Resource
 from db.adapter_selected import adapter
 from formularios.usuario_form import UserForm
 from flask.ext.mail import Message, Mail
+from servicios import email
 import os
 
 
@@ -17,12 +18,14 @@ class RegisterController(Resource):
 		if form.validate():
 			user = adapter.create_user(form)
 			current_app.logger.info('El usuario se creo con exito')
-			#
 			mail = Mail()
 			mail.init_app(current_app)
-			msg = Message("Arreglamos Eh", sender="arqsoft12015@gmail.com", recipients=[user.email])
-			msg.html = "<b>Felicitaciones!!, Te has logueado satisfactoriamente</b>"
-			mail.send(msg)
+
+			email.send_email(mail, current_app, "Arreglamos Eh", "arqsoft12015@gmail.com", [user.email], "Te has registrado satisfactoriamente", "<b>Felicitaciones!!, Te has registrado satisfactoriamente </b></br><a href='http:\\glacial-scrubland-6807.herokuapp.com'>Ir a Arreglamos Eh</a>")
+			#
+			#msg = Message("Arreglamos Eh", sender="arqsoft12015@gmail.com", recipients=[user.email])
+			#msg.html = "<b>Felicitaciones!!, Te has logueado satisfactoriamente</b>"
+			#mail.send(msg)
 			#
 			return redirect(url_for('login'))
 		else:
