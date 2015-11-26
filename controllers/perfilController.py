@@ -10,21 +10,28 @@ from db.utils.Asistencia import *
 class PerfilController(Resource):
 	@login_required
 	def get(self):
-		eventos_invitados_y_asistencia = []
 		usuario = adapter.get_userJson_by_id(current_user.get_id())
-		
-		current_app.logger.info('Obnetiendo eventos propios para cargar en el perfil')
-		eventos = adapter.obtener_eventos_asignados(current_user.get_id())
-		
-		current_app.logger.info('Obnetiendo eventos a los que el usuario esta invitado para cargar en el perfil')
-		eventos_invitados = adapter.obtener_eventos_invitados(current_user.get_id())
 
-		for ev in eventos_invitados:
-			asistencia_actual = adapter.obtener_asistencia_a_evento(ev['id'], usuario['id'])
-			eventos_invitados_y_asistencia = eventos_invitados_y_asistencia + [{"evento":ev, "asistencia":asistencia_actual}] 
-		eventos_publicos = adapter.obtener_eventos_publicos()
+		current_app.logger.info('Obnetiendo eventos propios para cargar en el perfil')
+		eventos = adapter.obtener_eventos_asignados(current_user.get_id())[:5]
+		last_id_propios = 0
+		primer_id_propios = 0
+
+		if eventos != []:
+			last_id_propios = eventos[-1]["_id"]
+			primer_id_propios = eventos[0]["_id"]
+
+		current_app.logger.info('Obnetiendo eventos a los que el usuario esta invitado para cargar en el perfil')
+		eventos_invitados = adapter.obtener_eventos_invitados(current_user.get_id())[:5]
+		last_id_invitados = 0
+		primer_id_invitados = 0
+
+		if eventos_invitados != []:
+			last_id_invitados = eventos_invitados[-1]["_id"]
+			primer_id_invitados = eventos_invitados[0]["_id"]
+
 		headers = {'Content-Type': 'text/html'}
-		return make_response(render_template('perfil.html', Asistencia=Asistencia, eventos_invitados_y_asistencia=eventos_invitados_y_asistencia, usuario=usuario, eventos=eventos, eventos_publicos=eventos_publicos,eventos_invitados=eventos_invitados),200,headers)
+		return make_response(render_template('perfil.html', primer_id_propios=primer_id_propios,last_id_propios=last_id_propios, primer_id_invitados=primer_id_invitados, last_id_invitados=last_id_invitados, usuario=usuario, eventos=eventos,eventos_invitados=eventos_invitados),200,headers)
 
 	def post(self):
 		resp = request.form['asistir']

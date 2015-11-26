@@ -170,25 +170,36 @@ class MySQLAdapter(Adapter):
 		  eventos.append(self.to_json(e))
 		return eventos
 
-	def obtener_eventos_tipo_pivote_id_lugar(self,tipo,pivote_id,pre_post,limit):
+	def obtener_eventos_tipo_pivote_id_lugar(self,tipo,pivote_id,pre_post,usuario_id):
 		print "llegue"
 		obj_eventos = []
 		eventos = []
 
 		if tipo=="publico":
-			print "publique"
 			if pre_post=="post":
-				print "postee"
-				obj_eventos = self.db_session.query(Evento).filter_by(categoria="Publico").filter(Evento.id>pivote_id).order_by(Evento.id).limit(limit)
+				obj_eventos = self.db_session.query(Evento).filter_by(categoria="Publico").filter(Evento.id>pivote_id).order_by(Evento.id).limit(12)
 			else:
-				obj_eventos = self.db_session.query(Evento).filter_by(categoria="Publico").filter(Evento.id<pivote_id).order_by(Evento.id.desc()).limit(limit)
-				
+				obj_eventos = self.db_session.query(Evento).filter_by(categoria="Publico").filter(Evento.id<pivote_id).order_by(Evento.id.desc()).limit(12)
+		elif tipo=="propios":
+			if pre_post=="post":
+				obj_eventos = self.db_session.query(Evento).filter_by(organizador_id=usuario_id).filter(Evento.id>pivote_id).order_by(Evento.id).limit(5)
+			else:
+				obj_eventos = self.db_session.query(Evento).filter_by(organizador_id=usuario_id).filter(Evento.id<pivote_id).order_by(Evento.id.desc()).limit(5)
+		else:
+			if pre_post=="post":
+				eventos_invitados = self.db_session.query(Invitacion).filter_by(usuario_id=usuario_id).filter(Invitacion.evento_id>pivote_id).order_by(Invitacion.evento_id)
+			else:
+				eventos_invitados = self.db_session.query(Invitacion).filter_by(usuario_id=usuario_id).filter(Invitacion.evento_id<pivote_id).order_by(Invitacion.evento_id.desc())
+			for e in eventos_invitados:
+				evento = self.db_session.query(Evento).filter_by(id=e.evento_id).first()
+				if str(evento.organizador_id) != str(usuario_id):
+					obj_eventos.append(evento)
+			obj_eventos = obj_eventos[:5]
 
 		for o in obj_eventos:
 		  eventos.append(self.to_json(o))
 
 		if pre_post=="pre":
-			print "reverseando"
 			eventos.reverse()
 		return eventos
 

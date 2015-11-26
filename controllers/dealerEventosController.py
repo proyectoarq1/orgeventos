@@ -13,14 +13,21 @@ class DealerEventosController(Resource):
         pivote_id = request.form['pivote_id']
         pre_post = request.form['pre_post']
 
-    	eventos_publicos = adapter.obtener_eventos_tipo_pivote_id_lugar(tipo,pivote_id,pre_post,12)
+    	eventos = adapter.obtener_eventos_tipo_pivote_id_lugar(tipo,pivote_id,pre_post,current_user.get_id())
 
-        if eventos_publicos==[]:
-            return {"hay_eventos":"false","ultimo_id":pivote_id, "primer_id":pivote_id}
-    	ultimo_id = eventos_publicos[-1]["_id"]
-        primer_id = eventos_publicos[0]["_id"]
+        if eventos==[]:
+            ultimo_id = pivote_id
+            primer_id = pivote_id
+            if pre_post=="post":
+                primer_id=int(primer_id)+1
+            else:
+                ultimo_id=int(ultimo_id)-1
 
+            return {"hay_eventos":"false","ultimo_id":ultimo_id, "primer_id":primer_id}
+        
+        ultimo_id = eventos[-1]["_id"]
+        primer_id = eventos[0]["_id"]
     	
-        return {"hay_eventos":"true","eventos":eventos_publicos,"ultimo_id":ultimo_id, "primer_id":primer_id}
+        return {"hay_eventos":"true","eventos":eventos,"ultimo_id":ultimo_id, "primer_id":primer_id}
 
 

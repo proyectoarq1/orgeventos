@@ -5,28 +5,75 @@
   	<h2>Bienvenido, {{ current_user.username }}</h2>
   {% endif %}
   <div class="jumbo">
-  	 <div id="left">
+  	 <div class="col-md-5">
 
-  	 	  <h3>Lista de eventos publicos</h3>
-		  
-		  {% with eventos=eventos_publicos,user=current_user %}
-				{% include "_lista_de_eventos.html" %}
-		  {% endwith %}
+  	 	<h3>Eventos propios</h3>
+		  <div id="lista_propios_eventos">
+		  {% for evento in eventos %}
+		    <div class="col-md-12" style=" margin-top:10px;">
+		      <div class="row">
+		           <div>
+		                 {% if evento.url_imagen !="" %}
+		                      {% set url_imagen = evento.url_imagen %}
+		                  {% else %}
+		                      {% set url_imagen = 'http://www.edsaugustablog.com/wp-content/uploads/2015/02/fiesta1.jpg' %}
+		                  {% endif %}
+		                  <img style="margin-left:25px; margin-top:5px;width:100px;height:100px;" align="left" class="img-circle"src="{{url_imagen}}"/>
+		            </div>
+		            <p style="margin-top:25px;font-size:20px" align="left">
+		              <a href="{{ url_for('evento', evento_id=evento._id) }}"> {{ evento.nombre }}</a>
+		            </p>
+		      </div>
+		    </div>
+		  {% endfor %}
+		  </div>
+
+		<div id="navegador_eventos_propios" style=" margin-top:30px;">
+		  <nav style=" margin-top:5px;">
+		    <ul class="pager">
+		      <li class="previous"><a onclick="otros_12_eventos({{primer_id_propios}},'propios','pre','lista_propios_eventos','navegador_eventos_propios')"><span aria-hidden="true">&larr;</span>Anterior</a></li>
+		      <li class="next"><a onclick="otros_12_eventos({{last_id_propios}},'propios','post','lista_propios_eventos','navegador_eventos_propios')"><span aria-hidden="true">Proxima&rarr;</span></a></li>
+		    </ul>
+		  </nav>
+		</div>
+
 
      </div>
-     <div id="right">
 
-		  <h3>Lista de eventos propios</h3>
+     <div class="col-md-6">
 
-		  {% with eventos=eventos,user=current_user %}
-				{% include "_lista_de_eventos.html" %}
-		  {% endwith %}
+		  <h3>Eventos a los que fuiste invitado</h3>
+		   <div id="lista_invitados_eventos">
+		   {% for evento in eventos_invitados %}
+		    <div class="col-md-12" style=" margin-top:10px;">
+		      <div class="row">
+		           <div>
+		                 {% if evento.url_imagen !="" %}
+		                      {% set url_imagen = evento.url_imagen %}
+		                  {% else %}
+		                      {% set url_imagen = 'http://www.edsaugustablog.com/wp-content/uploads/2015/02/fiesta1.jpg' %}
+		                  {% endif %}
+		                  <img style="margin-left:25px; margin-top:5px;width:100px;height:100px;" align="left" class="img-circle"src="{{url_imagen}}"/>
+		            </div>
+		            <p style="margin-top:25px;font-size:20px" align="left">
+		              <a href="{{ url_for('evento', evento_id=evento._id) }}"> {{ evento.nombre }}</a>
+		            </p>
+		      </div>
+		    </div>
+		  {% endfor %}
+		</div>
 
-		  <h3>Lista de eventos invitados</h3>
-		
-		  {% with eventos=eventos_invitados,user=current_user %}
-				{% include "_lista_de_eventos.html" %}
-		  {% endwith %}
+		  <div id="navegador_eventos_invitado" style="margin-top:30px;">
+		  <nav style=" margin-top:5px;">
+		    <ul class="pager">
+		      <li class="previous"><a onclick="otros_12_eventos({{primer_id_invitados}},'invitados','pre','lista_invitados_eventos','navegador_eventos_invitado')"><span aria-hidden="true">&larr;</span>Anterior</a></li>
+		      <li class="next"><a onclick="otros_12_eventos({{last_id_invitados}},'invitados','post','lista_invitados_eventos','navegador_eventos_invitado')"><span aria-hidden="true">Proxima&rarr;</span></a></li>
+		    </ul>
+		  </nav>
+		</div>
+
+
+	  </div>
 
 	  </div>
 	  <p class="pull-right"><a role="button" class="btn btn-primary" href="{{ url_for('nuevo_evento', _method='GET') }}">Crear nuevo evento</a></p>
