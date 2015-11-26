@@ -1,7 +1,6 @@
 from sqlalchemy.ext.declarative import DeclarativeMeta
 from mongoalchemy.document import Document
 import json
-from models import Usuario, Session
 from mongoalchemy.fields import *
 
 class AlchemyEncoder(json.JSONEncoder):
@@ -57,13 +56,3 @@ class MongoAlchemyEncoder(json.JSONEncoder):
         return out
 
         return json.JSONEncoder.default(self, obj)
-
-if __name__ == '__main__':
-
-    db_session = Session()
-    usuario = Usuario(nombre="usuario_nombre")
-    db_session.add(usuario)
-    db_session.commit()
-
-    print usuario
-    print json.loads(json.dumps(usuario, cls=AlchemyEncoder))
