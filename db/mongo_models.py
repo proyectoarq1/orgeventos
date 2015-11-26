@@ -14,7 +14,7 @@ db_seleccionada = os.getenv('TIPO_BASE_DE_DATOS', 'MySQL')
 
 session=None
 if db_seleccionada=='MongoDB':
-    session = Session.connect("prueba3")
+    session = Session.connect(url)
 
 #mongod --config c:\mongodb\mongo.config
 
