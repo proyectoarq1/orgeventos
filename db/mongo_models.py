@@ -48,6 +48,7 @@ class Evento(Document):
     organizador = StringField()
     descripcion = StringField()
     ubicacion =  StringField()
+    categoria =  StringField()
     fecha = DateTimeField()
     asistiran = IntField(default=0)
     organizador_id = ObjectIdField()

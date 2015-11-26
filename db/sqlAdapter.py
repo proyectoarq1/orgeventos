@@ -7,6 +7,7 @@ import json, os
 from bson.objectid import ObjectId
 from datetime import date
 from abc import ABCMeta, abstractmethod
+from mongoAdapter import MongoAdapter
 
 from flask import current_app
 from adapter import Adapter
@@ -86,7 +87,7 @@ class MySQLAdapter(Adapter):
 db_seleccionada = os.getenv('TIPO_BASE_DE_DATOS', 'MySQL')
 
 if db_seleccionada=='MongoDB':
-	adapter = MongoDBAdapter()
+	adapter = MongoAdapter()
 else:
 	adapter = MySQLAdapter()
 

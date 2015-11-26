@@ -14,7 +14,7 @@ from evento_form import EventoForm
 
 class MongoAdapter(Adapter):
 
-	db_session=session
+	session=session
 	encoder = MongoAlchemyEncoder
 
 	def to_json(self, db_object):
@@ -24,25 +24,25 @@ class MongoAdapter(Adapter):
 		return objecto.mongo_id
 
 	def guardar(self,objeto):
-		self.db_session.save(objeto)
+		self.session.save(objeto)
 
 	def borrar(self,objeto):
-		self.db_session.remove(objeto)
+		self.session.remove(objeto)
 
 	def get_user_by_id(self,user_id):
-		user = self.db_session.query(User).filter_by(mongo_id=user_id).first()
+		user = self.session.query(User).filter_by(mongo_id=user_id).first()
 		return user	
 
 	def get_evento(self,evento_id):
-		evento = self.db_session.query(Evento).filter_by(mongo_id=evento_id).first()
+		evento = self.session.query(Evento).filter_by(mongo_id=evento_id).first()
 		return self.to_json(evento)
 
 	def borrar_evento(self,user_id,evento_id):
-		evento = self.db_session.query(Evento).filter_by(mongo_id=evento_id).first()
+		evento = self.session.query(Evento).filter_by(mongo_id=evento_id).first()
 		self.borrar(evento)
 
 	def crear_invitacion(self, evento_id, usuario_id):
-		evento = self.db_session.query(Evento).filter_by(mongo_id=evento_id).first()
+		evento = self.session.query(Evento).filter_by(mongo_id=evento_id).first()
 		evento.invitados.append(usuario_id)
 		self.guardar(evento)
 
@@ -51,14 +51,14 @@ class MongoAdapter(Adapter):
 		return evento["invitados"]
 
 	def obtener_invitaciones_usuario(self, usuario_id):
-		eventos = self.db_session.query(Evento).filter({ "invitados": [ usuario_id ] }).all()
+		eventos = self.session.query(Evento).filter({ "invitados": [ usuario_id ] }).all()
 		lista_invitaciones = []
 		for e in eventos:
 			lista_invitaciones.append(str(e.mongo_id))
 		return lista_invitaciones
 
 	def borrar_invitacion(self, evento_id, usuario_id):
-		evento = self.db_session.query(Evento).filter_by(mongo_id=evento_id).first()
+		evento = self.session.query(Evento).filter_by(mongo_id=evento_id).first()
 		evento.invitados.remove(usuario_id)
 		self.guardar(evento)
 

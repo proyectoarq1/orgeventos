@@ -6,7 +6,10 @@ install:
   - "pip install -r requirements.txt"
 deploy:
   provider: heroku
-  api_key: 965f3cec-c80e-438d-ade1-47511b7f3c72
-  app: glacial-scrubland-6807
+  api_key: 090b2e41-de41-4c8d-9f6b-cc7d3a29f196
+  app: glacial-scrubland-6807-mongo
 # command to run tests
 script: nosetests
+branches:
+  only:
+    - mongoFeature

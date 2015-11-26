@@ -6,7 +6,8 @@ DATABASE = {
     'port': '3306',
     'username': 'root',
     'password': 'root',
-    'database': 'prueba'
+    'database': 'prueba-mongo'
 }
 
-MONGO_DATABASE = { "url_conection":"mongodb://localhost:27017"}
+#mongodb://localhost:27017
+MONGO_DATABASE = { "url_conection":"mongodb://heroku_mlh2bvbl:90lgulqppq9fpvreerdjqt8h0r@ds059654.mongolab.com:59654/heroku_mlh2bvbl"}
