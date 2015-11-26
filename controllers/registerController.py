@@ -1,7 +1,6 @@
 from flask import Flask, render_template, flash, request, redirect, url_for, session, make_response
 from flask_restful import Resource
 from db.adapter_selected import adapter
-from db.models import Session
 import os
 
 def doRegister():
